@@ -39,10 +39,12 @@ async function seed() {
     ChatRoom.create({
       chatCode: "main",
       public: "true",
+      users: [1, 2],
     }),
     ChatRoom.create({
       chatCode: "admin",
       public: "false",
+      users: [2],
     }),
   ]);
 
