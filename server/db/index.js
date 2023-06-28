@@ -7,9 +7,6 @@ const ChatRoom = require("./models/ChatRoom");
 
 //associations could go here!
 
-User.belongsToMany(ChatRoom, { through: "UserChatRoom", as: "participants" });
-ChatRoom.belongsToMany(User, { through: "UserChatRoom", as: "participants" });
-
 module.exports = {
   db,
   models: {

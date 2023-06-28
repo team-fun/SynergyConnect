@@ -19,11 +19,6 @@ const ChatRoom = db.define("chatroom", {
     allowNull: true,
     defaultValue: [],
   },
-  users: {
-    type: Sequelize.ARRAY(Sequelize.INTEGER),
-    allowNull: true,
-    defaultValue: [],
-  },
 });
 
 module.exports = ChatRoom;

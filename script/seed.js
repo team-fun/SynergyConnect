@@ -21,7 +21,6 @@ async function seed() {
       firstName: "Cody",
       lastName: "Banks",
       email: "cody@gmail.com",
-      friends: [2],
       interests: ["sports", "call of duty", "lebron", "one direction"],
     }),
     User.create({
@@ -30,7 +29,6 @@ async function seed() {
       firstName: "Dan",
       lastName: "Rod",
       email: "dan@gmail.com",
-      friends: [1],
       interests: ["shooting", "guns", "dogs", "snakes"],
     }),
   ]);
@@ -39,12 +37,10 @@ async function seed() {
     ChatRoom.create({
       chatCode: "main",
       public: "true",
-      users: [1, 2],
     }),
     ChatRoom.create({
       chatCode: "admin",
       public: "false",
-      users: [2],
     }),
   ]);
 

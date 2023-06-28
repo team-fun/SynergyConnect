@@ -43,11 +43,6 @@ const User = db.define("user", {
       notEmpty: true,
     },
   },
-  friends: {
-    type: Sequelize.ARRAY(Sequelize.INTEGER),
-    allowNull: true,
-    defaultValue: [],
-  },
   theme: {
     type: Sequelize.STRING,
     allowNull: false,
