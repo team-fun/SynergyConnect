@@ -4,6 +4,7 @@ const db = require("./db");
 
 const User = require("./models/User");
 const ChatRoom = require("./models/ChatRoom");
+const Friend = require("./models/Friend");
 
 //associations could go here!
 
