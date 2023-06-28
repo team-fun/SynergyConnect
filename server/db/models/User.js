@@ -58,17 +58,11 @@ const User = db.define("user", {
     type: Sequelize.ARRAY(Sequelize.STRING),
     allowNull: true,
     defaultValue: [],
-    validate: {
-      isArray: true,
-    },
   },
   whiteboard: {
     type: Sequelize.ARRAY(Sequelize.STRING),
     allowNull: true,
     defaultValue: [],
-    validate: {
-      isArray: true,
-    },
   },
 });
 
