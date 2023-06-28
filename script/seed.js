@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, ChatRoom },
+  models: { User, ChatRoom, Friend, Participant },
 } = require("../server/db");
 
 /**
@@ -16,12 +16,12 @@ async function seed() {
   // Creating Users
   const users = await Promise.all([
     User.create({
-      username: "cody",
+      username: "adambomb",
       password: "123",
-      firstName: "Cody",
-      lastName: "Banks",
-      email: "cody@gmail.com",
-      interests: ["sports", "call of duty", "lebron", "one direction"],
+      firstName: "Adam",
+      lastName: "Green",
+      email: "adam@gmail.com",
+      interests: ["sports", "health & wellness", "muffins", "taco bell"],
     }),
     User.create({
       username: "drod",
@@ -31,6 +31,14 @@ async function seed() {
       email: "dan@gmail.com",
       interests: ["shooting", "guns", "dogs", "snakes"],
     }),
+    User.create({
+      username: "jdog",
+      password: "123",
+      firstName: "Jovan",
+      lastName: "Stosic",
+      email: "jovan@gmail.com",
+      interests: ["coding", "video games", "one direction"],
+    }),
   ]);
 
   const chats = await Promise.all([
@@ -39,7 +47,15 @@ async function seed() {
       public: "true",
     }),
     ChatRoom.create({
+      chatCode: "sports",
+      public: "true",
+    }),
+    ChatRoom.create({
       chatCode: "admin",
+      public: "false",
+    }),
+    ChatRoom.create({
+      chatCode: "test",
       public: "false",
     }),
   ]);

@@ -9,6 +9,18 @@ const Participant = require("./models/Participant");
 
 //associations could go here!
 
+// FRIENDS!!!! 😎
+User.hasMany(Friend);
+Friend.belongsTo(User);
+
+// USERS WHO ARE PARTICIPATING 🥸
+User.hasMany(Participant);
+Participant.belongsTo(User);
+
+// PARTICIPANTS WHO ARE CHATING 🥳
+ChatRoom.hasMany(Participant);
+Participant.belongsTo(ChatRoom);
+
 module.exports = {
   db,
   models: {
