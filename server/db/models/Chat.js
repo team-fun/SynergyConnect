@@ -1,8 +1,8 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
 
-const ChatRoom = db.define("chatroom", {
-  chatCode: {
+const Chat = db.define("chat", {
+  code: {
     type: Sequelize.STRING,
     unique: true,
     allowNull: false,
@@ -14,11 +14,11 @@ const ChatRoom = db.define("chatroom", {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
   },
-  messsageData: {
+  messageData: {
     type: Sequelize.ARRAY(Sequelize.STRING),
     allowNull: true,
     defaultValue: [],
   },
 });
 
-module.exports = ChatRoom;
+module.exports = Chat;

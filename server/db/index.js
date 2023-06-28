@@ -3,7 +3,8 @@
 const db = require("./db");
 
 const User = require("./models/User");
-const ChatRoom = require("./models/ChatRoom");
+// const ChatRoom = require("./models/ChatRoom");
+const Chat = require("./models/Chat");
 const Friend = require("./models/Friend");
 const Participant = require("./models/Participant");
 
@@ -18,15 +19,15 @@ User.hasMany(Participant);
 Participant.belongsTo(User);
 
 // PARTICIPANTS WHO ARE CHATING 🥳
-ChatRoom.hasMany(Participant);
-Participant.belongsTo(ChatRoom);
+Chat.hasMany(Participant);
+Participant.belongsTo(Chat);
 
 module.exports = {
   db,
   models: {
     User,
-    ChatRoom,
     Friend,
     Participant,
+    Chat,
   },
 };
