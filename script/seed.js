@@ -77,14 +77,43 @@ async function seed() {
     }),
   ]);
 
+  const participants = await Promise.all([
+    Participant.create({
+      userId: 1,
+      chatId: 3,
+    }),
+    Participant.create({
+      userId: 2,
+      chatId: 3,
+    }),
+    Participant.create({
+      userId: 3,
+      chatId: 3,
+    }),
+    Participant.create({
+      userId: 1,
+      chatId: 1,
+    }),
+    Participant.create({
+      userId: 2,
+      chatId: 1,
+    }),
+    Participant.create({
+      userId: 3,
+      chatId: 1,
+    }),
+  ]);
+
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${friends.length} friends`);
   console.log(`seeded ${chats.length} chats`);
+  console.log(`seeded ${participants.length} participants`);
   console.log(`seeded successfully`);
   return {
     users,
     chats,
     friends,
+    participants,
   };
 }
 

@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
 
-const Participant = db.define("chatroom", {});
+const Participant = db.define("participant", {});
 
 module.exports = Participant;
