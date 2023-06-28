@@ -6120,12 +6120,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /*
   CONSTANT VARIABLES
 */
-var TOKEN = 'token';
+var TOKEN = "token";
 
 /*
   THUNKS
 */
-var me = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createAsyncThunk)('auth/me', /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+var me = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createAsyncThunk)("auth/me", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
   var token, res;
   return _regeneratorRuntime().wrap(function _callee$(_context) {
     while (1) switch (_context.prev = _context.next) {
@@ -6137,7 +6137,7 @@ var me = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createAsyncThunk)('aut
           break;
         }
         _context.next = 5;
-        return axios__WEBPACK_IMPORTED_MODULE_1__["default"].get('/auth/me', {
+        return axios__WEBPACK_IMPORTED_MODULE_1__["default"].get("/auth/me", {
           headers: {
             authorization: token
           }
@@ -6159,14 +6159,14 @@ var me = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createAsyncThunk)('aut
         }
         return _context.abrupt("return", thunkAPI.rejectWithValue(_context.t0.response.data));
       case 18:
-        return _context.abrupt("return", 'There was an issue with your request.');
+        return _context.abrupt("return", "There was an issue with your request.");
       case 19:
       case "end":
         return _context.stop();
     }
   }, _callee, null, [[1, 12]]);
 })));
-var authenticate = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createAsyncThunk)('auth/authenticate', /*#__PURE__*/function () {
+var authenticate = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createAsyncThunk)("auth/authenticate", /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(_ref2, thunkAPI) {
     var username, password, method, res;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
@@ -6194,7 +6194,7 @@ var authenticate = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createAsyncT
           }
           return _context2.abrupt("return", thunkAPI.rejectWithValue(_context2.t0.response.data));
         case 15:
-          return _context2.abrupt("return", 'There was an issue with your request.');
+          return _context2.abrupt("return", "There was an issue with your request.");
         case 16:
         case "end":
           return _context2.stop();
@@ -6210,7 +6210,7 @@ var authenticate = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createAsyncT
   SLICE
 */
 var authSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createSlice)({
-  name: 'auth',
+  name: "auth",
   initialState: {
     me: {},
     error: null
