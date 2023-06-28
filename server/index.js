@@ -12,7 +12,7 @@ const init = async () => {
     }
     // start listening (and create a 'server' object representing our server)
     app.listen(PORT, () =>
-      console.log(`🛸🛸🛸🛸🛸 Mixing it up on http://localhost:3000 🔪🔪🔪🔪`)
+      console.log(`🛸🛸🛸🛸🛸 Mixing it up on http://localhost:8080 🔪🔪🔪🔪`)
     );
   } catch (ex) {
     console.log(ex);
