@@ -92,7 +92,7 @@ const CreateRoomForm = () => {
           <div>Room code will be hashed for security if private!</div>
         )}
         <div>
-          <button type="submit">Create Room</button>
+          <button type="submit">submit</button>
         </div>
         {error && <div>{error}</div>}
       </form>

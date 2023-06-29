@@ -10,13 +10,16 @@ const Home = (props) => {
   const [createFormVis, setCreateFormVis] = useState(false);
 
   const create = () => {
-    setCreateFormVis(!createFormVis);
+    setCreateFormVis(true);
   };
 
   return (
     <div>
       {createFormVis ? (
-        <CreateRoomForm />
+        <>
+          <CreateRoomForm />
+          <button onClick={() => setCreateFormVis(false)}>Back</button>
+        </>
       ) : (
         <>
           <h3>Welcome, {username}</h3>
