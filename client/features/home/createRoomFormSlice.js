@@ -20,6 +20,21 @@ export const fetchCreateRoomAsync = createAsyncThunk(
   }
 );
 
+export const fetchGetAllChatRooms = createAsyncThunk(
+    'getAllChatRooms',
+    async () => {
+        try {
+            const {data} = axios.get('/api/chats')
+            return data
+        } catch (error) {
+            console.error(error);
+        }
+    }
+)
+
+
+
+
 const createRoomSlice = createSlice({
   name: "createRoom",
   initialState,
@@ -28,10 +43,13 @@ const createRoomSlice = createSlice({
     builder.addCase(fetchCreateRoomAsync.fulfilled, (state, action) => {
       return action.payload;
     });
-  },
-});
+    builder.addCase(fetchGetAllChatRooms.fulfilled, (state, action) => {
+        return action.payload;
+    });
+  }
+})
 
-export const selectCreatedRoom = (state) => {
+export const selectChat = (state) => {
   return state.createRoom;
 };
 
