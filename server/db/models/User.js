@@ -2,6 +2,7 @@ const Sequelize = require("sequelize");
 const db = require("../db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+require("dotenv").config()
 
 const SALT_ROUNDS = 5;
 
@@ -51,6 +52,11 @@ const User = db.define("user", {
       notEmpty: true,
     },
   },
+  bio:{
+    type:Sequelize.STRING,
+    allowNull:true,
+
+  },
   icon: {
     type: Sequelize.STRING,
   },
@@ -64,6 +70,12 @@ const User = db.define("user", {
     allowNull: true,
     defaultValue: [],
   },
+  image:{
+    type:Sequelize.TEXT,
+    allowNull:false,
+    defaultValue:process.env.DEFAULT_PROFILE_IMAGE
+
+  }
 });
 
 module.exports = User;
