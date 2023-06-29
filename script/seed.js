@@ -72,18 +72,26 @@ async function seed() {
 
   const chats = await Promise.all([
     Chat.create({
+      name: "main",
+      description: "this the main chat",
       code: "main",
       public: true,
     }),
     Chat.create({
+      name: "test",
+      description: "test chat",
       code: "test",
       public: false,
     }),
     Chat.create({
+      name: "admin",
+      description: "this is the super secret chat",
       code: "admin",
       public: false,
     }),
     Chat.create({
+      name: "sports",
+      description: "FOOTTBALL!!!",
       code: "sports",
       public: true,
     }),
