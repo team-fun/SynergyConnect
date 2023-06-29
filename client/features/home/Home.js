@@ -1,22 +1,28 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import io from "socket.io-client";
-
-const socket = io.connect("http://localhost:3001/");
+import CreateRoomForm from "./CreateRoomForm";
 
 /**
  * COMPONENT
  */
 const Home = (props) => {
   const username = useSelector((state) => state.auth.me.username);
-  const [room, setRoom] = useState("");
+  const [createFormVis, setCreateFormVis] = useState(false);
 
-  const joinRoom = () => {};
+  const create = () => {
+    setCreateFormVis(!createFormVis);
+  };
 
   return (
     <div>
-      <h3>Welcome, {username}</h3>
-      <button onClick={joinRoom}>Create A Room</button>
+      {createFormVis ? (
+        <CreateRoomForm />
+      ) : (
+        <>
+          <h3>Welcome, {username}</h3>
+          <button onClick={create}>Create Room</button>
+        </>
+      )}
     </div>
   );
 };
