@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import CreateRoomForm from "./CreateRoomForm";
+import { selectChats, fetchAllChats } from "./AllChatsSlice";
 
 /**
  * COMPONENT
  */
 const Home = (props) => {
   const username = useSelector((state) => state.auth.me.username);
+  const chats = useSelector(selectChats);
   const [createFormVis, setCreateFormVis] = useState(false);
   const dispatch = useDispatch();
 
-  // const chats = useSelector(selectChat);
-  // console.log("THIS IS CHATS", chats);
-  // const chatsData = chats.data;
-  // console.log("THIS IS CHATS", chatsData);
+  console.log("THIS IS CHATS", chats);
 
-  // useEffect(() => {
-  //   dispatch(fetchGetAllChatRooms());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchAllChats());
+  }, [dispatch]);
 
   const create = () => {
     setCreateFormVis(true);
@@ -34,11 +33,11 @@ const Home = (props) => {
         <>
           <h3>Welcome, {username}</h3>
           <button onClick={create}>Create Room</button>
-          {/* <div>
-            {chatsData.map((chat) => {
-              return <div>{chat.name}</div>;
+          <div>
+            {chats.map((chat) => {
+              return <div key={chat.id}>{chat.name}</div>;
             })}
-          </div> */}
+          </div>
         </>
       )}
     </div>
