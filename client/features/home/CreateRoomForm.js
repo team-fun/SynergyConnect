@@ -10,9 +10,30 @@ const CreateRoomForm = () => {
   const [code, setCode] = useState("");
   const [isPublic, setIsPublic] = useState(false);
 
+  const hasher = () => {
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    function generateString(length) {
+      let result = " ";
+      const charactersLength = characters.length;
+      for (let i = 0; i < length; i++) {
+        result += characters.charAt(
+          Math.floor(Math.random() * charactersLength)
+        );
+      }
+
+      return result;
+    }
+    const hash = generateString(7);
+    return hash;
+  };
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    dispatch(fetchCreateRoomAsync({ name, description, code, isPublic }));
+    const roomCode = isPublic ? code : hasher();
+    dispatch(
+      fetchCreateRoomAsync({ name, description, code: roomCode, isPublic })
+    );
     setName("");
     setDescription("");
     setCode("");
@@ -45,17 +66,6 @@ const CreateRoomForm = () => {
           />
         </div>
         <div>
-          <label htmlFor="code">
-            <small>Code</small>
-          </label>
-          <input
-            name="code"
-            type="text"
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-          />
-        </div>
-        <div>
           <label htmlFor="isPublic">
             <small>Public</small>
           </label>
@@ -66,6 +76,21 @@ const CreateRoomForm = () => {
             onChange={(e) => setIsPublic(e.target.checked)}
           />
         </div>
+        {isPublic ? (
+          <div>
+            <label htmlFor="code">
+              <small>Code</small>
+            </label>
+            <input
+              name="code"
+              type="text"
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+            />
+          </div>
+        ) : (
+          <div>Room code will be hashed for security if private!</div>
+        )}
         <div>
           <button type="submit">Create Room</button>
         </div>

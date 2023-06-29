@@ -6300,12 +6300,26 @@ var CreateRoomForm = function CreateRoomForm() {
     _useState8 = _slicedToArray(_useState7, 2),
     isPublic = _useState8[0],
     setIsPublic = _useState8[1];
+  var hasher = function hasher() {
+    var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    function generateString(length) {
+      var result = " ";
+      var charactersLength = characters.length;
+      for (var i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+      return result;
+    }
+    var hash = generateString(7);
+    return hash;
+  };
   var handleSubmit = function handleSubmit(evt) {
     evt.preventDefault();
+    var roomCode = isPublic ? code : hasher();
     dispatch((0,_createRoomFormSlice__WEBPACK_IMPORTED_MODULE_2__.fetchCreateRoomAsync)({
       name: name,
       description: description,
-      code: code,
+      code: roomCode,
       isPublic: isPublic
     }));
     setName("");
@@ -6334,15 +6348,6 @@ var CreateRoomForm = function CreateRoomForm() {
       return setDescription(e.target.value);
     }
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    htmlFor: "code"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("small", null, "Code")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    name: "code",
-    type: "text",
-    value: code,
-    onChange: function onChange(e) {
-      return setCode(e.target.value);
-    }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
     htmlFor: "isPublic"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("small", null, "Public")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
     name: "isPublic",
@@ -6351,7 +6356,16 @@ var CreateRoomForm = function CreateRoomForm() {
     onChange: function onChange(e) {
       return setIsPublic(e.target.checked);
     }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+  })), isPublic ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    htmlFor: "code"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("small", null, "Code")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+    name: "code",
+    type: "text",
+    value: code,
+    onChange: function onChange(e) {
+      return setCode(e.target.value);
+    }
+  })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, "Room code will be hashed for security if private!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
     type: "submit"
   }, "Create Room")), error && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, error)));
 };
