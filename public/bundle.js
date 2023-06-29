@@ -5977,20 +5977,16 @@ var AppRoutes = function AppRoutes() {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
     to: "/home",
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_features_home_Home__WEBPACK_IMPORTED_MODULE_3__["default"], null)
-<<<<<<< HEAD
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
-    to: "/chat",
-    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_features_home_Home__WEBPACK_IMPORTED_MODULE_3__["default"], null)
-  })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Routes, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
-=======
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
     path: "/admin",
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_features_admin_AdminView__WEBPACK_IMPORTED_MODULE_4__["default"], null)
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
     path: "/admin/:id",
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_features_admin_EditUser__WEBPACK_IMPORTED_MODULE_7__["default"], null)
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
+    to: "/chat",
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_features_home_Home__WEBPACK_IMPORTED_MODULE_3__["default"], null)
   })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Routes, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
->>>>>>> origin
     path: "/*",
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_features_auth_AuthForm__WEBPACK_IMPORTED_MODULE_2__["default"], {
       name: "login",
@@ -6048,32 +6044,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   me: () => (/* reexport safe */ _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_1__.me),
 /* harmony export */   selectUser: () => (/* reexport safe */ _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_1__.selectUser)
 /* harmony export */ });
-/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js");
+/* harmony import */ var _reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @reduxjs/toolkit */ "./node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js");
 /* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux-logger */ "./node_modules/redux-logger/dist/redux-logger.js");
 /* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(redux_logger__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../features/auth/authSlice */ "./client/features/auth/authSlice.js");
-<<<<<<< HEAD
 /* harmony import */ var _features_home_createRoomFormSlice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../features/home/createRoomFormSlice */ "./client/features/home/createRoomFormSlice.js");
 /* harmony import */ var _features_home_AllChatsSlice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../features/home/AllChatsSlice */ "./client/features/home/AllChatsSlice.js");
-=======
-/* harmony import */ var _features_admin_adminViewSlice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../features/admin/adminViewSlice */ "./client/features/admin/adminViewSlice.js");
-/* harmony import */ var _features_admin_editUserSlice__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../features/admin/editUserSlice */ "./client/features/admin/editUserSlice.js");
->>>>>>> origin
+/* harmony import */ var _features_admin_adminViewSlice__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../features/admin/adminViewSlice */ "./client/features/admin/adminViewSlice.js");
+/* harmony import */ var _features_admin_editUserSlice__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../features/admin/editUserSlice */ "./client/features/admin/editUserSlice.js");
 
 
 
 
 
-var store = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_4__.configureStore)({
+
+
+var store = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_6__.configureStore)({
   reducer: {
     auth: _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_1__["default"],
-<<<<<<< HEAD
+    allUsers: _features_admin_adminViewSlice__WEBPACK_IMPORTED_MODULE_4__["default"],
+    editUser: _features_admin_editUserSlice__WEBPACK_IMPORTED_MODULE_5__["default"],
     createRoom: _features_home_createRoomFormSlice__WEBPACK_IMPORTED_MODULE_2__["default"],
     chats: _features_home_AllChatsSlice__WEBPACK_IMPORTED_MODULE_3__["default"]
-=======
-    allUsers: _features_admin_adminViewSlice__WEBPACK_IMPORTED_MODULE_2__["default"],
-    editUser: _features_admin_editUserSlice__WEBPACK_IMPORTED_MODULE_3__["default"]
->>>>>>> origin
   },
   middleware: function middleware(getDefaultMiddleware) {
     return getDefaultMiddleware().concat((redux_logger__WEBPACK_IMPORTED_MODULE_0___default()));

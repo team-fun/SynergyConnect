@@ -1,14 +1,11 @@
-<<<<<<< HEAD
 const router = require("express").Router();
 module.exports = router;
 
 router.use("/users", require("./users"));
 router.use("/createroom", require("./createRoom"));
 router.use('/chats', require("./chats"));
-=======
-const router = require('express').Router()
 const { models: { User }} = require('../db')
-module.exports = router
+
 
 const requireToken = async (req, res, next) => {
 	try {
@@ -30,11 +27,8 @@ const isAdminCheck = (req, res, next) => {
     }
   })
 }
-
-router.use('/users', require('./users'))
 router.use('/admin', isAdminCheck, require('./admin'))
 
->>>>>>> origin
 
 router.use((req, res, next) => {
   const error = new Error("Not Found");
