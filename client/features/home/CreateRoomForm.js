@@ -12,11 +12,7 @@ const CreateRoomForm = () => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log("Room Name:", name);
-    console.log("Description:", description);
-    console.log("Code:", code);
-    console.log("Is Public:", isPublic);
-    dispatch(fetchCreateRoomAsync({ roomName, description, code, isPublic }));
+    dispatch(fetchCreateRoomAsync({ name, description, code, isPublic }));
     setName("");
     setDescription("");
     setCode("");

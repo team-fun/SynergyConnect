@@ -6,15 +6,13 @@ const initialState = [];
 export const fetchCreateRoomAsync = createAsyncThunk(
   "createRoomAsync",
   async ({ name, code, description, isPublic }) => {
-    console.log({ name, code, description, isPublic });
     try {
-      const { data } = await axios.get("/api/createroom", {
+      const { data } = await axios.post("/api/createroom", {
         name: name,
         code: code,
         description: description,
         isPublic: isPublic,
       });
-      console.log(data);
       return data;
     } catch (error) {
       console.log(error);

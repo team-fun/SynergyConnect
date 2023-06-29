@@ -6302,12 +6302,8 @@ var CreateRoomForm = function CreateRoomForm() {
     setIsPublic = _useState8[1];
   var handleSubmit = function handleSubmit(evt) {
     evt.preventDefault();
-    console.log("Room Name:", name);
-    console.log("Description:", description);
-    console.log("Code:", code);
-    console.log("Is Public:", isPublic);
     dispatch((0,_createRoomFormSlice__WEBPACK_IMPORTED_MODULE_2__.fetchCreateRoomAsync)({
-      roomName: roomName,
+      name: name,
       description: description,
       code: code,
       isPublic: isPublic
@@ -6434,39 +6430,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 var initialState = [];
 var fetchCreateRoomAsync = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createAsyncThunk)("createRoomAsync", /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(_ref) {
-    var name, code, description, isPublic, _yield$axios$get, data;
+    var name, code, description, isPublic, _yield$axios$post, data;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           name = _ref.name, code = _ref.code, description = _ref.description, isPublic = _ref.isPublic;
-          console.log({
+          _context.prev = 1;
+          _context.next = 4;
+          return axios__WEBPACK_IMPORTED_MODULE_1__["default"].post("/api/createroom", {
             name: name,
             code: code,
             description: description,
             isPublic: isPublic
           });
-          _context.prev = 2;
-          _context.next = 5;
-          return axios__WEBPACK_IMPORTED_MODULE_1__["default"].get("/api/createroom", {
-            name: name,
-            code: code,
-            description: description,
-            isPublic: isPublic
-          });
-        case 5:
-          _yield$axios$get = _context.sent;
-          data = _yield$axios$get.data;
-          console.log(data);
+        case 4:
+          _yield$axios$post = _context.sent;
+          data = _yield$axios$post.data;
           return _context.abrupt("return", data);
-        case 11:
-          _context.prev = 11;
-          _context.t0 = _context["catch"](2);
+        case 9:
+          _context.prev = 9;
+          _context.t0 = _context["catch"](1);
           console.log(_context.t0);
-        case 14:
+        case 12:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[2, 11]]);
+    }, _callee, null, [[1, 9]]);
   }));
   return function (_x) {
     return _ref2.apply(this, arguments);
