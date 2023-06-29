@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const initialState = [];
-
 export const fetchCreateRoomAsync = createAsyncThunk(
   "createRoomAsync",
   async ({ name, code, description, isPublic }) => {
@@ -21,35 +19,29 @@ export const fetchCreateRoomAsync = createAsyncThunk(
 );
 
 export const fetchGetAllChatRooms = createAsyncThunk(
-    'getAllChatRooms',
-    async () => {
-        try {
-            const {data} = axios.get('/api/chats')
-            return data
-        } catch (error) {
-            console.error(error);
-        }
+  "getAllChatRooms",
+  async () => {
+    try {
+      const { data } = axios.get("/api/chats");
+      return data;
+    } catch (error) {
+      console.error(error);
     }
-)
-
-
-
+  }
+);
 
 const createRoomSlice = createSlice({
   name: "createRoom",
-  initialState,
+  initialState: [],
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchCreateRoomAsync.fulfilled, (state, action) => {
       return action.payload;
     });
-    builder.addCase(fetchGetAllChatRooms.fulfilled, (state, action) => {
-        return action.payload;
-    });
-  }
-})
+  },
+});
 
-export const selectChat = (state) => {
+export const createRoom = (state) => {
   return state.createRoom;
 };
 
