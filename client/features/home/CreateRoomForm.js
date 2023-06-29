@@ -1,34 +1,40 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { fetchCreateRoomAsync } from "./createRoomFormSlice";
 
 const CreateRoomForm = () => {
   const { error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const [roomName, setRoomName] = useState("");
+  const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [code, setCode] = useState("");
   const [isPublic, setIsPublic] = useState(false);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log("Room Name:", roomName);
+    console.log("Room Name:", name);
     console.log("Description:", description);
     console.log("Code:", code);
     console.log("Is Public:", isPublic);
+    dispatch(fetchCreateRoomAsync({ roomName, description, code, isPublic }));
+    setName("");
+    setDescription("");
+    setCode("");
+    setIsPublic(false);
   };
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="roomName">
+          <label htmlFor="name">
             <small>Chat Name</small>
           </label>
           <input
-            name="roomName"
+            name="name"
             type="text"
-            value={roomName}
-            onChange={(e) => setRoomName(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </div>
         <div>

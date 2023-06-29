@@ -6268,12 +6268,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _createRoomFormSlice__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./createRoomFormSlice */ "./client/features/home/createRoomFormSlice.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 var CreateRoomForm = function CreateRoomForm() {
@@ -6284,8 +6286,8 @@ var CreateRoomForm = function CreateRoomForm() {
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState2 = _slicedToArray(_useState, 2),
-    roomName = _useState2[0],
-    setRoomName = _useState2[1];
+    name = _useState2[0],
+    setName = _useState2[1];
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState4 = _slicedToArray(_useState3, 2),
     description = _useState4[0],
@@ -6300,21 +6302,31 @@ var CreateRoomForm = function CreateRoomForm() {
     setIsPublic = _useState8[1];
   var handleSubmit = function handleSubmit(evt) {
     evt.preventDefault();
-    console.log("Room Name:", roomName);
+    console.log("Room Name:", name);
     console.log("Description:", description);
     console.log("Code:", code);
     console.log("Is Public:", isPublic);
+    dispatch((0,_createRoomFormSlice__WEBPACK_IMPORTED_MODULE_2__.fetchCreateRoomAsync)({
+      roomName: roomName,
+      description: description,
+      code: code,
+      isPublic: isPublic
+    }));
+    setName("");
+    setDescription("");
+    setCode("");
+    setIsPublic(false);
   };
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("form", {
     onSubmit: handleSubmit
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
-    htmlFor: "roomName"
+    htmlFor: "name"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("small", null, "Chat Name")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
-    name: "roomName",
+    name: "name",
     type: "text",
-    value: roomName,
+    value: name,
     onChange: function onChange(e) {
-      return setRoomName(e.target.value);
+      return setName(e.target.value);
     }
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
     htmlFor: "description"
@@ -6420,42 +6432,48 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 var initialState = [];
-var fetchCreateRoomAsync = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createAsyncThunk)('createRoomAsync', /*#__PURE__*/function () {
+var fetchCreateRoomAsync = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createAsyncThunk)("createRoomAsync", /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(_ref) {
     var name, code, description, isPublic, _yield$axios$get, data;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           name = _ref.name, code = _ref.code, description = _ref.description, isPublic = _ref.isPublic;
-          _context.prev = 1;
-          _context.next = 4;
-          return axios__WEBPACK_IMPORTED_MODULE_1__["default"].get('/api/createroom', {
+          console.log({
             name: name,
             code: code,
             description: description,
             isPublic: isPublic
           });
-        case 4:
+          _context.prev = 2;
+          _context.next = 5;
+          return axios__WEBPACK_IMPORTED_MODULE_1__["default"].get("/api/createroom", {
+            name: name,
+            code: code,
+            description: description,
+            isPublic: isPublic
+          });
+        case 5:
           _yield$axios$get = _context.sent;
           data = _yield$axios$get.data;
           console.log(data);
           return _context.abrupt("return", data);
-        case 10:
-          _context.prev = 10;
-          _context.t0 = _context["catch"](1);
+        case 11:
+          _context.prev = 11;
+          _context.t0 = _context["catch"](2);
           console.log(_context.t0);
-        case 13:
+        case 14:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[1, 10]]);
+    }, _callee, null, [[2, 11]]);
   }));
   return function (_x) {
     return _ref2.apply(this, arguments);
   };
 }());
 var createRoomSlice = (0,_reduxjs_toolkit__WEBPACK_IMPORTED_MODULE_0__.createSlice)({
-  name: 'createRoom',
+  name: "createRoom",
   initialState: initialState,
   reducers: {},
   extraReducers: function extraReducers(builder) {
