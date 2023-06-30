@@ -38,18 +38,11 @@ const AppRoutes = () => {
           </Routes>
         ) : (
           <Routes>
-            <Route
-              path="/*"
-              element={<AuthForm name="login" displayName="Login" />}
-            />
-            <Route
-              path="/login"
-              element={<AuthForm name="login" displayName="Login" />}
-            />
-            <Route
-              path="/signup"
-              element={<AuthForm name="signup" displayName="Sign Up" />}
-            />
+          <Route path="/*" element={<Home />} />
+            <Route to="/home" element={<Home />} />
+            <Route to="/chat" element={<Home />} />
+            <Route path="/profile" element={<UserView />} />
+            <Route path="/profile/:id" element={<UserView />} />
           </Routes>
         )
       ) : (
