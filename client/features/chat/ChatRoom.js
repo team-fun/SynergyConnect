@@ -31,6 +31,7 @@ const ChatRoom = ({ socket, username }) => {
 
     await socket.emit("send_message", messageData);
     setMessageList((list) => [...list, messageData]);
+    console.log(messageList);
     setMessage("");
   };
 
