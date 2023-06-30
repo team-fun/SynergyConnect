@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import CreateRoomForm from "./CreateRoomForm";
 import { selectChats, fetchAllChats } from "./AllChatsSlice";
 
@@ -35,7 +36,14 @@ const Home = (props) => {
           <button onClick={create}>Create Room</button>
           <div>
             {chats.map((chat) => {
-              return <div key={chat.id}>{chat.name}</div>;
+              return (
+                <div key={chat.id}>
+                  <h1>{chat.name}</h1>
+                  <Link to="/chat">
+                    <button>Join Room</button>
+                  </Link>
+                </div>
+              );
             })}
           </div>
         </>
