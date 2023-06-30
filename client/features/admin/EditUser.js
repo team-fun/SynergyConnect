@@ -9,36 +9,48 @@ import {
 
 const EditUser = () => {
 	const dispatch = useDispatch();
-
-    // const user = useSelector((state) => {
-    //     console.log('this is user in EditUser', state.editUser.editUserObj)
-    //     return state.editUser.editUserObj
-    // })
-    const navigate = useNavigate();
+	const navigate = useNavigate();
 	const { id } = useParams();
 
-	// const [username, setUserName] = useState("");
+    const allUsers = useSelector((state) => {
+        return state.allUsers.userList
+    })
+
+	const singleUser = allUsers.filter((user) => {
+		return user.id == id;
+	});
+
+	const [username, setUserName] = useState("");
+	const [password, setPassword] = useState("");
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [email, setEmail] = useState("");
+	const [bio, setBio] = useState("");
+	const [icon, setIcon] = useState("");
 
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		dispatch(
+		await dispatch(
 			editUser({
 				id,
-				// username,
+				username,
+				password,
 				firstName,
 				lastName,
 				email,
+				bio,
+				icon,
 			})
 		);
 		dispatch(fetchSingleUser(id));
-     	// setUserName("");
+     	setUserName("");
+     	setPassword("");
 		setFirstName("");
      	setLastName("");
      	setEmail("");
+     	setBio("");
+     	setIcon("");
 
 		 navigate("/admin")
 
@@ -58,19 +70,27 @@ const EditUser = () => {
 
 				<form className="loginForm-wrapper" onSubmit={handleSubmit}>
 
-					{/* <label htmlFor="username">User Name:</label>
+					<label htmlFor="username">User Name:</label>
 					<input
 						name="username" 
 						value={username}
-						placeholder="Enter User Name"
+						placeholder={`${singleUser[0].username}`}
 						onChange={(e) => setUserName(e.target.value)}
-					/> */}
+					/>
+
+					<label htmlFor="password">Password:</label>
+					<input
+						name="password" 
+						value={password}
+						placeholder="Enter your new password"
+						onChange={(e) => setPassword(e.target.value)}
+					/>
 
 					<label htmlFor="firstName">First Name:</label>
 					<input
 						name="firstName" 
 						value={firstName}
-						placeholder="Enter User's First Name"
+						placeholder={`${singleUser[0].firstName}`}
 						onChange={(e) => setFirstName(e.target.value)}
 					/>
 
@@ -78,7 +98,7 @@ const EditUser = () => {
 					<input
 						name="lastName"
 						value={lastName}
-						placeholder="Enter User's Last Name"
+						placeholder={`${singleUser[0].lastName}`}
 						onChange={(e) => setLastName(e.target.value)}
 					/>
 
@@ -86,10 +106,27 @@ const EditUser = () => {
 					<input
 						name="email"
 						value={email}
-						placeholder="Enter User's Email Address"
+						placeholder={`${singleUser[0].email}`}
 						onChange={(e) => setEmail(e.target.value)}
 					/>
 
+					<label htmlFor="bio">Bio:</label>
+					<input
+						name="bio"
+						value={bio}
+						placeholder={`${singleUser[0].bio}`}
+						onChange={(e) => setBio(e.target.value)}
+					/>
+
+					<label htmlFor="icon">Icon:</label>
+					<input
+						name="icon"
+						value={icon}
+						placeholder={`${singleUser[0].icon}`}
+						onChange={(e) => setIcon(e.target.value)}
+					/>
+
+					<br />
 					<div className="button-box">
 						<button className="submitBtn" type="submit">Submit Changes</button>
 

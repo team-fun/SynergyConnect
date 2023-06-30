@@ -11,22 +11,22 @@ const AllUsers = () => {
         return state.allUsers.userList
     })
 
-    useEffect(() => {
+    useEffect( () => {
         dispatch(fetchAllUsers())
     }, [dispatch])
 
     const usersDiv =
         allUsers ? (
             <div>
-                <div className="mainAdmin-container">
-                    <div className="adminUsers-container">
+                <div className="adminOuter-wrapper">
+                    <div className="adminInner-wrapper">
                         <h1>Edit Users</h1>
                         {
                             allUsers.map((user) => {
                                 return(
-                                    <div className="userContainer" key={user.id}>
-                                    
-                                        <Link className="individualUser" to={`/admin/${user.id}`}>
+                                    <div className="users-container" key={user.id}>
+                                  
+                                        <Link className="individualUser" to={`/profile/${user.id}`}>
                                             <h1 >{`${user.firstName} ${user.lastName}`}</h1>
                                         </Link>
                                         <div className="adminButtonDiv">

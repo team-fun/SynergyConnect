@@ -24,6 +24,7 @@ const Navbar = () => {
             <div>
               {/* The navbar will show these links after you log in */}
               <Link to="/home">Home</Link>
+              <Link to="/ContactUs">Contact Us</Link>
               <Link to="/profile">Profile</Link>
               <Link to="/admin">Admin</Link>
               <button type="button" onClick={logoutAndRedirectHome}>
@@ -35,6 +36,7 @@ const Navbar = () => {
               {/* The navbar will show these links after you log in */}
               <Link to="/home">Home</Link>
               <Link to="/profile">Profile</Link>
+              <Link to="/ContactUs">Contact Us</Link>
               <button type="button" onClick={logoutAndRedirectHome}>
                 Logout
               </button>
@@ -45,6 +47,7 @@ const Navbar = () => {
             {/* The navbar will show these links before you log in */}
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
+            <Link to="/ContactUs">Contact Us</Link>
             <div>
               <h1>Synergy Connect</h1>
               <p>

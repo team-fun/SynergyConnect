@@ -9,9 +9,12 @@ import { selectUser } from "../features/auth/authSlice";
 import EditUser from "../features/admin/EditUser";
 import UserView from "../features/userView/userView";
 import ChatRoom from "../features/chat/ChatRoom";
-
+import ContactUs from "../features/ContactUs/ContactUs"
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:3001/");
+
+
+
 
 /**
  * COMPONENT
@@ -43,6 +46,7 @@ const AppRoutes = () => {
             />
             <Route path="/profile" element={<UserView />} />
             <Route path="/profile/:id" element={<UserView />} />
+            <Routes path="/ContactUs" element={<ContactUs />} />
           </Routes>
         ) : (
           <Routes>
@@ -54,6 +58,7 @@ const AppRoutes = () => {
             />
             <Route path="/profile" element={<UserView />} />
             <Route path="/profile/:id" element={<UserView />} />
+            <Route path="/ContactUs" element={<ContactUs />} />
           </Routes>
         )
       ) : (
@@ -62,6 +67,8 @@ const AppRoutes = () => {
             path="/*"
             element={<AuthForm name="login" displayName="Login" />}
           />
+           <Route path="/ContactUs" element={<ContactUs />} 
+           />
           <Route
             path="/login"
             element={<AuthForm name="login" displayName="Login" />}
