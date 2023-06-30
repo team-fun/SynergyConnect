@@ -9,6 +9,7 @@ import { authenticate } from "../../app/store";
 **/
 
 const AuthForm = ({ name, displayName }) => {
+	console.log(name);
 	const { error } = useSelector((state) => state.auth);
 	const dispatch = useDispatch();
 
@@ -22,6 +23,8 @@ const AuthForm = ({ name, displayName }) => {
 			formName === "signup" ? evt.target.firstName.value : undefined; 
 		const lastName =
 			formName === "signup" ? evt.target.lastName.value : undefined; 
+
+		
 		dispatch(
 			authenticate({
 				username,

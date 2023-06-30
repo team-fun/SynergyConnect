@@ -34,14 +34,17 @@ return (
 	<div className="userViewWrapper">
 		<div className="profile">
 			<div className="pfp">
-			<img src={user.image} alt="" />
+				<img
+					src={user.image}
+					alt=""
+				/>
 			</div>
 			<div className="user-info">
 				<div className="username">{user.username}</div>
-				<div className="fullname">{user.firstName} {user.lastName}</div>
-                <div className="email">
-                    {user.email}
-                </div>
+				<div className="fullname">
+					{user.firstName} {user.lastName}
+				</div>
+				<div className="email">{user.email}</div>
 				<div className="bio">{user.bio}</div>
 				<div className="location">{user.location}</div>
 				<div className="user-info-exta">
@@ -51,11 +54,10 @@ return (
 						))}
 					</ul>
 					<div className="link">
-                            <InstagramIcon></InstagramIcon>
-                            <FacebookIcon></FacebookIcon>
-                            <TwitterIcon></TwitterIcon>
-                            <LinkedInIcon></LinkedInIcon>
-
+						<InstagramIcon></InstagramIcon>
+						<FacebookIcon></FacebookIcon>
+						<TwitterIcon></TwitterIcon>
+						<LinkedInIcon></LinkedInIcon>
 					</div>
 				</div>
 			</div>
