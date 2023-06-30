@@ -10,12 +10,16 @@ import EditUser from "../features/admin/EditUser";
 import UserView from "../features/userView/userView";
 import ChatRoom from "../features/chat/ChatRoom";
 
+import io from "socket.io-client";
+const socket = io.connect("http://localhost:3001/");
+
 /**
  * COMPONENT
  */
 
 const AppRoutes = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
+  const username = useSelector((state) => state.auth.me.username);
   const user = useSelector(selectUser);
   const isAdmin = user.me.isAdmin;
   const dispatch = useDispatch();
@@ -33,7 +37,10 @@ const AppRoutes = () => {
             <Route to="/home" element={<Home />} />
             <Route path="/admin" element={<AdminView />} />
             <Route path="/admin/:id" element={<EditUser />} />
-            <Route path="/chat/:code" element={<ChatRoom />} />
+            <Route
+              path="/chat/:code"
+              element={<ChatRoom socket={socket} username={username} />}
+            />
             <Route path="/profile" element={<UserView />} />
             <Route path="/profile/:id" element={<UserView />} />
           </Routes>
@@ -41,7 +48,10 @@ const AppRoutes = () => {
           <Routes>
             <Route path="/*" element={<Home />} />
             <Route to="/home" element={<Home />} />
-            <Route path="/chat/:code" element={<ChatRoom />} />
+            <Route
+              path="/chat/:code"
+              element={<ChatRoom socket={socket} username={username} />}
+            />
             <Route path="/profile" element={<UserView />} />
             <Route path="/profile/:id" element={<UserView />} />
           </Routes>

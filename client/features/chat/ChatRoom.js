@@ -10,7 +10,7 @@ const ChatRoom = () => {
   const dispatch = useDispatch();
   const { code } = useParams();
 
-  console.log("HELLOOO THIS WAS SUPPOSTED TO WORK");
+  console.log(code);
 
   return (
     <div>
