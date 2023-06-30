@@ -51,6 +51,14 @@ async function seed() {
       email: "chobbes@gmail.com",
       interests: ["tigers", "lions", "bears", "oh my"],
     }),
+    User.create({
+      username: "Emoman",
+      password: "321",
+      firstName: "Keith",
+      lastName: "Russell",
+      email: "Keith@gmail.com",
+      interests: ["Jujutsu Kaisen", "being sad"],
+    })
   ]);
 
   const friends = await Promise.all([
