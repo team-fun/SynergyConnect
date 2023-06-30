@@ -7,6 +7,7 @@ import AdminView from "../features/admin/AdminView";
 import { me } from "./store";
 import { selectUser } from "../features/auth/authSlice";
 import EditUser from "../features/admin/EditUser";
+import UserView from "../features/userView/userView";
 
 /**
  * COMPONENT
@@ -32,6 +33,8 @@ const AppRoutes = () => {
             <Route path="/admin" element={<AdminView />} />
             <Route path="/admin/:id" element={<EditUser />} />
             <Route to="/chat" element={<Home />} />
+            <Route path="/profile" element={<UserView />} />
+            <Route path="/profile/:id" element={<UserView />} />
           </Routes>
         ) : (
           <Routes>
