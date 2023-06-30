@@ -25,8 +25,8 @@ const AllUsers = () => {
                             allUsers.map((user) => {
                                 return(
                                     <div className="userContainer" key={user.id}>
-                                    
-                                        <Link className="individualUser" to={`/admin/${user.id}`}>
+                                  
+                                        <Link className="individualUser" to={`/profile/${user.id}`}>
                                             <h1 >{`${user.firstName} ${user.lastName}`}</h1>
                                         </Link>
                                         <div className="adminButtonDiv">
