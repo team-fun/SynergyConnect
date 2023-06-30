@@ -13,8 +13,6 @@ const Home = (props) => {
   const [createFormVis, setCreateFormVis] = useState(false);
   const dispatch = useDispatch();
 
-  console.log("THIS IS CHATS", chats);
-
   useEffect(() => {
     dispatch(fetchAllChats());
   }, [dispatch]);
@@ -39,8 +37,8 @@ const Home = (props) => {
               return (
                 <div key={chat.id}>
                   <h1>{chat.name}</h1>
-                  <Link to="/chat">
-                    <button>Join Room</button>
+                  <Link to={`/chat/${chat.code}`}>
+                    <button>CLICK ME</button>
                   </Link>
                 </div>
               );
