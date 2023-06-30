@@ -5,7 +5,7 @@ module.exports = router
 router.get('/', async (req, res, next) => {
     try {
       const users = await User.findAll({
-        attributes: ['id', 'username', 'isAdmin', 'firstName', 'lastName', 'email', 'interests']
+        attributes: ['id', 'username', 'password', 'isAdmin', 'firstName', 'lastName', 'email', 'bio', 'icon', 'interests']
       })
       res.json(users)
     } catch (err) {
