@@ -84,6 +84,22 @@ async function seed() {
       description: "this the main chat",
       code: "main",
       public: true,
+      messageData: [
+        {
+          id: 100,
+          code: "main",
+          username: "adambomb",
+          message: "testmessage",
+          time: "11:39AM",
+        },
+        {
+          id: 200,
+          code: "main",
+          username: "adambomb",
+          message: "testmessage2",
+          time: "11:39AM",
+        },
+      ],
     }),
     Chat.create({
       name: "test",
