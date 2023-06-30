@@ -25,26 +25,22 @@ router.get("/:id", async(req , res)=>{
 			next(err);
 		}
 })
+
 router.post("/", async (req, res, next) => {
 	try {
-		const { username, email, firstName, lastName, theme } = req.body;
-		const newUser = await User.create({
-			username,
-			email,
-			firstName,
-			lastName,
-			theme,
-		});
+		const { username, email } = req.body;
+		const newUser = await User.create({ username, email });
 		res.status(201).json(newUser);
 	} catch (error) {
 		next(error);
 	}
 });
 
+
 router.put("/:id", async (req, res, next) => {
 	try {
 		const { id } = req.params;
-		const { username, email, theme } = req.body;
+		const { username, email } = req.body;
 		const updatedUser = await User.findByPk(id);
 
 		if (!updatedUser) {
@@ -53,7 +49,6 @@ router.put("/:id", async (req, res, next) => {
 
 		updatedUser.username = username;
 		updatedUser.email = email;
-		updatedUser.theme = theme;
 
 		await updatedUser.save();
 
@@ -62,6 +57,10 @@ router.put("/:id", async (req, res, next) => {
 		next(error);
 	}
 });
+
+
+
+
 
 router.delete("/:id", async (req, res, next) => {
 	try {
