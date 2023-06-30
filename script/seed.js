@@ -18,6 +18,7 @@ async function seed() {
     User.create({
       username: "adambomb",
       password: "123",
+      isAdmin: true,
       firstName: "Adam",
       lastName: "Green",
       email: "adam@gmail.com",
@@ -26,6 +27,7 @@ async function seed() {
     User.create({
       username: "drod",
       password: "123",
+      isAdmin: true,
       firstName: "Dan",
       lastName: "Rod",
       email: "dan@gmail.com",
@@ -34,10 +36,20 @@ async function seed() {
     User.create({
       username: "jdog",
       password: "123",
+      isAdmin: true,
       firstName: "Jovan",
       lastName: "Stosic",
       email: "jovan@gmail.com",
       interests: ["coding", "video games", "one direction"],
+    }),
+    User.create({
+      username: "testDummy",
+      password: "123",
+      isAdmin: false,
+      firstName: "Calvin",
+      lastName: "Hobbes",
+      email: "chobbes@gmail.com",
+      interests: ["tigers", "lions", "bears", "oh my"],
     }),
   ]);
 
@@ -60,18 +72,26 @@ async function seed() {
 
   const chats = await Promise.all([
     Chat.create({
+      name: "main",
+      description: "this the main chat",
       code: "main",
       public: true,
     }),
     Chat.create({
+      name: "test",
+      description: "test chat",
       code: "test",
       public: false,
     }),
     Chat.create({
+      name: "admin",
+      description: "this is the super secret chat",
       code: "admin",
       public: false,
     }),
     Chat.create({
+      name: "sports",
+      description: "FOOTTBALL!!!",
       code: "sports",
       public: true,
     }),
