@@ -11,7 +11,7 @@ const ChatRoom = ({ socket, username }) => {
   const { code } = useParams();
   const [message, setMessage] = useState("");
   const pastMessages = useSelector((state) => state.chat);
-  const [messageList, setMessageList] = useState(pastMessages || []);
+  const [messageList, setMessageList] = useState([]);
 
   console.log("LISTT", messageList);
   const sendMessage = () => {
@@ -63,6 +63,12 @@ const ChatRoom = ({ socket, username }) => {
       socket.off("receive_message");
     };
   }, [socket, code, username]);
+
+  useEffect(() => {
+    if (pastMessages) {
+      setMessageList(pastMessages);
+    }
+  }, [pastMessages]);
 
   return (
     <div>
