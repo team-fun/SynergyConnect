@@ -11,6 +11,7 @@ const Home = (props) => {
   const username = useSelector((state) => state.auth.me.username);
   const chats = useSelector(selectChats);
   const [createFormVis, setCreateFormVis] = useState(false);
+  const [filter, setFilter] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,6 +21,16 @@ const Home = (props) => {
   const create = () => {
     setCreateFormVis(true);
   };
+
+
+  const publicFilter = () => {
+    setFilter(chats.filter((chat) => chat.public))
+  }
+
+  const privateFilter = () => {
+    setFilter(chats.filter((chat) => !chat.public))
+  }
+
 
   return (
     <div>
@@ -33,7 +44,11 @@ const Home = (props) => {
           <h3>Welcome, {username}</h3>
           <button onClick={create}>Create Room</button>
           <div>
-            {chats.map((chat) => {
+            <button onClick={publicFilter}>Public Rooms</button>
+            <button onClick={privateFilter}>Private Rooms</button>
+          </div>
+          <div>
+            {filter.map((chat) => {
               return (
                 <div key={chat.id}>
                   <h1>{chat.name}</h1>

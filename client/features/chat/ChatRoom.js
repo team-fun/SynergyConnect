@@ -88,7 +88,7 @@ const ChatRoom = ({ socket, username }) => {
           {videoCall && <VideoCall code={code} username={username} />}
         </div>
       </header>
-      
+     
       <div>
         <section>
           <h3
