@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { fetchChatRoomChats } from "./chatRoomSlice";
 
 /**
  * COMPONENT
@@ -9,9 +10,9 @@ const ChatRoom = ({ socket, username }) => {
   const dispatch = useDispatch();
   const { code } = useParams();
   const [message, setMessage] = useState("");
-  const [messageList, setMessageList] = useState([]);
+  const messageList = useSelector((state) => state.chat);
 
-  const sendMessage = async () => {
+  const sendMessage = () => {
     const currentTime = new Date();
     const hours = currentTime.getHours();
     const minutes = currentTime.getMinutes();
@@ -29,10 +30,10 @@ const ChatRoom = ({ socket, username }) => {
       time: formattedTime,
     };
 
-    await socket.emit("send_message", messageData);
-    setMessageList((list) => [...list, messageData]);
-    console.log(messageList);
+    socket.emit("send_message", messageData);
     setMessage("");
+
+    dispatch(fetchChatRoomChats({ code, messageData }));
   };
 
   useEffect(() => {
@@ -41,8 +42,7 @@ const ChatRoom = ({ socket, username }) => {
         const newList = [...list];
         const existingMessage = newList.find(
           (message) =>
-            message.username === data.username &&
-            message.message === data.message
+            message.username === data.username && message.message === data.message
         );
         if (!existingMessage) {
           newList.push(data);
@@ -56,7 +56,7 @@ const ChatRoom = ({ socket, username }) => {
     return () => {
       socket.off("receive_message");
     };
-  }, [socket, setMessageList, code, username]);
+  }, [socket, code, username]);
 
   return (
     <div>
@@ -108,3 +108,4 @@ const ChatRoom = ({ socket, username }) => {
 };
 
 export default ChatRoom;
+

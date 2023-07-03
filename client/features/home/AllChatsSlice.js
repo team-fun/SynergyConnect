@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const fetchAllChats = createAsyncThunk("getAllChatRooms", async () => {
   try {
-    const { data } = await axios.get("/api/chats");
+    const { data } = await axios.get("/api/chat");
     return data;
   } catch (error) {
     console.error(error);
