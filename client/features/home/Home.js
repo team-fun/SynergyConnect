@@ -22,15 +22,13 @@ const Home = (props) => {
     setCreateFormVis(true);
   };
 
-
   const publicFilter = () => {
-    setFilter(chats.filter((chat) => chat.public))
-  }
+    setFilter(chats.filter((chat) => chat.public));
+  };
 
   const privateFilter = () => {
-    setFilter(chats.filter((chat) => !chat.public))
-  }
-
+    setFilter(chats.filter((chat) => !chat.public));
+  };
 
   return (
     <div>
@@ -52,7 +50,7 @@ const Home = (props) => {
               return (
                 <div key={chat.id}>
                   <h1>{chat.name}</h1>
-                  <Link to={`/chat/${chat.code}`}>
+                  <Link to={`/chats/${chat.code}`}>
                     <button>CLICK ME</button>
                   </Link>
                 </div>
