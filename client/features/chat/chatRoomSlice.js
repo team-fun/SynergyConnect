@@ -6,7 +6,7 @@ export const fetchOldChats = createAsyncThunk(
   async (code) => {
     try {
       const { data } = await axios.get(`/api/chat/${code}`);
-      console.log("MYYYY DATATATA", data);
+      console.log("DAYTTATA", data);
       return data;
     } catch (error) {
       console.log(error);
@@ -22,7 +22,6 @@ export const sendNewChats = createAsyncThunk(
       const { data } = await axios.post(`/api/chat/${code}/save-history`, {
         messageList,
       });
-      console.log("This is data from chatRoomSlice", data);
       return data;
     } catch (error) {
       console.log(error);
@@ -40,7 +39,7 @@ const chatRoomSlice = createSlice({
       return action.payload;
     });
     builder.addCase(sendNewChats.fulfilled, (state, action) => {
-      return [...state, action.payload];
+      console.log("Message sent successfully");
     });
   },
 });

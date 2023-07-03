@@ -10,10 +10,10 @@ const ChatRoom = ({ socket, username }) => {
   const dispatch = useDispatch();
   const { code } = useParams();
   const [message, setMessage] = useState("");
-  const [messageList, setMessageList] = useState([]);
   const pastMessages = useSelector((state) => state.chat);
-  console.log(pastMessages);
+  const [messageList, setMessageList] = useState(pastMessages || []);
 
+  console.log("LISTT", messageList);
   const sendMessage = () => {
     const currentTime = new Date();
     const hours = currentTime.getHours();
@@ -34,13 +34,13 @@ const ChatRoom = ({ socket, username }) => {
 
     socket.emit("send_message", messageData);
     setMessageList((list) => [...list, messageData]);
-    setMessage("");
-
+    console.log("MESSAAGE LISTTT", messageList);
     dispatch(sendNewChats({ code, messageList }));
+    setMessage("");
   };
 
   useEffect(() => {
-    dispatch(fetchOldChats());
+    dispatch(fetchOldChats(code));
     socket.on("receive_message", (data) => {
       console.log("YOOOOOOOOOOOOOOO", data);
       setMessageList((list) => {
