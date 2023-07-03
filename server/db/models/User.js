@@ -83,6 +83,11 @@ const User = db.define("user", {
     allowNull:false,
     defaultValue:process.env.DEFAULT_PROFILE_IMAGE
 
+  },
+  location:{
+    type:Sequelize.STRING,
+    allowNull: true,
+    
   }
 });
 
