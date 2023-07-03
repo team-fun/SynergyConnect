@@ -37,7 +37,6 @@ router.post("/:code", async (req, res) => {
     const { id } = req.body;
     const { code } = req.params;
     const chat = await Chat.findOne({ where: { code } });
-    console.log(chat.id);
     const newPar = await Participant.create({
       userId: id,
       chatId: chat.id,
