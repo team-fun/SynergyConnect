@@ -14,7 +14,6 @@ const ChatRoom = ({ socket, username }) => {
   const pastMessages = useSelector((state) => state.chat);
   const [messageList, setMessageList] = useState([]);
 
-  console.log("LISTT", messageList);
   const sendMessage = () => {
     const currentTime = new Date();
     const hours = currentTime.getHours();
@@ -72,11 +71,10 @@ const ChatRoom = ({ socket, username }) => {
   const [videoCall, setVideoCall] = useState(false);
 
   const handleClick = () => {
-    if(videoCall) {
+    if (videoCall) {
       setVideoCall(false);
     }
     setVideoCall(true);
-
   };
 
   return (
@@ -88,7 +86,7 @@ const ChatRoom = ({ socket, username }) => {
           {videoCall && <VideoCall code={code} username={username} />}
         </div>
       </header>
-     
+
       <div>
         <section>
           <h3

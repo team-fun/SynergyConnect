@@ -12,11 +12,18 @@ const Home = (props) => {
   const chats = useSelector(selectChats);
   const [createFormVis, setCreateFormVis] = useState(false);
   const [filter, setFilter] = useState([]);
+  const [code, setCode] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchAllChats());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (chats) {
+      setFilter(chats.filter((chat) => chat.public));
+    }
+  }, [chats]);
 
   const create = () => {
     setCreateFormVis(true);
@@ -30,6 +37,11 @@ const Home = (props) => {
     setFilter(chats.filter((chat) => !chat.public));
   };
 
+  const joinRoom = (evt) => {
+    evt.preventDefault();
+    setCode("");
+  };
+
   return (
     <div>
       {createFormVis ? (
@@ -38,9 +50,14 @@ const Home = (props) => {
           <button onClick={() => setCreateFormVis(false)}>Back</button>
         </>
       ) : (
-        <>
+        <section>
           <h3>Welcome, {username}</h3>
           <button onClick={create}>Create Room</button>
+          <input
+            placeholder="Enter Room Code"
+            onChange={(e) => setCode(e.target.value)}
+          ></input>
+          <button onClick={joinRoom}>Join Room</button>
           <div>
             <button onClick={publicFilter}>Public Rooms</button>
             <button onClick={privateFilter}>Private Rooms</button>
@@ -57,7 +74,7 @@ const Home = (props) => {
               );
             })}
           </div>
-        </>
+        </section>
       )}
     </div>
   );

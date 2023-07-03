@@ -6,7 +6,6 @@ export const fetchOldChats = createAsyncThunk(
   async (code) => {
     try {
       const { data } = await axios.get(`/api/chats/${code}`);
-      console.log("DAYTTATA", data);
       return data;
     } catch (error) {
       console.log(error);
