@@ -17,10 +17,10 @@ export const fetchOldChats = createAsyncThunk(
 
 export const sendNewChats = createAsyncThunk(
   "chat/sendNewChats",
-  async ({ code, messageList }) => {
+  async ({ code, newMesssage }) => {
     try {
       const { data } = await axios.post(`/api/chat/${code}/save-history`, {
-        messageList,
+        newMesssage,
       });
       return data;
     } catch (error) {

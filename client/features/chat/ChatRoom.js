@@ -24,7 +24,7 @@ const ChatRoom = ({ socket, username }) => {
     const formattedTime = `${formattedHours}:${formattedMinutes} ${ampm}`;
     const messageId = Math.floor(Math.random() * 3587);
 
-    const messageData = {
+    const newMesssage = {
       id: messageId,
       code: code,
       username: username,
@@ -32,17 +32,15 @@ const ChatRoom = ({ socket, username }) => {
       time: formattedTime,
     };
 
-    socket.emit("send_message", messageData);
-    setMessageList((list) => [...list, messageData]);
-    console.log("MESSAAGE LISTTT", messageList);
-    dispatch(sendNewChats({ code, messageList }));
+    socket.emit("send_message", newMesssage);
+    setMessageList((list) => [...list, newMesssage]);
+    dispatch(sendNewChats({ code, newMesssage }));
     setMessage("");
   };
 
   useEffect(() => {
     dispatch(fetchOldChats(code));
     socket.on("receive_message", (data) => {
-      console.log("YOOOOOOOOOOOOOOO", data);
       setMessageList((list) => {
         const newList = [...list];
         const existingMessage = newList.find(
