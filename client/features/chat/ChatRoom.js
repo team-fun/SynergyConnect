@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { sendNewChats, fetchOldChats } from "./chatRoomSlice";
+import VideoCall from "./videoCall";
 
 /**
  * COMPONENT
@@ -68,14 +69,26 @@ const ChatRoom = ({ socket, username }) => {
     }
   }, [pastMessages]);
 
+  const [videoCall, setVideoCall] = useState(false);
+
+  const handleClick = () => {
+    if(videoCall) {
+      setVideoCall(false);
+    }
+    setVideoCall(true);
+
+  };
+
   return (
     <div>
       <header>
         <p>Welcome to {code}</p>
-        <span>
-          <button>Join video call</button>
-        </span>
+        <div>
+          <button onClick={handleClick}>Start Video Call</button>
+          {videoCall && <VideoCall code={code} username={username} />}
+        </div>
       </header>
+      
       <div>
         <section>
           <h3
