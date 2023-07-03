@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Friend, Participant, Chat },
+  models: { User, Friend, Participant, Chat, MessageData },
 } = require("../server/db");
 
 /**
@@ -58,7 +58,7 @@ async function seed() {
       lastName: "Russell",
       email: "Keith@gmail.com",
       interests: ["Jujutsu Kaisen", "being sad"],
-    })
+    }),
   ]);
 
   const friends = await Promise.all([
@@ -84,22 +84,6 @@ async function seed() {
       description: "this the main chat",
       code: "main",
       public: true,
-      messageData: [
-        {
-          id: 100,
-          code: "main",
-          username: "adambomb",
-          message: "testmessage",
-          time: "11:39AM",
-        },
-        {
-          id: 200,
-          code: "main",
-          username: "adambomb",
-          message: "testmessage2",
-          time: "11:39AM",
-        },
-      ],
     }),
     Chat.create({
       name: "test",
@@ -148,10 +132,28 @@ async function seed() {
     }),
   ]);
 
+  const messages = await Promise.all([
+    MessageData.create({
+      code: "main",
+      username: "jdog",
+      message: "HELLO THIS IS A TEST MESSAGE",
+      time: "12:00am",
+      chatId: 1,
+    }),
+    MessageData.create({
+      code: "main",
+      username: "adambomb",
+      message: "HIIII THIS IS ANOTHER TEST MESSAGAE",
+      time: "12:55am",
+      chatId: 1,
+    }),
+  ]);
+
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${friends.length} friends`);
   console.log(`seeded ${chats.length} chats`);
   console.log(`seeded ${participants.length} participants`);
+  console.log(`seeded ${messages.length} messages`);
   console.log(`seeded successfully`);
   return {
     users,
