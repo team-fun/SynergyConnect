@@ -18,18 +18,6 @@ export const fetchCreateRoomAsync = createAsyncThunk(
   }
 );
 
-export const fetchGetAllChatRooms = createAsyncThunk(
-  "getAllChatRooms",
-  async () => {
-    try {
-      const { data } = axios.get("/api/chats");
-      return data;
-    } catch (error) {
-      console.error(error);
-    }
-  }
-);
-
 const createRoomSlice = createSlice({
   name: "createRoom",
   initialState: [],

@@ -29,11 +29,6 @@ const Chat = db.define("chat", {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
   },
-  messageData: {
-    type: Sequelize.ARRAY(Sequelize.STRING),
-    allowNull: true,
-    defaultValue: [],
-  },
 });
 
 module.exports = Chat;

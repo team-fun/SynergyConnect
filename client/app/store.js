@@ -5,6 +5,7 @@ import createRoomFormSlice from "../features/home/createRoomFormSlice";
 import AllChatsSlice from "../features/home/AllChatsSlice";
 import allUsersSlice from "../features/admin/adminViewSlice";
 import editUserSlice from "../features/admin/editUserSlice";
+import chatRoomSlice from "../features/chat/chatRoomSlice";
 
 const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
     editUser: editUserSlice,
     createRoom: createRoomFormSlice,
     chats: AllChatsSlice,
+    chat: chatRoomSlice,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
