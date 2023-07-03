@@ -67,8 +67,7 @@ const AppRoutes = () => {
             path="/*"
             element={<AuthForm name="login" displayName="Login" />}
           />
-           <Route path="/ContactUs" element={<ContactUs />} 
-           />
+           
           <Route
             path="/login"
             element={<AuthForm name="login" displayName="Login" />}
@@ -77,6 +76,11 @@ const AppRoutes = () => {
             path="/signup"
             element={<AuthForm name="signup" displayName="Sign Up" />}
           />
+          <Route 
+          path="/ContactUs" 
+          element={<ContactUs />} 
+           />
+
         </Routes>
       )}
     </div>
