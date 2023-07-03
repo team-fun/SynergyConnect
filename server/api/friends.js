@@ -1,30 +1,38 @@
 const router = require("express").Router();
 const {
-  models: { User },
+	models: { User },
 } = require("../db");
 const {
-	models: { Friend},
+	models: { Friend },
 } = require("../db");
 module.exports = router;
 
-router.get("/", async (req, res, next) => {
-  try {
- const users = await User.findAll({
-		include: Friend,
- });
-    res.json(users);
-  } catch (err) {
-    next(err);
-  }
-});
-router.get("/:id", async(req , res)=>{
-    try {
-			const user = await User.findByPk(req.params.id)
-			res.json(user);
-		} catch (err) {
-			next(err);
+router.get("/:id", async (req, res) => {
+	try {
+		const user = await User.findByPk(req.params.id, { include: Friend });
+
+		if (!user) {
+			// Handle case where user with the given ID is not found
+			return res.status(404).json({ error: "User not found" });
 		}
-})
+
+		// Extract friend IDs
+		const friendIds = user.friends.map((friend) => friend.friendsUserId);
+		const pendingREQ = user.friends.map((friend) => friend.pending);
+
+		// Retrieve all users who are friends of the specified user
+		const friends = await User.findAll({ where: { id: friendIds } });
+
+		// Return the friends
+		return res.json({
+			friends: friends.map((x, i) => {
+				return { ...x, pending: pendingREQ[i] };
+			}),
+		});
+	} catch (err) {
+		next(err);
+	}
+});
 
 router.post("/", async (req, res, next) => {
 	console.log(req);
@@ -36,7 +44,6 @@ router.post("/", async (req, res, next) => {
 		next(error);
 	}
 });
-
 
 router.put("/:id", async (req, res, next) => {
 	try {
@@ -58,10 +65,6 @@ router.put("/:id", async (req, res, next) => {
 		next(error);
 	}
 });
-
-
-
-
 
 router.delete("/:id", async (req, res, next) => {
 	try {

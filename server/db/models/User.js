@@ -7,86 +7,86 @@ require("dotenv").config()
 const SALT_ROUNDS = 5;
 
 const User = db.define("user", {
-  username: {
-    type: Sequelize.STRING,
-    unique: true,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
-    },
-  },
-  password: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
-    },
-  },
-  isAdmin: {
-    type: Sequelize.BOOLEAN,
-    allowNull: false,
-    defaultValue: false
-  },
-  firstName: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-     
-      notEmpty: true,
-    },
-  },
-  lastName: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      
-      notEmpty: true,
-    },
-  }, 
-  email: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-     
-      isEmail: true,
-      notEmpty: true,
-    },
-  },
-  theme: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    defaultValue: "default",
-    validate: {
-      notEmpty: true,
-    },
-  },
-  bio:{
-    type:Sequelize.STRING,
-    allowNull:true,
-
-  },
-  icon: {
-    type: Sequelize.STRING,
-  },
-  interests: {
-    type: Sequelize.ARRAY(Sequelize.STRING),
-    allowNull: true,
-    defaultValue: [],
-  },
-  whiteboard: {
-    type: Sequelize.ARRAY(Sequelize.STRING),
-    allowNull: true,
-    defaultValue: [],
-  },
-  image:{
-    type:Sequelize.STRING,
-    allowNull:false,
-    defaultValue:process.env.DEFAULT_PROFILE_IMAGE
-
-  }
+	username: {
+		type: Sequelize.STRING,
+		unique: true,
+		allowNull: false,
+		validate: {
+			notEmpty: true,
+		},
+	},
+	password: {
+		type: Sequelize.STRING,
+		allowNull: false,
+		validate: {
+			notEmpty: true,
+		},
+	},
+	isAdmin: {
+		type: Sequelize.BOOLEAN,
+		allowNull: false,
+		defaultValue: false,
+	},
+	firstName: {
+		type: Sequelize.STRING,
+		allowNull: false,
+		validate: {
+			notEmpty: true,
+		},
+	},
+	lastName: {
+		type: Sequelize.STRING,
+		allowNull: false,
+		validate: {
+			notEmpty: true,
+		},
+	},
+	email: {
+		type: Sequelize.STRING,
+		allowNull: false,
+		validate: {
+			isEmail: true,
+			notEmpty: true,
+		},
+	},
+	theme: {
+		type: Sequelize.STRING,
+		allowNull: false,
+		defaultValue: "default",
+		validate: {
+			notEmpty: true,
+		},
+	},
+	bio: {
+		type: Sequelize.STRING,
+		allowNull: true,
+	},
+	icon: {
+		type: Sequelize.STRING,
+	},
+	interests: {
+		type: Sequelize.ARRAY(Sequelize.STRING),
+		allowNull: true,
+		defaultValue: [],
+	},
+	whiteboard: {
+		type: Sequelize.ARRAY(Sequelize.STRING),
+		allowNull: true,
+		defaultValue: [],
+	},
+	image: {
+		type: Sequelize.STRING,
+		allowNull: false,
+		defaultValue: process.env.DEFAULT_PROFILE_IMAGE,
+	},
+	// friends: {
+	// 	type: DataTypes.ARRAY(DataTypes.INTEGER), // Assuming the friend's IDs will be stored as integers in an array
+	// 	defaultValue: [], // An empty array to start with no friends by default
+	// },
 });
 
 module.exports = User;
+
 
 /**
  * instanceMethods
