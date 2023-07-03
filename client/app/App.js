@@ -5,6 +5,7 @@ import AppRoutes from './AppRoutes';
 import { Provider } from 'react-redux';
 import store from './store'
 
+import Footer from '../features/footer/Footer';
 
 const App = () => {
   return (
@@ -13,10 +14,8 @@ const App = () => {
     <Provider store={store}>
       <Navbar />
       <AppRoutes />
+      {/* <Footer /> */}
     </Provider>
-
-
-    
     </div>
   );
 };

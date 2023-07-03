@@ -78,12 +78,17 @@ const User = db.define("user", {
     allowNull: true,
     defaultValue: [],
   },
-  // image:{
-  //   type:Sequelize.TEXT,
-  //   allowNull:false,
-  //   defaultValue:process.env.DEFAULT_PROFILE_IMAGE
+  image:{
+    type:Sequelize.STRING,
+    allowNull:false,
+    defaultValue:process.env.DEFAULT_PROFILE_IMAGE
 
-  // }
+  },
+  location:{
+    type:Sequelize.STRING,
+    allowNull: true,
+    
+  }
 });
 
 module.exports = User;

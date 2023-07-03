@@ -32,21 +32,32 @@ export const me = createAsyncThunk("auth/me", async () => {
 });
 
 export const authenticate = createAsyncThunk(
-  "auth/authenticate",
-  async ({ username, password, method }, thunkAPI) => {
-    try {
-      const res = await axios.post(`/auth/${method}`, { username, password });
-      window.localStorage.setItem(TOKEN, res.data.token);
-      thunkAPI.dispatch(me());
-    } catch (err) {
-      if (err.response.data) {
-        return thunkAPI.rejectWithValue(err.response.data);
-      } else {
-        return "There was an issue with your request.";
-      }
-    }
-  }
+	"auth/authenticate",
+	async (
+		{ username, password, email, firstName, lastName, method },
+		thunkAPI
+	) => {
+		console.log(username);
+		try {
+			let postData = { username, password };
+			if (method === "signup") {
+				postData.email = email;
+				postData.firstName = firstName;
+				postData.lastName = lastName;
+			}
+			const res = await axios.post(`/auth/${method}`, postData);
+			window.localStorage.setItem(TOKEN, res.data.token);
+			thunkAPI.dispatch(me());
+		} catch (err) {
+			if (err.response.data) {
+				return thunkAPI.rejectWithValue(err.response.data);
+			} else {
+				return "There was an issue with your request.";
+			}
+		}
+	}
 );
+
 
 /*
   SLICE
