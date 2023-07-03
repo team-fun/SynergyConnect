@@ -23,6 +23,15 @@ router.get("/:code", async (req, res) => {
   }
 });
 
+router.post("/:code", async (req, res) => {
+  try {
+    console.log(req.params);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 router.post("/:code/save-history", async (req, res) => {
   try {
     const { code } = req.params;

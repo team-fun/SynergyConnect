@@ -10,12 +10,24 @@ export const fetchAllChats = createAsyncThunk("getAllChatRooms", async () => {
   }
 });
 
+export const asyncJoinRoom = createAsyncThunk("joinRoom", async (code) => {
+  try {
+    const { data } = await axios.post(`/api/chats/${code}`);
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 const chatsSlice = createSlice({
   name: "chats",
   initialState: [],
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchAllChats.fulfilled, (state, action) => {
+      return action.payload;
+    });
+    builder.addCase(asyncJoinRoom.fulfilled, (state, action) => {
       return action.payload;
     });
   },
