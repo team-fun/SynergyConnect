@@ -41,15 +41,14 @@ router.post("/", async (req, res, next) => {
 router.put("/:id", async (req, res, next) => {
 	try {
 		const { id } = req.params;
-		const { username, email } = req.body;
-		const updatedUser = await User.findByPk(id);
+		console.log(req.body)
+		
+		const  updatedUser = await User.findByPk(id);
 
 		if (!updatedUser) {
 			return res.sendStatus(404);
 		}
-
-		updatedUser.username = username;
-		updatedUser.email = email;
+		updatedUser.update({...req.body, id:updatedUser.id , password:updatedUser.password})
 
 		await updatedUser.save();
 
