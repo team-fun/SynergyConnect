@@ -36,10 +36,11 @@ const ChatRoom = ({ socket, username }) => {
     setMessageList((list) => [...list, messageData]);
     setMessage("");
 
-    dispatch(sendNewChats({ code, messageData }));
+    dispatch(sendNewChats({ code, messageList }));
   };
 
   useEffect(() => {
+    dispatch(fetchOldChats());
     socket.on("receive_message", (data) => {
       console.log("YOOOOOOOOOOOOOOO", data);
       setMessageList((list) => {

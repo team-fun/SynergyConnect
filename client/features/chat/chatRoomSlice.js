@@ -5,7 +5,7 @@ export const fetchOldChats = createAsyncThunk(
   "chat/fetchOldChats",
   async (code) => {
     try {
-      const { data } = await axios.get(`/api/chat${code}`);
+      const { data } = await axios.get(`/api/chat/${code}`);
       console.log("MYYYY DATATATA", data);
       return data;
     } catch (error) {
@@ -17,10 +17,10 @@ export const fetchOldChats = createAsyncThunk(
 
 export const sendNewChats = createAsyncThunk(
   "chat/sendNewChats",
-  async ({ code, messageData }) => {
+  async ({ code, messageList }) => {
     try {
       const { data } = await axios.post(`/api/chat/${code}/save-history`, {
-        messageData,
+        messageList,
       });
       console.log("This is data from chatRoomSlice", data);
       return data;
