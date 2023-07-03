@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchChatRoomChats } from "./chatRoomSlice";
+import { sendNewChats } from "./chatRoomSlice";
 
 /**
  * COMPONENT
@@ -11,7 +11,8 @@ const ChatRoom = ({ socket, username }) => {
   const { code } = useParams();
   const [message, setMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
-  // const messageList = useSelector((state) => state.chat);
+  const pastMessages = useSelector((state) => state.chat);
+  console.log(pastMessages);
 
   const sendMessage = () => {
     const currentTime = new Date();
@@ -35,7 +36,7 @@ const ChatRoom = ({ socket, username }) => {
     setMessageList((list) => [...list, messageData]);
     setMessage("");
 
-    dispatch(fetchChatRoomChats({ code, messageData }));
+    dispatch(sendNewChats({ code, messageData }));
   };
 
   useEffect(() => {

@@ -1,12 +1,21 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const fetchChatRoomChats = createAsyncThunk(
-  'chat/fetchChatRoomChats',
+export const fetchOldChats = createAsyncThunk(
+  "chat/fetchOldChats",
+  async (code) => {
+    try {
+      const { data } = await axios.get(`/api/chat`);
+    } catch (error) {}
+  }
+);
+
+export const sendNewChats = createAsyncThunk(
+  "chat/sendNewChats",
   async ({ code, messageData }) => {
     try {
       const { data } = await axios.post(`/api/chat/${code}/save-history`, {
-        messageData
+        messageData,
       });
       console.log("This is data from chatRoomSlice", data);
       return data;
@@ -18,16 +27,14 @@ export const fetchChatRoomChats = createAsyncThunk(
 );
 
 const chatRoomSlice = createSlice({
-  name: 'chat',
+  name: "chat",
   initialState: [],
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchChatRoomChats.fulfilled, (state, action) => {
+    builder.addCase(sendNewChats.fulfilled, (state, action) => {
       return [...state, action.payload];
     });
   },
 });
 
 export default chatRoomSlice.reducer;
-
-
