@@ -5,8 +5,13 @@ export const fetchOldChats = createAsyncThunk(
   "chat/fetchOldChats",
   async (code) => {
     try {
-      const { data } = await axios.get(`/api/chat`);
-    } catch (error) {}
+      const { data } = await axios.get(`/api/chat${code}`);
+      console.log("MYYYY DATATATA", data);
+      return data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   }
 );
 
@@ -31,6 +36,9 @@ const chatRoomSlice = createSlice({
   initialState: [],
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(fetchOldChats.fulfilled, (state, action) => {
+      return action.payload;
+    });
     builder.addCase(sendNewChats.fulfilled, (state, action) => {
       return [...state, action.payload];
     });
