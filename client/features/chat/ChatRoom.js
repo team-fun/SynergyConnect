@@ -10,7 +10,8 @@ const ChatRoom = ({ socket, username }) => {
   const dispatch = useDispatch();
   const { code } = useParams();
   const [message, setMessage] = useState("");
-  const messageList = useSelector((state) => state.chat);
+  const [messageList, setMessageList] = useState([]);
+  // const messageList = useSelector((state) => state.chat);
 
   const sendMessage = () => {
     const currentTime = new Date();
@@ -31,6 +32,7 @@ const ChatRoom = ({ socket, username }) => {
     };
 
     socket.emit("send_message", messageData);
+    setMessageList((list) => [...list, messageData]);
     setMessage("");
 
     dispatch(fetchChatRoomChats({ code, messageData }));
@@ -38,11 +40,13 @@ const ChatRoom = ({ socket, username }) => {
 
   useEffect(() => {
     socket.on("receive_message", (data) => {
+      console.log("YOOOOOOOOOOOOOOO", data);
       setMessageList((list) => {
         const newList = [...list];
         const existingMessage = newList.find(
           (message) =>
-            message.username === data.username && message.message === data.message
+            message.username === data.username &&
+            message.message === data.message
         );
         if (!existingMessage) {
           newList.push(data);
@@ -111,4 +115,3 @@ const ChatRoom = ({ socket, username }) => {
 };
 
 export default ChatRoom;
-
