@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const fetchOldChats = createAsyncThunk(
-  "chat/fetchOldChats",
+  "chats/fetchOldChats",
   async (code) => {
     try {
       const { data } = await axios.get(`/api/chats/${code}`);
@@ -15,7 +15,7 @@ export const fetchOldChats = createAsyncThunk(
 );
 
 export const sendNewChats = createAsyncThunk(
-  "chat/sendNewChats",
+  "chats/sendNewChats",
   async ({ code, newMesssage }) => {
     try {
       const { data } = await axios.post(`/api/chats/${code}/save-history`, {

@@ -4,9 +4,9 @@ const MessageData = require("../db/models/MessageData");
 const Participant = require("../db/models/Participant");
 const { Op } = require("sequelize");
 
-router.get("/:id", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id } = req.query;
     const participanting = await Participant.findAll({ where: { userId: id } });
     const participantsId = participanting.map((info) => info.dataValues.chatId);
     const privateChats = await Chat.findAll({
