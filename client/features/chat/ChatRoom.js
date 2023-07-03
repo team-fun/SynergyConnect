@@ -62,6 +62,9 @@ const ChatRoom = ({ socket, username }) => {
     <div>
       <header>
         <p>Welcome to {code}</p>
+        <span>
+          <button>Join video call</button>
+        </span>
       </header>
       <div>
         <section>

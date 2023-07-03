@@ -10,30 +10,30 @@ router.get("/", async (req, res) => {
   }
 });
 
-  router.post('/:code', async (req, res) => {
-    try {
-      const { code } = req.params;
-      const { name, description, messageData } = req.body;
+  // router.post('/:code', async (req, res) => {
+  //   try {
+  //     const { code } = req.params;
+  //     const { name, description, messageData } = req.body;
   
-      const chat = await Chat.create({
-        name,
-        description,
-        code,
-        messageData: {
-          message: messageData.message,
-          name: messageData.name,
-        },
-      });
+  //     const chat = await Chat.create({
+  //       name,
+  //       description,
+  //       code,
+  //       messageData: {
+  //         message: messageData.message,
+  //         name: messageData.name,
+  //       },
+  //     });
   
-      console.log("THIS IS CODE", code);
-      console.log("THIS IS MESSAGE DATA", messageData);
+  //     console.log("THIS IS CODE", code);
+  //     console.log("THIS IS MESSAGE DATA", messageData);
   
-      res.status(201).send(chat);
-    } catch (error) {
-      console.error("Error creating chat:", error);
-      res.status(500).json({ error: 'Internal server error' });
-    }
-  });
+  //     res.status(201).send(chat);
+  //   } catch (error) {
+  //     console.error("Error creating chat:", error);
+  //     res.status(500).json({ error: 'Internal server error' });
+  //   }
+  // });
 
   router.post("/:code/save-history", async (req, res) => {
     try {
