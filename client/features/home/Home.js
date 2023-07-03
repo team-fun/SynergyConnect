@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import CreateRoomForm from "./CreateRoomForm";
-import { selectChats, fetchAllChats } from "./AllChatsSlice";
+import { selectChats, fetchAllChats, asyncJoinRoom } from "./AllChatsSlice";
 
 /**
  * COMPONENT
  */
 const Home = (props) => {
   const username = useSelector((state) => state.auth.me.username);
+  const id = useSelector((state) => state.auth.me.id);
   const chats = useSelector(selectChats);
   const [createFormVis, setCreateFormVis] = useState(false);
   const [filter, setFilter] = useState([]);
@@ -16,7 +17,7 @@ const Home = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchAllChats());
+    dispatch(fetchAllChats(id));
   }, [dispatch]);
 
   useEffect(() => {
@@ -39,6 +40,7 @@ const Home = (props) => {
 
   const joinRoom = (evt) => {
     evt.preventDefault();
+    dispatch(asyncJoinRoom(code));
     setCode("");
   };
 

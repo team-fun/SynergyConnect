@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const fetchAllChats = createAsyncThunk("getAllChatRooms", async () => {
+export const fetchAllChats = createAsyncThunk("getAllChatRooms", async (id) => {
   try {
-    const { data } = await axios.get("/api/chats");
+    const { data } = await axios.get(`/api/chats/${id}`);
     return data;
   } catch (error) {
     console.error(error);

@@ -1,11 +1,21 @@
 const router = require("express").Router();
 const Chat = require("../db/models/Chat");
 const MessageData = require("../db/models/MessageData");
+const Participant = require("../db/models/Participant");
+const { Op } = require("sequelize");
 
-router.get("/", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
-    const chats = await Chat.findAll();
-    res.send(chats);
+    const { id } = req.params;
+    const participanting = await Participant.findAll({ where: { userId: id } });
+    const participantsId = participanting.map((info) => info.dataValues.chatId);
+    const privateChats = await Chat.findAll({
+      where: { id: { [Op.in]: participantsId }, public: false },
+    });
+    const publicChats = await Chat.findAll({ where: { public: true } });
+    const result = [...publicChats, ...privateChats];
+    console.log(result);
+    res.send(result);
   } catch (error) {
     console.error(error);
   }
