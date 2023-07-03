@@ -41,6 +41,7 @@ router.put("/:id", async (req, res, next) => {
 		const user = await User.findOne({
 			where: { id: req.params.id },
 		});
+		console.log(req.body)
 		res.send(await user.update(req.body));
 	} catch (error) {
 		next(error);

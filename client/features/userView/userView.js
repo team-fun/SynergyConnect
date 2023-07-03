@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
+
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import EditIcon from "@mui/icons-material/Edit";
 import DoneIcon from "@mui/icons-material/Done";
+import { fetchSingleUser, editUser } from "../admin/editUserSlice";
 import { me } from "../auth/authSlice";
 import { useParams } from "react-router-dom";
 
@@ -22,6 +24,7 @@ const UserView = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [editEmail, setEditEmail] = useState(false);
   const [placeHolder, setPlaceHolder] = useState("");
+  const [image, setImage] = useState();
 
   async function fetchUser() {
     const data = await (await fetch("/api/users/" + id)).json();
@@ -86,12 +89,41 @@ const UserView = () => {
     }
   }, [user]);
 
+  useEffect(()=>{
+if(id){
+    fetchUser()
+}else{
+    setToMe()
+}
+   
+          
+            
+            
+   },[])
+
+const handleImageChange = async (e) => {
+	const inputValue = e.target.files[0];
+	let formData = new FormData();
+
+	formData.append("image", inputValue);
+	await axios.post("/api/upload", formData).then(async (res) => {
+		setImage(res?.data?.url);
+		await dispatch(
+			editUser({
+				id: user?.id,
+				image: res?.data?.url,
+			})
+		);
+	});
+};
+
   return (
     <div className="userViewWrapper">
       <div className="profile">
         <div className="pfp">
-          <img src={user.image} alt="" />
+          <img src={image? image :user.image} alt="" />
         </div>
+        <input type="file" onChange={handleImageChange} />
         <div className="user-info">
           <div className="username">
             {!editUsername && user.username}

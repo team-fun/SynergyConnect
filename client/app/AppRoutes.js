@@ -8,6 +8,13 @@ import { me } from "./store";
 import { selectUser } from "../features/auth/authSlice";
 import EditUser from "../features/admin/EditUser";
 import UserView from "../features/userView/userView";
+import ChatRoom from "../features/chat/ChatRoom";
+import ContactUs from "../features/ContactUs/ContactUs"
+import io from "socket.io-client";
+const socket = io.connect("http://localhost:3001/");
+
+
+
 
 /**
  * COMPONENT
@@ -15,6 +22,7 @@ import UserView from "../features/userView/userView";
 
 const AppRoutes = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
+  const username = useSelector((state) => state.auth.me.username);
   const user = useSelector(selectUser);
   const isAdmin = user.me.isAdmin;
   const dispatch = useDispatch();
@@ -32,17 +40,25 @@ const AppRoutes = () => {
             <Route to="/home" element={<Home />} />
             <Route path="/admin" element={<AdminView />} />
             <Route path="/admin/:id" element={<EditUser />} />
-            <Route to="/chat" element={<Home />} />
+            <Route
+              path="/chat/:code"
+              element={<ChatRoom socket={socket} username={username} />}
+            />
             <Route path="/profile" element={<UserView />} />
             <Route path="/profile/:id" element={<UserView />} />
+            {/* <Routes path="/contactus" element={<ContactUs />} /> */}
           </Routes>
         ) : (
           <Routes>
-          <Route path="/*" element={<Home />} />
+            <Route path="/*" element={<Home />} />
             <Route to="/home" element={<Home />} />
-            <Route to="/chat" element={<Home />} />
+            <Route
+              path="/chat/:code"
+              element={<ChatRoom socket={socket} username={username} />}
+            />
             <Route path="/profile" element={<UserView />} />
             <Route path="/profile/:id" element={<UserView />} />
+            {/* <Route path="/contactus" element={<ContactUs />} /> */}
           </Routes>
         )
       ) : (
@@ -51,6 +67,7 @@ const AppRoutes = () => {
             path="/*"
             element={<AuthForm name="login" displayName="Login" />}
           />
+           
           <Route
             path="/login"
             element={<AuthForm name="login" displayName="Login" />}
@@ -59,6 +76,11 @@ const AppRoutes = () => {
             path="/signup"
             element={<AuthForm name="signup" displayName="Sign Up" />}
           />
+          <Route 
+          path="/ContactUs" 
+          element={<ContactUs />} 
+           />
+
         </Routes>
       )}
     </div>

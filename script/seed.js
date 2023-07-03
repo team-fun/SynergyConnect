@@ -51,6 +51,14 @@ async function seed() {
       email: "chobbes@gmail.com",
       interests: ["tigers", "lions", "bears", "oh my"],
     }),
+    User.create({
+      username: "Emoman",
+      password: "321",
+      firstName: "Keith",
+      lastName: "Russell",
+      email: "Keith@gmail.com",
+      interests: ["Jujutsu Kaisen", "being sad"],
+    })
   ]);
 
   const friends = await Promise.all([
@@ -76,6 +84,22 @@ async function seed() {
       description: "this the main chat",
       code: "main",
       public: true,
+      messageData: [
+        {
+          id: 100,
+          code: "main",
+          username: "adambomb",
+          message: "testmessage",
+          time: "11:39AM",
+        },
+        {
+          id: 200,
+          code: "main",
+          username: "adambomb",
+          message: "testmessage2",
+          time: "11:39AM",
+        },
+      ],
     }),
     Chat.create({
       name: "test",
