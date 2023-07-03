@@ -40,7 +40,7 @@ const Home = (props) => {
 
   const joinRoom = (evt) => {
     evt.preventDefault();
-    dispatch(asyncJoinRoom(code));
+    dispatch(asyncJoinRoom({ code, id }));
     setCode("");
   };
 

@@ -14,7 +14,6 @@ router.get("/:id", async (req, res) => {
     });
     const publicChats = await Chat.findAll({ where: { public: true } });
     const result = [...publicChats, ...privateChats];
-    console.log(result);
     res.send(result);
   } catch (error) {
     console.error(error);
@@ -35,7 +34,22 @@ router.get("/:code", async (req, res) => {
 
 router.post("/:code", async (req, res) => {
   try {
-    console.log(req.params);
+    const { id } = req.body;
+    const { code } = req.params;
+    const chat = await Chat.findOne({ where: { code } });
+    console.log(chat.id);
+    const newPar = await Participant.create({
+      userId: id,
+      chatId: chat.id,
+    });
+    const participanting = await Participant.findAll({ where: { userId: id } });
+    const participantsId = participanting.map((info) => info.dataValues.chatId);
+    const privateChats = await Chat.findAll({
+      where: { id: { [Op.in]: participantsId }, public: false },
+    });
+    const publicChats = await Chat.findAll({ where: { public: true } });
+    const result = [...publicChats, ...privateChats];
+    res.send(result);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });

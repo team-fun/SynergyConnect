@@ -10,14 +10,17 @@ export const fetchAllChats = createAsyncThunk("getAllChatRooms", async (id) => {
   }
 });
 
-export const asyncJoinRoom = createAsyncThunk("joinRoom", async (code) => {
-  try {
-    const { data } = await axios.post(`/api/chats/${code}`);
-    return data;
-  } catch (error) {
-    console.error(error);
+export const asyncJoinRoom = createAsyncThunk(
+  "joinRoom",
+  async ({ code, id }) => {
+    try {
+      const { data } = await axios.post(`/api/chats/${code}`, { id });
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
   }
-});
+);
 
 const chatsSlice = createSlice({
   name: "chats",
