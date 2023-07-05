@@ -24,7 +24,7 @@ const Home = (props) => {
   const [createFormVis, setCreateFormVis] = useState(false);
   const [filter, setFilter] = useState([]);
   const [code, setCode] = useState("");
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -88,8 +88,8 @@ const Home = (props) => {
   };
 
   const onSearchChange = (event) => {
-    setSearch(event.target.value)
-  }
+    setSearch(event.target.value);
+  };
 
   return (
     <div>
@@ -111,23 +111,24 @@ const Home = (props) => {
             <button onClick={publicFilter}>Public Rooms</button>
             <button onClick={privateFilter}>Private Rooms</button>
           </div>
-          <SearchBox  searchChange={onSearchChange}/>
+          <SearchBox searchChange={onSearchChange} />
           <div>
             {filter
-            .filter((chat) =>{
-              const chatName = chat.name.toLowerCase();
-              return chatName.includes(search.toLocaleLowerCase())
-            })
-            .map((chat) => {
-              return (
-                <div key={chat.id}>
-                  <h1>{chat.name}</h1>
-                  <Link to={`/chats/${chat.code}`}>
-                    <button>CLICK ME</button>
-                  </Link>
-                </div>
-              );
-            })}
+              .filter((chat) => {
+                const chatName = chat.name.toLowerCase();
+                return chatName.includes(search.toLocaleLowerCase());
+              })
+              .map((chat) => {
+                return (
+                  <div key={chat.id}>
+                    <h1>{chat.name}</h1>
+                    <button>Favorite</button>
+                    <Link to={`/chats/${chat.code}`}>
+                      <button>Join Room</button>
+                    </Link>
+                  </div>
+                );
+              })}
           </div>
         </section>
       )}
