@@ -3,29 +3,66 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import CreateRoomForm from "./CreateRoomForm";
 import { selectChats, fetchAllChats } from "./AllChatsSlice";
-import { selectFriends, fetchAllFriends } from "./AllFriendsSlice";
+import {
+  sendFriendRequest,
+  selectFriends,
+  fetchAllFriends,
+  acceptRejectRequest,
+} from "./AllFriendsSlice";
+import { fetchAllNonFriends, selectNonFriends } from "./AllNonFriendsSlice";
 
 /**
  * COMPONENT
  */
 const Home = (props) => {
+  const [friendLishChange, setFriendLishChange] = useState(false);
   const id = useSelector((state) => state.auth.me.id);
-  console.log(id);
   const username = useSelector((state) => state.auth.me.username);
   const chats = useSelector(selectChats);
   const friends = useSelector(selectFriends) || [];
+  const nonFriends = useSelector(selectNonFriends) || [];
   const [createFormVis, setCreateFormVis] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchAllChats());
-    dispatch(fetchAllFriends({ id }));
   }, [dispatch]);
-
+  useEffect(() => {
+    dispatch(fetchAllFriends({ id }));
+    dispatch(fetchAllNonFriends({ id }));
+  }, [dispatch, friendLishChange]);
+  const handleFriendListChange = () => {
+    setFriendLishChange(!friendLishChange);
+  };
   const create = () => {
     setCreateFormVis(true);
   };
-  console.log(chats, friends);
+  const handleSendRequest = (friendID) => {
+    dispatch(
+      sendFriendRequest({
+        loggedInUserId: id,
+        otherFriendId: friendID,
+      })
+    );
+
+    setTimeout(() => {
+      handleFriendListChange();
+    }, 1000); // 1000 milliseconds = 1 second
+  };
+  const handleAcceptRejectRequest = (friendID, action) => {
+    dispatch(
+      acceptRejectRequest({
+        loggedInUserId: id,
+        otherFriendId: friendID,
+        action: action,
+      })
+    );
+
+    setTimeout(() => {
+      handleFriendListChange();
+    }, 1000); // 1000 milliseconds = 1 second
+  };
+  console.log(friends);
   return (
     <div>
       {createFormVis ? (
@@ -59,8 +96,71 @@ const Home = (props) => {
           <div>
             {friends?.map((friend, i) => (
               <div key={i}>
-                {friend.dataValues.username}{" "}
-                <span>{friend.pending ? "pending" : "friend"}</span>
+                {friend.dataValues.username}
+                <span>
+                  {friend.pending ? (
+                    friend.sent ? (
+                      <button
+                        onClick={() =>
+                          handleAcceptRejectRequest(
+                            friend?.dataValues?.id,
+                            "reject"
+                          )
+                        }
+                      >
+                        Cancel Request
+                      </button>
+                    ) : (
+                      <>
+                        <button
+                          onClick={() =>
+                            handleAcceptRejectRequest(
+                              friend?.dataValues?.id,
+                              "accept"
+                            )
+                          }
+                        >
+                          Accept
+                        </button>
+                        <button
+                          onClick={() =>
+                            handleAcceptRejectRequest(
+                              friend?.dataValues?.id,
+                              "reject"
+                            )
+                          }
+                        >
+                          Reject
+                        </button>
+                      </>
+                    )
+                  ) : (
+                    <button
+                      onClick={() =>
+                        handleAcceptRejectRequest(
+                          friend?.dataValues?.id,
+                          "reject"
+                        )
+                      }
+                    >
+                      Remove Friend
+                    </button>
+                  )}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+        {nonFriends.length === undefined || nonFriends?.length == 0 ? (
+          <div>All Users are friends</div>
+        ) : (
+          <div>
+            {nonFriends?.map((nonFriend, i) => (
+              <div key={i}>
+                {nonFriend.username}{" "}
+                <button onClick={() => handleSendRequest(nonFriend.id)}>
+                  +
+                </button>
               </div>
             ))}
           </div>

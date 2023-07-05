@@ -58,7 +58,7 @@ async function seed() {
       lastName: "Russell",
       email: "Keith@gmail.com",
       interests: ["Jujutsu Kaisen", "being sad"],
-    })
+    }),
   ]);
 
   const friends = await Promise.all([
