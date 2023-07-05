@@ -69,7 +69,7 @@ const Home = (props) => {
             <button onClick={publicFilter}>Public Rooms</button>
             <button onClick={privateFilter}>Private Rooms</button>
           </div>
-          <SearchBox searchfield={search} searchChange={onSearchChange}/>
+          <SearchBox  searchChange={onSearchChange}/>
           <div>
             {filter
             .filter((chat) =>{

@@ -88,7 +88,11 @@ router.delete('/:code/:id', async (req, res) => {
  
   try {
     const { id, code } = req.params;
-		const deletedUserFromRoom = await User.findByPk(id);
+    const chat = await Chat.findAll({ where:  { code: code }  });
+    const chatId = chat[0].dataValues.id;
+		const deletedUserFromRoom = await Participant.findOne({
+      where: { userId: id, chatId}
+    });
 
 		if (!deletedUserFromRoom) {
 			return res.sendStatus(404);

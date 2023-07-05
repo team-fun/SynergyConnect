@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 const ChatRoom = ({ socket, username }) => {
   const dispatch = useDispatch();
   const { code } = useParams();
+  const id = useSelector((state) => state.auth.me.id);
   const [message, setMessage] = useState("");
   const pastMessages = useSelector((state) => state.chat);
   const [messageList, setMessageList] = useState([]);
@@ -40,6 +41,8 @@ const ChatRoom = ({ socket, username }) => {
     dispatch(sendNewChats({ code, newMesssage }));
     setMessage("");
   };
+
+
 
   useEffect(() => {
     dispatch(fetchOldChats(code));
@@ -82,8 +85,8 @@ const ChatRoom = ({ socket, username }) => {
 
   const navigate = useNavigate()
 
-  const handleDelete = (id) => {
-    dispatch(deleteUserFromRoom(id))
+  const handleDelete = () => {
+    dispatch(deleteUserFromRoom({ id, code } ))
     navigate('/home')
   }
 

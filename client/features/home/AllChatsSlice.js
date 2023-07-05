@@ -22,18 +22,6 @@ export const asyncJoinRoom = createAsyncThunk(
   }
 );
 
-// export const deleteUserFromRoom = createAsyncThunk(
-//   "deleteUserFromRoom",
-//   async ({ code, id }) => {
-//     try {
-//       const { data } = await axios.delete(`/api/chats/${code}/${id}`, { id } );
-//       return data;
-      
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   }
-// )
 
 const chatsSlice = createSlice({
   name: "chats",
@@ -46,10 +34,6 @@ const chatsSlice = createSlice({
     builder.addCase(asyncJoinRoom.fulfilled, (state, action) => {
       return action.payload;
     });
-    // builder.addCase(deleteUserFromRoom.fulfilled, (state, action) => {
-    //   const newState = state.filter((user) => user.id !== action.payload)
-    //   return newState
-    // })
   },
 });
 
