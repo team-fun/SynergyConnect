@@ -15,7 +15,7 @@ import { fetchAllNonFriends, selectNonFriends } from "./AllNonFriendsSlice";
  * COMPONENT
  */
 const Home = (props) => {
-  const [friendLishChange, setFriendLishChange] = useState(false);
+  const [friendListChange, setfriendListChange] = useState(false);
   const id = useSelector((state) => state.auth.me.id);
   const username = useSelector((state) => state.auth.me.username);
   const chats = useSelector(selectChats);
@@ -30,9 +30,9 @@ const Home = (props) => {
   useEffect(() => {
     dispatch(fetchAllFriends({ id }));
     dispatch(fetchAllNonFriends({ id }));
-  }, [dispatch, friendLishChange]);
+  }, [dispatch, friendListChange]);
   const handleFriendListChange = () => {
-    setFriendLishChange(!friendLishChange);
+    setfriendListChange(!friendListChange);
   };
   const create = () => {
     setCreateFormVis(true);
@@ -47,7 +47,7 @@ const Home = (props) => {
 
     setTimeout(() => {
       handleFriendListChange();
-    }, 1000); // 1000 milliseconds = 1 second
+    }, 1000); 
   };
   const handleAcceptRejectRequest = (friendID, action) => {
     dispatch(
@@ -60,7 +60,7 @@ const Home = (props) => {
 
     setTimeout(() => {
       handleFriendListChange();
-    }, 1000); // 1000 milliseconds = 1 second
+    }, 1000); 
   };
   console.log(friends);
   return (
