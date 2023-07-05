@@ -29,6 +29,19 @@ export const sendNewChats = createAsyncThunk(
   }
 );
 
+export const deleteUserFromRoom = createAsyncThunk(
+  "deleteUserFromRoom",
+  async ({ code, id }) => {
+    try {
+      const { data } = await axios.delete(`/api/chats/${code}/${id}`, { id } );
+      return data;
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+)
+
 const chatRoomSlice = createSlice({
   name: "chat",
   initialState: [],
@@ -40,6 +53,10 @@ const chatRoomSlice = createSlice({
     builder.addCase(sendNewChats.fulfilled, (state, action) => {
       console.log("Message sent successfully");
     });
+    builder.addCase(deleteUserFromRoom.fulfilled, (state, action) => {
+      const newState = state.filter((user) => user.id !== action.payload)
+      return newState
+    })
   },
 });
 

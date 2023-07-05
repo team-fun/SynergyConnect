@@ -22,6 +22,7 @@ export const asyncJoinRoom = createAsyncThunk(
   }
 );
 
+
 const chatsSlice = createSlice({
   name: "chats",
   initialState: [],
