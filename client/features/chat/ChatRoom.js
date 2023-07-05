@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import { sendNewChats, fetchOldChats } from "./chatRoomSlice";
+import VideoCall from "./videoCall";
 
 /**
  * COMPONENT
@@ -9,9 +11,10 @@ const ChatRoom = ({ socket, username }) => {
   const dispatch = useDispatch();
   const { code } = useParams();
   const [message, setMessage] = useState("");
+  const pastMessages = useSelector((state) => state.chat);
   const [messageList, setMessageList] = useState([]);
 
-  const sendMessage = async () => {
+  const sendMessage = () => {
     const currentTime = new Date();
     const hours = currentTime.getHours();
     const minutes = currentTime.getMinutes();
@@ -21,7 +24,7 @@ const ChatRoom = ({ socket, username }) => {
     const formattedTime = `${formattedHours}:${formattedMinutes} ${ampm}`;
     const messageId = Math.floor(Math.random() * 3587);
 
-    const messageData = {
+    const newMesssage = {
       id: messageId,
       code: code,
       username: username,
@@ -29,13 +32,14 @@ const ChatRoom = ({ socket, username }) => {
       time: formattedTime,
     };
 
-    await socket.emit("send_message", messageData);
-    setMessageList((list) => [...list, messageData]);
-    console.log(messageList);
+    socket.emit("send_message", newMesssage);
+    setMessageList((list) => [...list, newMesssage]);
+    dispatch(sendNewChats({ code, newMesssage }));
     setMessage("");
   };
 
   useEffect(() => {
+    dispatch(fetchOldChats(code));
     socket.on("receive_message", (data) => {
       setMessageList((list) => {
         const newList = [...list];
@@ -56,13 +60,33 @@ const ChatRoom = ({ socket, username }) => {
     return () => {
       socket.off("receive_message");
     };
-  }, [socket, setMessageList, code, username]);
+  }, [socket, code, username]);
+
+  useEffect(() => {
+    if (pastMessages) {
+      setMessageList(pastMessages);
+    }
+  }, [pastMessages]);
+
+  const [videoCall, setVideoCall] = useState(false);
+
+  const handleClick = () => {
+    if (videoCall) {
+      setVideoCall(false);
+    }
+    setVideoCall(true);
+  };
 
   return (
     <div>
       <header>
         <p>Welcome to {code}</p>
+        <div>
+          <button onClick={handleClick}>Start Video Call</button>
+          {videoCall && <VideoCall code={code} username={username} />}
+        </div>
       </header>
+
       <div>
         <section>
           <h3

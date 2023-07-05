@@ -7,6 +7,7 @@ const User = require("./models/User");
 const Chat = require("./models/Chat");
 const Friend = require("./models/Friend");
 const Participant = require("./models/Participant");
+const MessageData = require("./models/MessageData");
 
 //associations could go here!
 
@@ -22,6 +23,10 @@ Participant.belongsTo(User);
 Chat.hasMany(Participant);
 Participant.belongsTo(Chat);
 
+// MESSAGES WHO ARE IN A CHAT 🦔
+Chat.hasMany(MessageData);
+MessageData.belongsTo(Chat);
+
 module.exports = {
   db,
   models: {
@@ -29,5 +34,6 @@ module.exports = {
     Friend,
     Participant,
     Chat,
+    MessageData,
   },
 };

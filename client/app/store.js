@@ -7,6 +7,8 @@ import allUsersSlice from "../features/admin/adminViewSlice";
 import editUserSlice from "../features/admin/editUserSlice";
 import AllFriendsSlice from "../features/home/AllFriendsSlice";
 import AllNonFriendsSlice from "../features/home/AllNonFriendsSlice";
+import chatRoomSlice from "../features/chat/chatRoomSlice";
+
 const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -16,6 +18,7 @@ const store = configureStore({
     chats: AllChatsSlice,
     friends: AllFriendsSlice,
     notFriends: AllNonFriendsSlice,
+    chat: chatRoomSlice,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
