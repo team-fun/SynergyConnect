@@ -10,6 +10,7 @@ import EditUser from "../features/admin/EditUser";
 import UserView from "../features/userView/userView";
 import ChatRoom from "../features/chat/ChatRoom";
 import ContactUs from "../features/ContactUs/ContactUs";
+// import WhiteBoard from "../features/chat/WhiteBoard/WhiteBoard";
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:3001/");
 
@@ -41,9 +42,10 @@ const AppRoutes = () => {
               path="/chats/:code"
               element={<ChatRoom socket={socket} username={username} />}
             />
+            {/* <Route path="/whiteboard" element={<WhiteBoard />} /> */}
             <Route path="/profile" element={<UserView />} />
             <Route path="/profile/:id" element={<UserView />} />
-            {/* <Routes path="/contactus" element={<ContactUs />} /> */}
+            <Route path="/contactus" element={<ContactUs />} />
           </Routes>
         ) : (
           <Routes>
@@ -53,9 +55,11 @@ const AppRoutes = () => {
               path="/chats/:code"
               element={<ChatRoom socket={socket} username={username} />}
             />
+            {/* <Route path="/whiteboard" element={<WhiteBoard />} /> */}
+
             <Route path="/profile" element={<UserView />} />
             <Route path="/profile/:id" element={<UserView />} />
-            {/* <Route path="/contactus" element={<ContactUs />} /> */}
+            <Route path="/contactus" element={<ContactUs />} />
           </Routes>
         )
       ) : (
