@@ -2,6 +2,9 @@ const router = require("express").Router();
 const Chat = require("../db/models/Chat");
 const MessageData = require("../db/models/MessageData");
 const Participant = require("../db/models/Participant");
+const {
+  models: { User },
+} = require("../db");
 const { Op } = require("sequelize");
 
 router.get("/", async (req, res) => {
@@ -80,5 +83,22 @@ router.post("/:code/save-history", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
+
+router.delete('/:code/:id', async (req, res) => {
+ 
+  try {
+    const { id, code } = req.params;
+		const deletedUserFromRoom = await User.findByPk(id);
+
+		if (!deletedUserFromRoom) {
+			return res.sendStatus(404);
+		}
+		await deletedUserFromRoom.destroy();
+		res.sendStatus(204);
+
+  } catch (error) {
+    console.log(error);
+  }
+})
 
 module.exports = router;

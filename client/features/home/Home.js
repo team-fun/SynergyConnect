@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import CreateRoomForm from "./CreateRoomForm";
 import { selectChats, fetchAllChats, asyncJoinRoom } from "./AllChatsSlice";
-
+import SearchBox from "../seachbar/SearchBar";
 /**
  * COMPONENT
  */
@@ -14,6 +14,7 @@ const Home = (props) => {
   const [createFormVis, setCreateFormVis] = useState(false);
   const [filter, setFilter] = useState([]);
   const [code, setCode] = useState("");
+  const [search, setSearch] = useState('');
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -44,6 +45,10 @@ const Home = (props) => {
     setCode("");
   };
 
+  const onSearchChange = (event) => {
+    setSearch(event.target.value)
+  }
+
   return (
     <div>
       {createFormVis ? (
@@ -64,8 +69,14 @@ const Home = (props) => {
             <button onClick={publicFilter}>Public Rooms</button>
             <button onClick={privateFilter}>Private Rooms</button>
           </div>
+          <SearchBox searchfield={search} searchChange={onSearchChange}/>
           <div>
-            {filter.map((chat) => {
+            {filter
+            .filter((chat) =>{
+              const chatName = chat.name.toLowerCase();
+              return chatName.includes(search.toLocaleLowerCase())
+            })
+            .map((chat) => {
               return (
                 <div key={chat.id}>
                   <h1>{chat.name}</h1>
