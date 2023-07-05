@@ -2,9 +2,6 @@ const router = require("express").Router();
 const Chat = require("../db/models/Chat");
 const MessageData = require("../db/models/MessageData");
 const Participant = require("../db/models/Participant");
-const {
-  models: { User },
-} = require("../db");
 const { Op } = require("sequelize");
 
 router.get("/", async (req, res) => {
