@@ -43,7 +43,7 @@ const AppRoutes = () => {
             />
             <Route path="/profile" element={<UserView />} />
             <Route path="/profile/:id" element={<UserView />} />
-            {/* <Routes path="/contactus" element={<ContactUs />} /> */}
+            <Route path="/contactus" element={<ContactUs />} />
           </Routes>
         ) : (
           <Routes>
@@ -55,7 +55,7 @@ const AppRoutes = () => {
             />
             <Route path="/profile" element={<UserView />} />
             <Route path="/profile/:id" element={<UserView />} />
-            {/* <Route path="/contactus" element={<ContactUs />} /> */}
+            <Route path="/contactus" element={<ContactUs />} />
           </Routes>
         )
       ) : (

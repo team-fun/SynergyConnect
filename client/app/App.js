@@ -14,7 +14,7 @@ const App = () => {
     <Provider store={store}>
       <Navbar />
       <AppRoutes />
-      {/* <Footer /> */}
+      <Footer />
     </Provider>
     </div>
   );
