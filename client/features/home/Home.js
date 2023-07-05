@@ -18,7 +18,6 @@ const Home = (props) => {
   const [friendListChange, setfriendListChange] = useState(false);
   const id = useSelector((state) => state.auth.me.id);
   const username = useSelector((state) => state.auth.me.username);
-  const id = useSelector((state) => state.auth.me.id);
   const chats = useSelector(selectChats);
   const friends = useSelector(selectFriends) || [];
   const nonFriends = useSelector(selectNonFriends) || [];
@@ -72,7 +71,7 @@ const Home = (props) => {
       handleFriendListChange();
     }, 1000);
   };
-  
+
   const publicFilter = () => {
     setFilter(chats.filter((chat) => chat.public));
   };
