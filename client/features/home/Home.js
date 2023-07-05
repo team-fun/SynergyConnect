@@ -47,7 +47,7 @@ const Home = (props) => {
 
     setTimeout(() => {
       handleFriendListChange();
-    }, 1000); 
+    }, 1000);
   };
   const handleAcceptRejectRequest = (friendID, action) => {
     dispatch(
@@ -60,9 +60,9 @@ const Home = (props) => {
 
     setTimeout(() => {
       handleFriendListChange();
-    }, 1000); 
+    }, 1000);
   };
-  console.log(friends);
+  
   return (
     <div>
       {createFormVis ? (
