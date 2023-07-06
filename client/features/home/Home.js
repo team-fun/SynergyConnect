@@ -35,8 +35,6 @@ const Home = (props) => {
   const [search, setSearch] = useState("");
   const dispatch = useDispatch();
 
-  console.log(allParticipants);
-
   useEffect(() => {
     dispatch(fetchAllChats(id));
   }, [dispatch]);
@@ -128,9 +126,14 @@ const Home = (props) => {
   };
 
   const joinRoom = (evt) => {
-    evt.preventDefault();
     dispatch(asyncJoinRoom({ code, id }));
     setCode("");
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      joinRoom();
+    }
   };
 
   const onSearchChange = (event) => {
@@ -163,6 +166,7 @@ const Home = (props) => {
           <input
             placeholder="Enter Room Code"
             onChange={(e) => setCode(e.target.value)}
+            onKeyUp={handleKeyPress}
           ></input>
           <button onClick={joinRoom}>Join Room</button>
           <div>
@@ -181,6 +185,9 @@ const Home = (props) => {
                 const isParticipating = participating?.find(
                   (info) => info.chatId === chat.id
                 );
+                const participants = allParticipants.filter(
+                  (participant) => participant.chatId === chat.id
+                );
                 const chatId = chat.id;
                 const fav = favoriteStatus[chatId] || false;
 
@@ -188,7 +195,7 @@ const Home = (props) => {
                   <div key={chat.id}>
                     <h1>{chat.name}</h1>
                     <p>{chat.description}</p>
-                    <p>👤</p>
+                    <p>👤 {participants.length}</p>
                     <Link to={`/chats/${chat.code}`}>
                       <button>Join Room</button>
                     </Link>
