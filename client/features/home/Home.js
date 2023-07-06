@@ -31,6 +31,7 @@ const Home = (props) => {
   const [createFormVis, setCreateFormVis] = useState(false);
   const [filter, setFilter] = useState([]);
   const [code, setCode] = useState("");
+  const [favoriteStatus, setFavoriteStatus] = useState({});
   const [search, setSearch] = useState("");
   const dispatch = useDispatch();
 
@@ -103,9 +104,15 @@ const Home = (props) => {
   };
 
   const onFavorite = (isParticipating) => {
-    const oldFav = isParticipating.favorite;
+    const chatId = isParticipating.chatId;
+    const oldFav = favoriteStatus[chatId] || false;
     const newFav = !oldFav;
     dispatch(favoriteRoom({ newFav, isParticipating }));
+
+    setFavoriteStatus((prevStatus) => ({
+      ...prevStatus,
+      [chatId]: newFav,
+    }));
   };
 
   return (
@@ -137,13 +144,11 @@ const Home = (props) => {
                 return chatName.includes(search.toLowerCase());
               })
               .map((chat) => {
-                const isParticipating =
-                  participating &&
-                  participating.find((info) => info.chatId === chat.id);
-                let fav;
-                if (isParticipating) {
-                  fav = isParticipating.favorite;
-                }
+                const isParticipating = participating?.find(
+                  (info) => info.chatId === chat.id
+                );
+                const chatId = chat.id;
+                const fav = favoriteStatus[chatId] || false;
 
                 return (
                   <div key={chat.id}>
@@ -153,13 +158,19 @@ const Home = (props) => {
                     </Link>
                     {isParticipating ? (
                       fav ? (
-                        <button onClick={() => onFavorite(isParticipating)}>
-                          UnFavorite
-                        </button>
+                        <span
+                          onClick={() => onFavorite(isParticipating)}
+                          style={{ cursor: "pointer" }}
+                        >
+                          ❤️
+                        </span>
                       ) : (
-                        <button onClick={() => onFavorite(isParticipating)}>
-                          Favorite
-                        </button>
+                        <span
+                          onClick={() => onFavorite(isParticipating)}
+                          style={{ cursor: "pointer" }}
+                        >
+                          🖤
+                        </span>
                       )
                     ) : (
                       <p>Join once before favoriting!</p>
