@@ -11,7 +11,7 @@ import {
 import { fetchAllNonFriends, selectNonFriends } from "./AllNonFriendsSlice";
 import { selectChats, fetchAllChats, asyncJoinRoom } from "./AllChatsSlice";
 import SearchBox from "../seachbar/SearchBar";
-import { Favorite } from "@mui/icons-material";
+
 /**
  * COMPONENT
  */
@@ -97,6 +97,10 @@ const Home = (props) => {
     setSearch(event.target.value);
   };
 
+  const onFavorite = (isParticipating) => {
+    console.log(isParticipating);
+  };
+
   return (
     <div>
       {createFormVis ? (
@@ -142,9 +146,13 @@ const Home = (props) => {
                     </Link>
                     {isParticipating ? (
                       fav ? (
-                        <button>Unfavorite</button>
+                        <button onClick={() => onFavorite(isParticipating)}>
+                          UnFavorite
+                        </button>
                       ) : (
-                        <button>Favorite</button>
+                        <button onClick={() => onFavorite(isParticipating)}>
+                          Favorite
+                        </button>
                       )
                     ) : (
                       <p>Join once before favoriting!</p>
