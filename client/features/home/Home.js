@@ -11,6 +11,8 @@ import {
 import { fetchAllNonFriends, selectNonFriends } from "./AllNonFriendsSlice";
 import { selectChats, fetchAllChats, asyncJoinRoom } from "./AllChatsSlice";
 import SearchBox from "../seachbar/SearchBar";
+import SearchFriend from "../seachbar/searchFriend";
+import CalendarSchedule from "../calendar/Calendar";
 /**
  * COMPONENT
  */
@@ -20,11 +22,13 @@ const Home = (props) => {
   const username = useSelector((state) => state.auth.me.username);
   const chats = useSelector(selectChats);
   const friends = useSelector(selectFriends) || [];
+  //console.log("THISIS FRIENDS FROMHOME PAGE", friends);
   const nonFriends = useSelector(selectNonFriends) || [];
   const [createFormVis, setCreateFormVis] = useState(false);
   const [filter, setFilter] = useState([]);
   const [code, setCode] = useState("");
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
+  const [searchFriend, setSearchFriend] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -88,11 +92,16 @@ const Home = (props) => {
   };
 
   const onSearchChange = (event) => {
-    setSearch(event.target.value)
-  }
+    setSearch(event.target.value);
+  };
+
+  const onSearchFriendChange = (event) => {
+    setSearchFriend(event.target.value);
+  };
 
   return (
     <div>
+      <CalendarSchedule />
       {createFormVis ? (
         <>
           <CreateRoomForm />
@@ -111,60 +120,47 @@ const Home = (props) => {
             <button onClick={publicFilter}>Public Rooms</button>
             <button onClick={privateFilter}>Private Rooms</button>
           </div>
-          <SearchBox  searchChange={onSearchChange}/>
+          <SearchBox searchChange={onSearchChange} />
           <div>
             {filter
-            .filter((chat) =>{
-              const chatName = chat.name.toLowerCase();
-              return chatName.includes(search.toLocaleLowerCase())
-            })
-            .map((chat) => {
-              return (
-                <div key={chat.id}>
-                  <h1>{chat.name}</h1>
-                  <Link to={`/chats/${chat.code}`}>
-                    <button>CLICK ME</button>
-                  </Link>
-                </div>
-              );
-            })}
+              .filter((chat) => {
+                const chatName = chat.name.toLowerCase();
+                return chatName.includes(search.toLowerCase());
+              })
+              .map((chat) => {
+                return (
+                  <div key={chat.id}>
+                    <h1>{chat.name}</h1>
+                    <Link to={`/chats/${chat.code}`}>
+                      <button>CLICK ME</button>
+                    </Link>
+                  </div>
+                );
+              })}
           </div>
         </section>
       )}
       <div>
+        <SearchFriend searchChangeFriend={onSearchFriendChange} />
         <button>Friends</button>
         {friends.length === undefined || friends?.length == 0 ? (
           <div>No friends</div>
         ) : (
           <div>
-            {friends?.map((friend, i) => (
-              <div key={i}>
-                {friend.dataValues.username}
-                <span>
-                  {friend.pending ? (
-                    friend.sent ? (
-                      <button
-                        onClick={() =>
-                          handleAcceptRejectRequest(
-                            friend?.dataValues?.id,
-                            "reject"
-                          )
-                        }
-                      >
-                        Cancel Request
-                      </button>
-                    ) : (
-                      <>
-                        <button
-                          onClick={() =>
-                            handleAcceptRejectRequest(
-                              friend?.dataValues?.id,
-                              "accept"
-                            )
-                          }
-                        >
-                          Accept
-                        </button>
+            {friends
+              .filter((friend) => {
+                const friendName = friend.username
+                  ? friend.username.toLowerCase()
+                  : "";
+                return friendName.includes(searchFriend.toLowerCase());
+              })
+
+              .map((friend, i) => (
+                <div key={i}>
+                  {friend.dataValues.username}
+                  <span>
+                    {friend.pending ? (
+                      friend.sent ? (
                         <button
                           onClick={() =>
                             handleAcceptRejectRequest(
@@ -173,25 +169,47 @@ const Home = (props) => {
                             )
                           }
                         >
-                          Reject
+                          Cancel Request
                         </button>
-                      </>
-                    )
-                  ) : (
-                    <button
-                      onClick={() =>
-                        handleAcceptRejectRequest(
-                          friend?.dataValues?.id,
-                          "reject"
-                        )
-                      }
-                    >
-                      Remove Friend
-                    </button>
-                  )}
-                </span>
-              </div>
-            ))}
+                      ) : (
+                        <>
+                          <button
+                            onClick={() =>
+                              handleAcceptRejectRequest(
+                                friend?.dataValues?.id,
+                                "accept"
+                              )
+                            }
+                          >
+                            Accept
+                          </button>
+                          <button
+                            onClick={() =>
+                              handleAcceptRejectRequest(
+                                friend?.dataValues?.id,
+                                "reject"
+                              )
+                            }
+                          >
+                            Reject
+                          </button>
+                        </>
+                      )
+                    ) : (
+                      <button
+                        onClick={() =>
+                          handleAcceptRejectRequest(
+                            friend?.dataValues?.id,
+                            "reject"
+                          )
+                        }
+                      >
+                        Remove Friend
+                      </button>
+                    )}
+                  </span>
+                </div>
+              ))}
           </div>
         )}
         {nonFriends.length === undefined || nonFriends?.length == 0 ? (
