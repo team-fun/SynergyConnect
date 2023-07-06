@@ -1,4 +1,5 @@
 import React from 'react';
+import "tailwindcss/tailwind.css";
 
 import Navbar from '../features/navbar/Navbar';
 import AppRoutes from './AppRoutes';

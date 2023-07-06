@@ -193,6 +193,7 @@ const Home = (props) => {
                 <button onClick={() => handleSendRequest(nonFriend.id)}>
                   +
                 </button>
+         
               </div>
             ))}
           </div>

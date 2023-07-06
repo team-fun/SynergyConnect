@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
-
+import axios from "axios";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import EditIcon from "@mui/icons-material/Edit";
 import DoneIcon from "@mui/icons-material/Done";
@@ -49,7 +49,7 @@ const UserView = () => {
 		((arr) => {
 		  let str = "";
 		  arr.forEach((i) => {
-			console.log(i);
+			
 			str += i + ", ";
 		  });
   
@@ -119,9 +119,13 @@ const handleImageChange = async (e) => {
 
   return (
     <div className="userViewWrapper">
+      <div className="bg-blue-500">
+        <h1 className="text-red-500">Hello, Tailwind CSS!</h1>
+      </div>
+
       <div className="profile">
         <div className="pfp">
-          <img src={image? image :user.image} alt="" />
+          <img src={image ? image : user.image} alt="" />
         </div>
         <input type="file" onChange={handleImageChange} />
         <div className="user-info">
@@ -279,11 +283,11 @@ const handleImageChange = async (e) => {
             <ul className="interests">
               {editInterests ? <p>Edit Interests:</p> : <p>Interests</p>}
               {!editInterests && (
-             <>
-                  {user.interests?.map((i) => (
-                    <span>{i}</span>
+                <>
+                  {user.interests?.map((interest, index) => (
+                    <span key={index}>{interest}</span>
                   ))}
-               </>
+                </>
               )}
               {editInterests && (
                 <input
