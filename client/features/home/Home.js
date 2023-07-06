@@ -9,7 +9,12 @@ import {
   acceptRejectRequest,
 } from "./AllFriendsSlice";
 import { fetchAllNonFriends, selectNonFriends } from "./AllNonFriendsSlice";
-import { selectChats, fetchAllChats, asyncJoinRoom } from "./AllChatsSlice";
+import {
+  selectChats,
+  fetchAllChats,
+  asyncJoinRoom,
+  favoriteRoom,
+} from "./AllChatsSlice";
 import SearchBox from "../seachbar/SearchBar";
 
 /**
@@ -98,7 +103,9 @@ const Home = (props) => {
   };
 
   const onFavorite = (isParticipating) => {
-    console.log(isParticipating);
+    const oldFav = isParticipating.favorite;
+    const newFav = !oldFav;
+    dispatch(favoriteRoom({ newFav, isParticipating }));
   };
 
   return (

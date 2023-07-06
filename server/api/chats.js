@@ -110,4 +110,24 @@ router.delete("/:code/:id", async (req, res) => {
   }
 });
 
+router.put("/", async (req, res) => {
+  try {
+    const { favorite, isParticipating } = req.body;
+    const whatParticipatent = await Participant.findByPk(isParticipating.id);
+    whatParticipatent.update({ favorite });
+    const participating = await Participant.findAll({
+      where: { userId: isParticipating.userId },
+    });
+    const participantsId = participating.map((info) => info.dataValues.chatId);
+    const privateChats = await Chat.findAll({
+      where: { id: { [Op.in]: participantsId }, public: false },
+    });
+    const publicChats = await Chat.findAll({ where: { public: true } });
+    const chats = [...publicChats, ...privateChats];
+    res.send({ chats, participating });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 module.exports = router;
