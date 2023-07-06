@@ -19,7 +19,7 @@ const Home = (props) => {
   const id = useSelector((state) => state.auth.me.id);
   const username = useSelector((state) => state.auth.me.username);
   const results = useSelector(selectChats);
-  const { chats } = results;
+  const { chats, participating } = results;
   const friends = useSelector(selectFriends) || [];
   const nonFriends = useSelector(selectNonFriends) || [];
   const [createFormVis, setCreateFormVis] = useState(false);
@@ -27,8 +27,6 @@ const Home = (props) => {
   const [code, setCode] = useState("");
   const [search, setSearch] = useState("");
   const dispatch = useDispatch();
-
-  console.log(results);
 
   useEffect(() => {
     dispatch(fetchAllChats(id));
@@ -117,22 +115,31 @@ const Home = (props) => {
           <div>
             <button onClick={publicFilter}>Public Rooms</button>
             <button onClick={privateFilter}>Private Rooms</button>
+            <button onClick={privateFilter}>Favorites⭐</button>
           </div>
           <SearchBox searchChange={onSearchChange} />
           <div>
             {filter
               .filter((chat) => {
                 const chatName = chat.name.toLowerCase();
-                return chatName.includes(search.toLocaleLowerCase());
+                return chatName.includes(search.toLowerCase());
               })
               .map((chat) => {
+                const isParticipating =
+                  participating &&
+                  participating.find((info) => info.chatId === chat.id);
+
                 return (
                   <div key={chat.id}>
                     <h1>{chat.name}</h1>
-                    <button>Favorite</button>
                     <Link to={`/chats/${chat.code}`}>
                       <button>Join Room</button>
                     </Link>
+                    {isParticipating ? (
+                      <button>Favorite</button>
+                    ) : (
+                      <p>Join once to be able to favorite</p>
+                    )}
                   </div>
                 );
               })}
