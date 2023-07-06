@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import {
   sendNewChats,
   fetchOldChats,
@@ -99,7 +99,12 @@ const ChatRoom = ({ socket, username }) => {
           {videoCall && <VideoCall code={code} username={username} />}
         </div>
         <div>
-          <button onClick={handleDelete}>Leave Chat Room</button>
+          <Link to={`/home/`}>
+            <button>Back</button>
+          </Link>
+          <button style={{ backgroundColor: "red" }} onClick={handleDelete}>
+            Leave Chat Room
+          </button>
         </div>
       </header>
 

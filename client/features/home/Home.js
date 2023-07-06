@@ -11,6 +11,7 @@ import {
 import { fetchAllNonFriends, selectNonFriends } from "./AllNonFriendsSlice";
 import { selectChats, fetchAllChats, asyncJoinRoom } from "./AllChatsSlice";
 import SearchBox from "../seachbar/SearchBar";
+import { Favorite } from "@mui/icons-material";
 /**
  * COMPONENT
  */
@@ -128,6 +129,10 @@ const Home = (props) => {
                 const isParticipating =
                   participating &&
                   participating.find((info) => info.chatId === chat.id);
+                let fav;
+                if (isParticipating) {
+                  fav = isParticipating.favorite;
+                }
 
                 return (
                   <div key={chat.id}>
@@ -136,9 +141,13 @@ const Home = (props) => {
                       <button>Join Room</button>
                     </Link>
                     {isParticipating ? (
-                      <button>Favorite</button>
+                      fav ? (
+                        <button>Unfavorite</button>
+                      ) : (
+                        <button>Favorite</button>
+                      )
                     ) : (
-                      <p>Join once to be able to favorite</p>
+                      <p>Join once before favoriting!</p>
                     )}
                   </div>
                 );
