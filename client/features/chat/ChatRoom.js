@@ -30,8 +30,6 @@ const ChatRoom = ({ socket, username }) => {
     const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
     const formattedTime = `${formattedHours}:${formattedMinutes} ${ampm}`;
     const messageId = Math.floor(Math.random() * 3587);
-    const navigate = useNavigate()
-
 
     const newMesssage = {
       id: messageId,
@@ -92,7 +90,9 @@ const ChatRoom = ({ socket, username }) => {
       setWhiteBoard(false);
     }
     setWhiteBoard(true);
-  }; 
+  };
+
+  const navigate = useNavigate();
 
   const handleDelete = () => {
     dispatch(deleteUserFromRoom({ id, code }));
