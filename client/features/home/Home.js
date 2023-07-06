@@ -67,12 +67,6 @@ const Home = (props) => {
     setfriendListChange(!friendListChange);
   };
 
-  useEffect(() => {
-    if (chats) {
-      setFilter(chats.filter((chat) => chat.public));
-    }
-  }, [chats]);
-
   const create = () => {
     setCreateFormVis(true);
   };
@@ -140,7 +134,8 @@ const Home = (props) => {
     setSearch(event.target.value);
   };
 
-  const onFavorite = (isParticipating) => {
+  const onFavorite = (event, isParticipating) => {
+    event.preventDefault();
     const chatId = isParticipating.chatId;
     const oldFav = favoriteStatus[chatId] || false;
     const newFav = !oldFav;
@@ -202,14 +197,18 @@ const Home = (props) => {
                     {isParticipating ? (
                       fav ? (
                         <span
-                          onClick={() => onFavorite(isParticipating)}
+                          onClick={(event) =>
+                            onFavorite(event, isParticipating)
+                          }
                           style={{ cursor: "pointer" }}
                         >
                           ❤️
                         </span>
                       ) : (
                         <span
-                          onClick={() => onFavorite(isParticipating)}
+                          onClick={(event) =>
+                            onFavorite(event, isParticipating)
+                          }
                           style={{ cursor: "pointer" }}
                         >
                           🖤
@@ -225,7 +224,7 @@ const Home = (props) => {
         </section>
       )}
       <div>
-        <button>Friends</button>
+        <h1>Friends</h1>
         {friends.length === undefined || friends?.length == 0 ? (
           <div>No friends</div>
         ) : (
@@ -287,6 +286,7 @@ const Home = (props) => {
             ))}
           </div>
         )}
+        <h1>Non Friends</h1>
         {nonFriends.length === undefined || nonFriends?.length == 0 ? (
           <div>All Users are friends</div>
         ) : (
