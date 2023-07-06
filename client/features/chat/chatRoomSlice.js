@@ -5,8 +5,7 @@ export const fetchOldChats = createAsyncThunk(
   "chats/fetchOldChats",
   async ({ code, id }) => {
     try {
-      console.log(code, id);
-      const { data } = await axios.get(`/api/chats/${code}`, { id });
+      const { data } = await axios.get(`/api/chats/${code}/${id}`);
       return data;
     } catch (error) {
       console.log(error);
@@ -34,7 +33,7 @@ export const deleteUserFromRoom = createAsyncThunk(
   "deleteUserFromRoom",
   async ({ code, id }) => {
     try {
-      const { data } = await axios.delete(`/api/chats/${code}/${id}`, { id });
+      const { data } = await axios.delete(`/api/chats/${code}/${id}`);
       return data;
     } catch (error) {
       console.log(error);
