@@ -44,6 +44,25 @@ const Home = (props) => {
     dispatch(fetchAllNonFriends({ id }));
   }, [dispatch, friendListChange]);
 
+  useEffect(() => {
+    if (participating && chats) {
+      const newFavoriteStatus = {};
+
+      participating.forEach((info) => {
+        const chatId = info.chatId;
+        const chat = chats.find((chat) => chat.id === chatId);
+
+        if (chat) {
+          const isFavorite = info.favorite;
+
+          newFavoriteStatus[chatId] = isFavorite;
+        }
+      });
+
+      setFavoriteStatus(newFavoriteStatus);
+    }
+  }, [participating, chats]);
+
   const handleFriendListChange = () => {
     setfriendListChange(!friendListChange);
   };
