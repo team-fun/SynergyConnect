@@ -26,8 +26,6 @@ export const favoriteRoom = createAsyncThunk(
   "favoriteRoom",
   async ({ newFav, isParticipating }) => {
     const favorite = newFav;
-    console.log(favorite);
-    console.log(isParticipating);
     try {
       const { data } = await axios.put(`/api/chats`, {
         favorite,

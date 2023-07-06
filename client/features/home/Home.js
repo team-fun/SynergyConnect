@@ -93,6 +93,19 @@ const Home = (props) => {
     setFilter(chats.filter((chat) => !chat.public));
   };
 
+  const favFilter = () => {
+    setFilter(
+      chats.filter((chat) => {
+        const isParticipating = participating?.find(
+          (info) => info.chatId === chat.id
+        );
+        const chatId = chat.id;
+        const fav = favoriteStatus[chatId] || false;
+        return isParticipating && fav;
+      })
+    );
+  };
+
   const joinRoom = (evt) => {
     evt.preventDefault();
     dispatch(asyncJoinRoom({ code, id }));
@@ -134,7 +147,7 @@ const Home = (props) => {
           <div>
             <button onClick={publicFilter}>Public Rooms</button>
             <button onClick={privateFilter}>Private Rooms</button>
-            <button onClick={privateFilter}>Favorites⭐</button>
+            <button onClick={favFilter}>Favorites⭐</button>
           </div>
           <SearchBox searchChange={onSearchChange} />
           <div>
