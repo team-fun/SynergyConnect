@@ -27,13 +27,17 @@ const Home = (props) => {
   const [search, setSearch] = useState("");
   const dispatch = useDispatch();
 
+  console.log(chats);
+
   useEffect(() => {
     dispatch(fetchAllChats(id));
   }, [dispatch]);
+
   useEffect(() => {
     dispatch(fetchAllFriends({ id }));
     dispatch(fetchAllNonFriends({ id }));
   }, [dispatch, friendListChange]);
+
   const handleFriendListChange = () => {
     setfriendListChange(!friendListChange);
   };
@@ -47,6 +51,7 @@ const Home = (props) => {
   const create = () => {
     setCreateFormVis(true);
   };
+
   const handleSendRequest = (friendID) => {
     dispatch(
       sendFriendRequest({
@@ -59,6 +64,7 @@ const Home = (props) => {
       handleFriendListChange();
     }, 1000);
   };
+
   const handleAcceptRejectRequest = (friendID, action) => {
     dispatch(
       acceptRejectRequest({

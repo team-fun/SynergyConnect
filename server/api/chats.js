@@ -13,8 +13,8 @@ router.get("/", async (req, res) => {
       where: { id: { [Op.in]: participantsId }, public: false },
     });
     const publicChats = await Chat.findAll({ where: { public: true } });
-    const result = [...publicChats, ...privateChats];
-    res.send(result);
+    const chats = [...publicChats, ...privateChats];
+    res.send({ chats, participanting });
   } catch (error) {
     console.error(error);
   }
@@ -47,8 +47,8 @@ router.post("/:code", async (req, res) => {
       where: { id: { [Op.in]: participantsId }, public: false },
     });
     const publicChats = await Chat.findAll({ where: { public: true } });
-    const result = [...publicChats, ...privateChats];
-    res.send(result);
+    const chats = [...publicChats, ...privateChats];
+    res.send({ chats, participanting });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });
@@ -81,25 +81,23 @@ router.post("/:code/save-history", async (req, res) => {
   }
 });
 
-router.delete('/:code/:id', async (req, res) => {
- 
+router.delete("/:code/:id", async (req, res) => {
   try {
     const { id, code } = req.params;
-    const chat = await Chat.findAll({ where:  { code: code }  });
+    const chat = await Chat.findAll({ where: { code: code } });
     const chatId = chat[0].dataValues.id;
-		const deletedUserFromRoom = await Participant.findOne({
-      where: { userId: id, chatId}
+    const deletedUserFromRoom = await Participant.findOne({
+      where: { userId: id, chatId },
     });
 
-		if (!deletedUserFromRoom) {
-			return res.sendStatus(404);
-		}
-		await deletedUserFromRoom.destroy();
-		res.sendStatus(204);
-
+    if (!deletedUserFromRoom) {
+      return res.sendStatus(404);
+    }
+    await deletedUserFromRoom.destroy();
+    res.sendStatus(204);
   } catch (error) {
     console.log(error);
   }
-})
+});
 
 module.exports = router;
