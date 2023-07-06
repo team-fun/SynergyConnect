@@ -7,6 +7,7 @@ import {
   deleteUserFromRoom,
 } from "./chatRoomSlice";
 import VideoCall from "./videoCall";
+import Whiteboard from "./WhiteBoard/Whiteboard";
 import { useNavigate } from "react-router-dom";
 
 /**
@@ -29,6 +30,8 @@ const ChatRoom = ({ socket, username }) => {
     const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
     const formattedTime = `${formattedHours}:${formattedMinutes} ${ampm}`;
     const messageId = Math.floor(Math.random() * 3587);
+    const navigate = useNavigate()
+
 
     const newMesssage = {
       id: messageId,
@@ -75,6 +78,7 @@ const ChatRoom = ({ socket, username }) => {
   }, [pastMessages]);
 
   const [videoCall, setVideoCall] = useState(false);
+  const [whiteBoard, setWhiteBoard] = useState(false);
 
   const handleClick = () => {
     if (videoCall) {
@@ -83,7 +87,12 @@ const ChatRoom = ({ socket, username }) => {
     setVideoCall(true);
   };
 
-  const navigate = useNavigate();
+  const handleClickWB = () => {
+    if (whiteBoard) {
+      setWhiteBoard(false);
+    }
+    setWhiteBoard(true);
+  }; 
 
   const handleDelete = () => {
     dispatch(deleteUserFromRoom({ id, code }));
@@ -105,6 +114,9 @@ const ChatRoom = ({ socket, username }) => {
           <button style={{ backgroundColor: "red" }} onClick={handleDelete}>
             Leave Chat Room
           </button>
+          <button onClick={handleClickWB}>Create Whiteboard</button>
+          {whiteBoard && <Whiteboard socket={socket} />}
+          <button onClick={handleDelete}>Leave Chat Room</button>
         </div>
       </header>
 
