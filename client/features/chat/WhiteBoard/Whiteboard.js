@@ -23,7 +23,7 @@ let lastCursorPosition;
 
 const Whiteboard = ({socket}) => {
     const canvasRef = useRef();
-    const textAreaRef = useRef();
+    const textAreaRef = useRef(null);
     const toolType = useSelector((state) => state.whiteboard.tool);
     const elements = useSelector((state) => state.whiteboard.elements);
 
@@ -48,74 +48,108 @@ const Whiteboard = ({socket}) => {
 
     const handleMouseDown = (event) => {
         const { clientX, clientY } = event;
-
-        if(selectedElement && action === actions.WRITING) {
-            return;
+        const canvasRect = canvasRef.current.getBoundingClientRect();
+        const canvasX = clientX - canvasRect.left;
+        const canvasY = clientY - canvasRect.top;
+      
+        if (selectedElement && action === actions.WRITING) {
+          return;
         }
-
+      
         switch (toolType) {
-            case toolTypes.RECTANGLE:
-            case toolTypes.LINE:
-            case toolTypes.PENCIL: {
-                const element = createElement({
-                    x1: clientX,
-                    y1: clientY,
-                    x2: clientX,
-                    y2: clientY,
-                    toolType,
-                    id: uuidv4(),
-                })
-                setAction(actions.DRAWING);
-                setSelectedElement(element);
-                dispatch(updateElementInStore(element));
-                break;
-            }   
-            case toolTypes.TEXT: {
-                const element = createElement({
-                    x1: clientX,
-                    y1: clientY,
-                    x2: clientX,
-                    y2: clientY,
-                    toolType,
-                    id: uuidv4(),
-                })
-                setAction(actions.WRITING);
-                setSelectedElement(element);
-                dispatch(updateElementInStore(element));
-                break;
+          case toolTypes.RECTANGLE:
+          case toolTypes.LINE:
+          case toolTypes.PENCIL: {
+            const element = createElement({
+              x1: canvasX,
+              y1: canvasY,
+              x2: canvasX,
+              y2: canvasY,
+              toolType,
+              id: uuidv4(),
+            });
+            setAction(actions.DRAWING);
+            setSelectedElement(element);
+            dispatch(updateElementInStore(element));
+            break;
+          }
+          case toolTypes.TEXT: {
+            const element = createElement({
+              x1: canvasX,
+              y1: canvasY,
+              x2: canvasX,
+              y2: canvasY,
+              toolType,
+              id: uuidv4(),
+            });
+      
+            setAction(actions.WRITING);
+            setSelectedElement(element);
+            dispatch(updateElementInStore(element));
+      
+            if (textAreaRef.current) {
+              const textareaX = canvasX - canvasRect.left;
+              const textareaY = canvasY - canvasRect.top;
+      
+              textAreaRef.current.style.position = "absolute";
+              textAreaRef.current.style.left = `${textareaX}px`;
+              textAreaRef.current.style.top = `${textareaY}px`;
+              textAreaRef.current.focus();
             }
-            case toolTypes.SELECTION: {
-                const element = getElementAtPosition(clientX, clientY, elements);
-
-                if (element && 
-                    (element.type === toolTypes.RECTANGLE || element.type === toolTypes.TEXT || element.type === toolTypes.LINE)
-                    ) {
-                    setAction(
-                        element.position === cursorPositions.INSIDE 
-                        ? actions.MOVING 
-                        : actions.RESIZING
-                    )
-
-                    const offsetX = clientX - element.x1;
-                    const offsetY = clientY - element.y1;
-
-                    setSelectedElement({ ...element, offsetX, offsetY });
+            break;
+          }
+          case toolTypes.SELECTION: {
+            const element = getElementAtPosition(canvasX, canvasY, elements);
+      
+            if (element) {
+              const { id, type, position, x1, y1, x2, y2 } = element;
+      
+              if (
+                type === toolTypes.RECTANGLE ||
+                type === toolTypes.TEXT ||
+                type === toolTypes.LINE
+              ) {
+                const cursorX = canvasX - x1;
+                const cursorY = canvasY - y1;
+                const offsetX = cursorX;
+                const offsetY = cursorY;
+      
+                if (position === cursorPositions.INSIDE) {
+                  setAction(actions.MOVING);
+                  setSelectedElement({ ...element, offsetX, offsetY });
+                } else {
+                  setAction(actions.RESIZING);
+                  setSelectedElement({
+                    ...element,
+                    offsetX,
+                    offsetY,
+                    originalX1: x1,
+                    originalY1: y1,
+                    originalX2: x2,
+                    originalY2: y2,
+                    position,
+                  });
                 }
-
-                if (element && element.type === toolTypes.PENCIL) {
-                    setAction(actions.MOVING);
-
-                    const offsetX = element.points.map((point) => clientX - point.x);
-                    const offsetY = element.points.map((point) => clientY - point.y);
-
-                    setSelectedElement({ ...element, offsetX, offsetY });
-                }
-                break;
+              } else if (type === toolTypes.PENCIL) {
+                const offsetX = element.points.map((point) => canvasX - point.x);
+                const offsetY = element.points.map((point) => canvasY - point.y);
+      
+                setAction(actions.MOVING);
+                setSelectedElement({ ...element, offsetX, offsetY });
+              }
+            } else {
+              setAction(null);
+              setSelectedElement(null);
             }
-            default:
-                window.alert("Unknown tool type selected");
+            break;
+          }
+          default:
+            window.alert("Unknown tool type selected");
         }
-    };
+      };
+      
+      
+      
 
 
     const handleMouseUp = () => {
@@ -147,8 +181,13 @@ const Whiteboard = ({socket}) => {
 
     const handleMouseMove = (event) => {
         const { clientX, clientY } = event;
-
-        lastCursorPosition = { x: clientX, y: clientY };
+        const canvasRect = canvasRef.current.getBoundingClientRect();
+      
+        const canvasX = clientX - canvasRect.left;
+        const canvasY = clientY - canvasRect.top;
+      
+        lastCursorPosition = { x: canvasX, y: canvasY };
+      
 
         if (emitCursor) {
             emitCursorPosition({ x: clientX, y: clientY})
@@ -167,21 +206,29 @@ const Whiteboard = ({socket}) => {
             const index = elements.findIndex((element) => element.id === selectedElement.id);
             
             if (index !== -1) {
-                updateElement({
-                    index,
-                    id: elements[index].id,
-                    x1: elements[index].x1,
-                    y1: elements[index].y1,
-                    x2: clientX,
-                    y2: clientY,
-                    type: elements[index].type,
-                }, elements)
+              updateElement(
+                {
+                  index,
+                  id: elements[index].id,
+                  x1: elements[index].x1,
+                  y1: elements[index].y1,
+                  x2: canvasX,
+                  y2: canvasY,
+                  type: elements[index].type,
+                },
+                elements
+              );
+              
+              if (textAreaRef.current) {
+                textAreaRef.current.style.left = `${canvasX}px`;
+                textAreaRef.current.style.top = `${canvasY}px`;
+              }
             }
-        }
+          }
+          
 
         if (toolType === toolTypes.SELECTION) {
-            const element = getElementAtPosition(clientX, clientY, elements);
-
+            const element = getElementAtPosition(canvasX, canvasY, elements);
                 event.target.style.cursor = element 
                     ? getCursorForPosition(element.position) 
                     : 'default';
@@ -189,13 +236,13 @@ const Whiteboard = ({socket}) => {
 
         if (
             selectedElement &&
-            toolType === toolTypes.SELECTION && 
-            action === actions.MOVING && 
+            toolType === toolTypes.SELECTION &&
+            action === actions.MOVING &&
             selectedElement.type === toolTypes.PENCIL
-            ) {
+          ) {
             const newPoints = selectedElement.points.map((_, index) => ({
-                x: clientX - selectedElement.offsetX[index],
-                y: clientY - selectedElement.offsetY[index],
+              x: canvasX - selectedElement.offsetX[index],
+              y: canvasY - selectedElement.offsetY[index],
             }));
 
             const index = elements.findIndex((element) => element.id === selectedElement.id);
@@ -207,16 +254,18 @@ const Whiteboard = ({socket}) => {
             return;
         }
 
-        if (toolType === toolTypes.SELECTION && 
-            action === actions.MOVING && 
-            selectedElement) {
+        if (
+            toolType === toolTypes.SELECTION &&
+            action === actions.MOVING &&
+            selectedElement
+          ) {
             const { id, x1, x2, y1, y2, type, offsetX, offsetY, text } = selectedElement;
-
+        
             const width = x2 - x1;
             const height = y2 - y1;
-
-            const newX1 = clientX - offsetX;
-            const newY1 = clientY - offsetY;
+        
+            const newX1 = canvasX - offsetX;
+            const newY1 = canvasY - offsetY;
 
             const index = elements.findIndex((element) => element.id === selectedElement.id);
 
@@ -234,16 +283,18 @@ const Whiteboard = ({socket}) => {
             }
         }
 
-        if (toolType === toolTypes.SELECTION && 
-            action === actions.RESIZING && 
-            selectedElement) {
-                const { id, type, position, ...coordinates } = selectedElement;
-                const { x1, y1, x2, y2 } = getResizedCoordinates(
-                    clientX,
-                    clientY,
-                    position,
-                    coordinates
-                );
+        if (
+            toolType === toolTypes.SELECTION &&
+            action === actions.RESIZING &&
+            selectedElement
+          ) {
+            const { id, type, position, ...coordinates } = selectedElement;
+            const { x1, y1, x2, y2 } = getResizedCoordinates(
+              canvasX,
+              canvasY,
+              position,
+              coordinates
+            );
 
                 const selectedElementIndex = elements.findIndex((element) => element.id === selectedElement.id);
 
@@ -296,11 +347,11 @@ const Whiteboard = ({socket}) => {
                 padding: 0,
                 border: 0,
                 outline: 0,
-                resize: 'auto',
-                overflow: 'hidden',
+                overflow: "hidden", 
+                resize: "auto",
                 whiteSpace: 'pre',
                 background: 'transparent',
-            }}
+              }}
         /> : null}
 
             <canvas
