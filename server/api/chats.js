@@ -81,4 +81,25 @@ router.post("/:code/save-history", async (req, res) => {
   }
 });
 
+router.delete('/:code/:id', async (req, res) => {
+ 
+  try {
+    const { id, code } = req.params;
+    const chat = await Chat.findAll({ where:  { code: code }  });
+    const chatId = chat[0].dataValues.id;
+		const deletedUserFromRoom = await Participant.findOne({
+      where: { userId: id, chatId}
+    });
+
+		if (!deletedUserFromRoom) {
+			return res.sendStatus(404);
+		}
+		await deletedUserFromRoom.destroy();
+		res.sendStatus(204);
+
+  } catch (error) {
+    console.log(error);
+  }
+})
+
 module.exports = router;
