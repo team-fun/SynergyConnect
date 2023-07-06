@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { sendNewChats, fetchOldChats, deleteUserFromRoom } from "./chatRoomSlice";
+import {
+  sendNewChats,
+  fetchOldChats,
+  deleteUserFromRoom,
+} from "./chatRoomSlice";
 import VideoCall from "./videoCall";
 import { useNavigate } from "react-router-dom";
-
 
 /**
  * COMPONENT
@@ -16,7 +19,6 @@ const ChatRoom = ({ socket, username }) => {
   const [message, setMessage] = useState("");
   const pastMessages = useSelector((state) => state.chat);
   const [messageList, setMessageList] = useState([]);
-
 
   const sendMessage = () => {
     const currentTime = new Date();
@@ -42,10 +44,8 @@ const ChatRoom = ({ socket, username }) => {
     setMessage("");
   };
 
-
-
   useEffect(() => {
-    dispatch(fetchOldChats(code));
+    dispatch(fetchOldChats({ code, id }));
     socket.on("receive_message", (data) => {
       setMessageList((list) => {
         const newList = [...list];
@@ -83,12 +83,12 @@ const ChatRoom = ({ socket, username }) => {
     setVideoCall(true);
   };
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleDelete = () => {
-    dispatch(deleteUserFromRoom({ id, code } ))
-    navigate('/home')
-  }
+    dispatch(deleteUserFromRoom({ id, code }));
+    navigate("/home");
+  };
 
   return (
     <div>
