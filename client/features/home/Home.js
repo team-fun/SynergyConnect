@@ -9,8 +9,14 @@ import {
   acceptRejectRequest,
 } from "./AllFriendsSlice";
 import { fetchAllNonFriends, selectNonFriends } from "./AllNonFriendsSlice";
-import { selectChats, fetchAllChats, asyncJoinRoom } from "./AllChatsSlice";
+import {
+  selectChats,
+  fetchAllChats,
+  asyncJoinRoom,
+  favoriteRoom,
+} from "./AllChatsSlice";
 import SearchBox from "../seachbar/SearchBar";
+
 /**
  * COMPONENT
  */
@@ -18,22 +24,26 @@ const Home = (props) => {
   const [friendListChange, setfriendListChange] = useState(false);
   const id = useSelector((state) => state.auth.me.id);
   const username = useSelector((state) => state.auth.me.username);
-  const chats = useSelector(selectChats);
+  const results = useSelector(selectChats);
+  const { chats, participating } = results;
   const friends = useSelector(selectFriends) || [];
   const nonFriends = useSelector(selectNonFriends) || [];
   const [createFormVis, setCreateFormVis] = useState(false);
   const [filter, setFilter] = useState([]);
   const [code, setCode] = useState("");
-  const [search, setSearch] = useState('');
+  const [favoriteStatus, setFavoriteStatus] = useState({});
+  const [search, setSearch] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchAllChats(id));
   }, [dispatch]);
+
   useEffect(() => {
     dispatch(fetchAllFriends({ id }));
     dispatch(fetchAllNonFriends({ id }));
   }, [dispatch, friendListChange]);
+
   const handleFriendListChange = () => {
     setfriendListChange(!friendListChange);
   };
@@ -47,6 +57,7 @@ const Home = (props) => {
   const create = () => {
     setCreateFormVis(true);
   };
+
   const handleSendRequest = (friendID) => {
     dispatch(
       sendFriendRequest({
@@ -59,6 +70,7 @@ const Home = (props) => {
       handleFriendListChange();
     }, 1000);
   };
+
   const handleAcceptRejectRequest = (friendID, action) => {
     dispatch(
       acceptRejectRequest({
@@ -81,6 +93,19 @@ const Home = (props) => {
     setFilter(chats.filter((chat) => !chat.public));
   };
 
+  const favFilter = () => {
+    setFilter(
+      chats.filter((chat) => {
+        const isParticipating = participating?.find(
+          (info) => info.chatId === chat.id
+        );
+        const chatId = chat.id;
+        const fav = favoriteStatus[chatId] || false;
+        return isParticipating && fav;
+      })
+    );
+  };
+
   const joinRoom = (evt) => {
     evt.preventDefault();
     dispatch(asyncJoinRoom({ code, id }));
@@ -88,8 +113,20 @@ const Home = (props) => {
   };
 
   const onSearchChange = (event) => {
-    setSearch(event.target.value)
-  }
+    setSearch(event.target.value);
+  };
+
+  const onFavorite = (isParticipating) => {
+    const chatId = isParticipating.chatId;
+    const oldFav = favoriteStatus[chatId] || false;
+    const newFav = !oldFav;
+    dispatch(favoriteRoom({ newFav, isParticipating }));
+
+    setFavoriteStatus((prevStatus) => ({
+      ...prevStatus,
+      [chatId]: newFav,
+    }));
+  };
 
   return (
     <div>
@@ -110,24 +147,50 @@ const Home = (props) => {
           <div>
             <button onClick={publicFilter}>Public Rooms</button>
             <button onClick={privateFilter}>Private Rooms</button>
+            <button onClick={favFilter}>Favorites⭐</button>
           </div>
-          <SearchBox  searchChange={onSearchChange}/>
+          <SearchBox searchChange={onSearchChange} />
           <div>
             {filter
-            .filter((chat) =>{
-              const chatName = chat.name.toLowerCase();
-              return chatName.includes(search.toLocaleLowerCase())
-            })
-            .map((chat) => {
-              return (
-                <div key={chat.id}>
-                  <h1>{chat.name}</h1>
-                  <Link to={`/chats/${chat.code}`}>
-                    <button>CLICK ME</button>
-                  </Link>
-                </div>
-              );
-            })}
+              .filter((chat) => {
+                const chatName = chat.name.toLowerCase();
+                return chatName.includes(search.toLowerCase());
+              })
+              .map((chat) => {
+                const isParticipating = participating?.find(
+                  (info) => info.chatId === chat.id
+                );
+                const chatId = chat.id;
+                const fav = favoriteStatus[chatId] || false;
+
+                return (
+                  <div key={chat.id}>
+                    <h1>{chat.name}</h1>
+                    <Link to={`/chats/${chat.code}`}>
+                      <button>Join Room</button>
+                    </Link>
+                    {isParticipating ? (
+                      fav ? (
+                        <span
+                          onClick={() => onFavorite(isParticipating)}
+                          style={{ cursor: "pointer" }}
+                        >
+                          ❤️
+                        </span>
+                      ) : (
+                        <span
+                          onClick={() => onFavorite(isParticipating)}
+                          style={{ cursor: "pointer" }}
+                        >
+                          🖤
+                        </span>
+                      )
+                    ) : (
+                      <p>Join once before favoriting!</p>
+                    )}
+                  </div>
+                );
+              })}
           </div>
         </section>
       )}
