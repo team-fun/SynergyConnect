@@ -18,7 +18,8 @@ const Home = (props) => {
   const [friendListChange, setfriendListChange] = useState(false);
   const id = useSelector((state) => state.auth.me.id);
   const username = useSelector((state) => state.auth.me.username);
-  const chats = useSelector(selectChats);
+  const results = useSelector(selectChats);
+  const { chats } = results;
   const friends = useSelector(selectFriends) || [];
   const nonFriends = useSelector(selectNonFriends) || [];
   const [createFormVis, setCreateFormVis] = useState(false);
@@ -27,7 +28,7 @@ const Home = (props) => {
   const [search, setSearch] = useState("");
   const dispatch = useDispatch();
 
-  console.log(chats);
+  console.log(results);
 
   useEffect(() => {
     dispatch(fetchAllChats(id));
