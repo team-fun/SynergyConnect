@@ -4,6 +4,7 @@ const http = require("http");
 const cors = require("cors");
 const { Server } = require("socket.io");
 
+
 const corsOptions = {
   origin: "http://localhost:8080",
 };
@@ -15,6 +16,15 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: corsOptions,
 });
+
+let elements = [];
+
+const updateElementInElements = (elementData) => {
+  const index = elements.findIndex((element) => element.id === elementData.id);
+  if (index === -1) return elements.push(elementData);
+
+  elements[index] = elementData;
+}
 
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
@@ -31,7 +41,42 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log(`User Disconnected: ${socket.id}`);
   });
+
+  io.to(socket.id).emit("whiteboard-state", elements);
+
+  socket.on('element-update', (elementData) => {
+      updateElementInElements(elementData);
+      
+      socket.broadcast.emit('element-update', elementData);
+  });
+
+  socket.on('whiteboard-clear', () => {
+      elements = [];
+      socket.broadcast.emit('whiteboard-clear');
+  });
+
+  socket.on('cursor-position', (cursorData) => {
+      socket.broadcast.emit('cursor-position', {
+          ...cursorData,
+          userId: socket.id,
+      });
+  });
+
+  socket.on('disconnect', () => {
+      console.log('user disconnected');
+      socket.broadcast.emit('user-disconnected', socket.id);
+  });
 });
+
+// ************************ WHITE BOARD BEGIN ************************
+
+// app.get('/', (req, res) => {
+//   res.send('<h1>Hello server is working</h1>');
+// });
+
+// ************************ WHITE BOARD END ************************
+
+
 
 server.listen(3001, () => {
   console.log("🏃 RUNNING ON http://localhost:3001/ 🤑");
