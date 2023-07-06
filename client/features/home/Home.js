@@ -25,7 +25,7 @@ const Home = (props) => {
   const id = useSelector((state) => state.auth.me.id);
   const username = useSelector((state) => state.auth.me.username);
   const results = useSelector(selectChats);
-  const { chats, participating } = results;
+  const { chats, participating, allParticipants } = results;
   const friends = useSelector(selectFriends) || [];
   const nonFriends = useSelector(selectNonFriends) || [];
   const [createFormVis, setCreateFormVis] = useState(false);
@@ -34,6 +34,8 @@ const Home = (props) => {
   const [favoriteStatus, setFavoriteStatus] = useState({});
   const [search, setSearch] = useState("");
   const dispatch = useDispatch();
+
+  console.log(allParticipants);
 
   useEffect(() => {
     dispatch(fetchAllChats(id));
@@ -185,6 +187,8 @@ const Home = (props) => {
                 return (
                   <div key={chat.id}>
                     <h1>{chat.name}</h1>
+                    <p>{chat.description}</p>
+                    <p>👤</p>
                     <Link to={`/chats/${chat.code}`}>
                       <button>Join Room</button>
                     </Link>

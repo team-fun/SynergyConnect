@@ -8,13 +8,14 @@ router.get("/", async (req, res) => {
   try {
     const { id } = req.query;
     const participating = await Participant.findAll({ where: { userId: id } });
+    const allParticipants = await Participant.findAll();
     const participantsId = participating.map((info) => info.dataValues.chatId);
     const privateChats = await Chat.findAll({
       where: { id: { [Op.in]: participantsId }, public: false },
     });
     const publicChats = await Chat.findAll({ where: { public: true } });
     const chats = [...publicChats, ...privateChats];
-    res.send({ chats, participating });
+    res.send({ chats, participating, allParticipants });
   } catch (error) {
     console.error(error);
   }
@@ -52,13 +53,14 @@ router.post("/:code", async (req, res) => {
       chatId: chat.id,
     });
     const participating = await Participant.findAll({ where: { userId: id } });
+    const allParticipants = await Participant.findAll();
     const participantsId = participating.map((info) => info.dataValues.chatId);
     const privateChats = await Chat.findAll({
       where: { id: { [Op.in]: participantsId }, public: false },
     });
     const publicChats = await Chat.findAll({ where: { public: true } });
     const chats = [...publicChats, ...privateChats];
-    res.send({ chats, participating });
+    res.send({ chats, participating, allParticipants });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Server error" });
@@ -118,13 +120,14 @@ router.put("/", async (req, res) => {
     const participating = await Participant.findAll({
       where: { userId: isParticipating.userId },
     });
+    const allParticipants = await Participant.findAll();
     const participantsId = participating.map((info) => info.dataValues.chatId);
     const privateChats = await Chat.findAll({
       where: { id: { [Op.in]: participantsId }, public: false },
     });
     const publicChats = await Chat.findAll({ where: { public: true } });
     const chats = [...publicChats, ...privateChats];
-    res.send({ chats, participating });
+    res.send({ chats, participating, allParticipants });
   } catch (error) {
     console.log(error);
   }
