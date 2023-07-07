@@ -18,8 +18,11 @@ const ChatRoom = ({ socket, username }) => {
   const { code } = useParams();
   const id = useSelector((state) => state.auth.me.id);
   const [message, setMessage] = useState("");
+  const [userList, setUserList] = useState([]);
   const pastMessages = useSelector((state) => state.chat);
   const [messageList, setMessageList] = useState([]);
+
+  console.log(userList);
 
   const sendMessage = () => {
     const currentTime = new Date();
@@ -63,9 +66,21 @@ const ChatRoom = ({ socket, username }) => {
     });
 
     socket.emit("join_room", { code, username });
+    socket.emit("request_user_list", code);
+
+    socket.on("user_list", (users) => {
+      let uniqUsers = [];
+      for (let i = 0; i < users.length; i++) {
+        if (!uniqUsers.some((user) => user.id === users[i].id)) {
+          uniqUsers.push(users[i]);
+        }
+      }
+      setUserList(uniqUsers);
+    });
 
     return () => {
       socket.off("receive_message");
+      socket.off("user_list");
     };
   }, [socket, code, username]);
 
