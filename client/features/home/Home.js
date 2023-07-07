@@ -15,9 +15,6 @@ import {
 } from "./AllChatsSlice";
 import SearchBox from "../seachbar/SearchBar";
 
-/**
- * COMPONENT
- */
 const Home = (props) => {
   const [friendListChange, setfriendListChange] = useState(false);
   const [showFriends, setShowFriends] = useState(false);
@@ -35,27 +32,20 @@ const Home = (props) => {
 
   useEffect(() => {
     dispatch(fetchAllChats(id));
-  }, [dispatch]);
-
-  useEffect(() => {
     dispatch(fetchAllFriends({ id }));
-  }, [dispatch, friendListChange]);
+  }, [dispatch, friendListChange, id]);
 
   useEffect(() => {
     if (participating && chats) {
       const newFavoriteStatus = {};
-
       participating.forEach((info) => {
         const chatId = info.chatId;
         const chat = chats.find((chat) => chat.id === chatId);
-
         if (chat) {
           const isFavorite = info.favorite;
-
           newFavoriteStatus[chatId] = isFavorite;
         }
       });
-
       setFavoriteStatus(newFavoriteStatus);
     }
   }, [participating, chats]);
@@ -77,13 +67,10 @@ const Home = (props) => {
       acceptRejectRequest({
         loggedInUserId: id,
         otherFriendId: friendID,
-        action: action,
+        action,
       })
     );
-
-    setTimeout(() => {
-      handleFriendListChange();
-    }, 1000);
+    setTimeout(handleFriendListChange, 1000);
   };
 
   const publicFilter = () => {
@@ -96,14 +83,11 @@ const Home = (props) => {
 
   const favFilter = () => {
     setFilter(
-      chats.filter((chat) => {
-        const isParticipating = participating?.find(
-          (info) => info.chatId === chat.id
-        );
-        const chatId = chat.id;
-        const fav = favoriteStatus[chatId] || false;
-        return isParticipating && fav;
-      })
+      chats.filter(
+        (chat) =>
+          participating?.find((info) => info.chatId === chat.id) &&
+          (favoriteStatus[chat.id] || false)
+      )
     );
   };
 
@@ -128,11 +112,7 @@ const Home = (props) => {
     const oldFav = favoriteStatus[chatId] || false;
     const newFav = !oldFav;
     dispatch(favoriteRoom({ newFav, isParticipating }));
-
-    setFavoriteStatus((prevStatus) => ({
-      ...prevStatus,
-      [chatId]: newFav,
-    }));
+    setFavoriteStatus((prevStatus) => ({ ...prevStatus, [chatId]: newFav }));
   };
 
   return (
@@ -160,10 +140,9 @@ const Home = (props) => {
           <SearchBox searchChange={onSearchChange} />
           <div>
             {filter
-              .filter((chat) => {
-                const chatName = chat.name.toLowerCase();
-                return chatName.includes(search.toLowerCase());
-              })
+              .filter((chat) =>
+                chat.name.toLowerCase().includes(search.toLowerCase())
+              )
               .map((chat) => {
                 const isParticipating = participating?.find(
                   (info) => info.chatId === chat.id
