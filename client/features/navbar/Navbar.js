@@ -24,8 +24,8 @@ const Navbar = () => {
             <div>
               {/* The navbar will show these links after you log in */}
               <Link to="/home">Home</Link>
-              <Link to="/ContactUs">Contact Us</Link>
               <Link to="/profile">Profile</Link>
+              <Link to="/ContactUs">Contact Us</Link>
               <Link to="/admin">Admin</Link>
               <button type="button" onClick={logoutAndRedirectHome}>
                 Logout
