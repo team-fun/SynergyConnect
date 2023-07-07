@@ -20,6 +20,7 @@ import SearchBox from "../seachbar/SearchBar";
  */
 const Home = (props) => {
   const [friendListChange, setfriendListChange] = useState(false);
+  const [showFriends, setShowFriends] = useState(false);
   const id = useSelector((state) => state.auth.me.id);
   const username = useSelector((state) => state.auth.me.username);
   const results = useSelector(selectChats);
@@ -61,6 +62,10 @@ const Home = (props) => {
 
   const handleFriendListChange = () => {
     setfriendListChange(!friendListChange);
+  };
+
+  const toggleFriendsList = () => {
+    setShowFriends(!showFriends);
   };
 
   const create = () => {
@@ -207,39 +212,56 @@ const Home = (props) => {
         </section>
       )}
       <div>
-        <button>Friends</button>
-        {friends.length === undefined || friends?.length == 0 ? (
-          <div>No friends</div>
-        ) : (
+        <button
+          onClick={toggleFriendsList}
+        >{`${friends.length} Friends`}</button>
+        {showFriends && (
           <div>
-            {friends?.map((friend, i) => (
-              <div key={i}>
-                {friend.dataValues.username}
-                <span>
-                  {friend.pending ? (
-                    friend.sent ? (
-                      <button
-                        onClick={() =>
-                          handleAcceptRejectRequest(
-                            friend?.dataValues?.id,
-                            "reject"
-                          )
-                        }
-                      >
-                        Cancel Request
-                      </button>
-                    ) : (
-                      <>
-                        <button
-                          onClick={() =>
-                            handleAcceptRejectRequest(
-                              friend?.dataValues?.id,
-                              "accept"
-                            )
-                          }
-                        >
-                          Accept
-                        </button>
+            {friends.length === undefined || friends?.length === 0 ? (
+              <div>No friends</div>
+            ) : (
+              <div>
+                {friends.map((friend, i) => (
+                  <div key={i}>
+                    {friend.dataValues.username}
+                    <span>
+                      {friend.pending ? (
+                        friend.sent ? (
+                          <button
+                            onClick={() =>
+                              handleAcceptRejectRequest(
+                                friend?.dataValues?.id,
+                                "reject"
+                              )
+                            }
+                          >
+                            Cancel Request
+                          </button>
+                        ) : (
+                          <>
+                            <button
+                              onClick={() =>
+                                handleAcceptRejectRequest(
+                                  friend?.dataValues?.id,
+                                  "accept"
+                                )
+                              }
+                            >
+                              Accept
+                            </button>
+                            <button
+                              onClick={() =>
+                                handleAcceptRejectRequest(
+                                  friend?.dataValues?.id,
+                                  "reject"
+                                )
+                              }
+                            >
+                              Reject
+                            </button>
+                          </>
+                        )
+                      ) : (
                         <button
                           onClick={() =>
                             handleAcceptRejectRequest(
@@ -248,25 +270,14 @@ const Home = (props) => {
                             )
                           }
                         >
-                          Reject
+                          Remove Friend
                         </button>
-                      </>
-                    )
-                  ) : (
-                    <button
-                      onClick={() =>
-                        handleAcceptRejectRequest(
-                          friend?.dataValues?.id,
-                          "reject"
-                        )
-                      }
-                    >
-                      Remove Friend
-                    </button>
-                  )}
-                </span>
+                      )}
+                    </span>
+                  </div>
+                ))}
               </div>
-            ))}
+            )}
           </div>
         )}
       </div>
