@@ -3,78 +3,78 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import CreateRoomForm from "./CreateRoomForm";
 import {
-  sendFriendRequest,
   selectFriends,
   fetchAllFriends,
   acceptRejectRequest,
 } from "./AllFriendsSlice";
-import { fetchAllNonFriends, selectNonFriends } from "./AllNonFriendsSlice";
-import { selectChats, fetchAllChats, asyncJoinRoom } from "./AllChatsSlice";
+import {
+  selectChats,
+  fetchAllChats,
+  asyncJoinRoom,
+  favoriteRoom,
+} from "./AllChatsSlice";
 import SearchBox from "../seachbar/SearchBar";
 import SearchFriend from "../seachbar/searchFriend";
 import CalendarSchedule from "../calendar/Calendar";
-/**
- * COMPONENT
- */
-const Home = (props) => {
+
+const Home = () => {
   const [friendListChange, setfriendListChange] = useState(false);
+  const [showFriends, setShowFriends] = useState(false);
   const id = useSelector((state) => state.auth.me.id);
   const username = useSelector((state) => state.auth.me.username);
-  const chats = useSelector(selectChats);
+  const results = useSelector(selectChats);
+  const { chats, participating, allParticipants } = results;
   const friends = useSelector(selectFriends) || [];
-  //console.log("THISIS FRIENDS FROMHOME PAGE", friends);
   const nonFriends = useSelector(selectNonFriends) || [];
   const [createFormVis, setCreateFormVis] = useState(false);
   const [filter, setFilter] = useState([]);
   const [code, setCode] = useState("");
   const [search, setSearch] = useState("");
   const [searchFriend, setSearchFriend] = useState("");
+  const [favoriteStatus, setFavoriteStatus] = useState({});
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchAllChats(id));
-  }, [dispatch]);
-  useEffect(() => {
     dispatch(fetchAllFriends({ id }));
-    dispatch(fetchAllNonFriends({ id }));
-  }, [dispatch, friendListChange]);
+  }, [dispatch, friendListChange, id]);
+
+  useEffect(() => {
+    if (participating && chats) {
+      const newFavoriteStatus = {};
+      participating.forEach((info) => {
+        const chatId = info.chatId;
+        const chat = chats.find((chat) => chat.id === chatId);
+        if (chat) {
+          const isFavorite = info.favorite;
+          newFavoriteStatus[chatId] = isFavorite;
+        }
+      });
+      setFavoriteStatus(newFavoriteStatus);
+    }
+  }, [participating, chats]);
+
   const handleFriendListChange = () => {
     setfriendListChange(!friendListChange);
   };
 
-  useEffect(() => {
-    if (chats) {
-      setFilter(chats.filter((chat) => chat.public));
-    }
-  }, [chats]);
+  const toggleFriendsList = () => {
+    setShowFriends(!showFriends);
+  };
 
   const create = () => {
     setCreateFormVis(true);
   };
-  const handleSendRequest = (friendID) => {
-    dispatch(
-      sendFriendRequest({
-        loggedInUserId: id,
-        otherFriendId: friendID,
-      })
-    );
 
-    setTimeout(() => {
-      handleFriendListChange();
-    }, 1000);
-  };
   const handleAcceptRejectRequest = (friendID, action) => {
     dispatch(
       acceptRejectRequest({
         loggedInUserId: id,
         otherFriendId: friendID,
-        action: action,
+        action,
       })
     );
-
-    setTimeout(() => {
-      handleFriendListChange();
-    }, 1000);
+    setTimeout(handleFriendListChange, 1000);
   };
 
   const publicFilter = () => {
@@ -85,18 +85,39 @@ const Home = (props) => {
     setFilter(chats.filter((chat) => !chat.public));
   };
 
+  const favFilter = () => {
+    setFilter(
+      chats.filter(
+        (chat) =>
+          participating?.find((info) => info.chatId === chat.id) &&
+          (favoriteStatus[chat.id] || false)
+      )
+    );
+  };
+
   const joinRoom = (evt) => {
-    evt.preventDefault();
     dispatch(asyncJoinRoom({ code, id }));
     setCode("");
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      joinRoom();
+    }
   };
 
   const onSearchChange = (event) => {
     setSearch(event.target.value);
   };
 
-  const onSearchFriendChange = (event) => {
-    setSearchFriend(event.target.value);
+  const onFavorite = (event, isParticipating) => {
+    event.preventDefault();
+    const chatId = isParticipating.chatId;
+    const oldFav = favoriteStatus[chatId] || false;
+    const newFav = !oldFav;
+    dispatch(favoriteRoom({ newFav, isParticipating }));
+    setFavoriteStatus((prevStatus) => ({ ...prevStatus, [chatId]: newFav }));
+
   };
 
   return (
@@ -114,26 +135,61 @@ const Home = (props) => {
           <input
             placeholder="Enter Room Code"
             onChange={(e) => setCode(e.target.value)}
+            onKeyUp={handleKeyPress}
           ></input>
           <button onClick={joinRoom}>Join Room</button>
           <div>
             <button onClick={publicFilter}>Public Rooms</button>
             <button onClick={privateFilter}>Private Rooms</button>
+            <button onClick={favFilter}>Favorites⭐</button>
           </div>
           <SearchBox searchChange={onSearchChange} />
           <div>
             {filter
-              .filter((chat) => {
-                const chatName = chat.name.toLowerCase();
-                return chatName.includes(search.toLowerCase());
-              })
+              .filter((chat) =>
+                chat.name.toLowerCase().includes(search.toLowerCase())
+              )
               .map((chat) => {
+                const isParticipating = participating?.find(
+                  (info) => info.chatId === chat.id
+                );
+                const participants = allParticipants.filter(
+                  (participant) => participant.chatId === chat.id
+                );
+                const chatId = chat.id;
+                const fav = favoriteStatus[chatId] || false;
+
                 return (
                   <div key={chat.id}>
                     <h1>{chat.name}</h1>
+                    <p>{chat.description}</p>
+                    <p>👤 {participants.length}</p>
                     <Link to={`/chats/${chat.code}`}>
-                      <button>CLICK ME</button>
+                      <button>Join Room</button>
                     </Link>
+                    {isParticipating ? (
+                      fav ? (
+                        <span
+                          onClick={(event) =>
+                            onFavorite(event, isParticipating)
+                          }
+                          style={{ cursor: "pointer" }}
+                        >
+                          ❤️
+                        </span>
+                      ) : (
+                        <span
+                          onClick={(event) =>
+                            onFavorite(event, isParticipating)
+                          }
+                          style={{ cursor: "pointer" }}
+                        >
+                          🖤
+                        </span>
+                      )
+                    ) : (
+                      <p>Join once before favoriting!</p>
+                    )}
                   </div>
                 );
               })}
@@ -141,48 +197,22 @@ const Home = (props) => {
         </section>
       )}
       <div>
-        <SearchFriend searchChangeFriend={onSearchFriendChange} />
-        <button>Friends</button>
-        {friends.length === undefined || friends?.length == 0 ? (
-          <div>No friends</div>
-        ) : (
+      
+        <button
+          onClick={toggleFriendsList}
+        >{`${friends.length} Friends`}</button>
+        {showFriends && (
           <div>
-            {friends
-              .filter((friend) => {
-                const friendName = friend.username
-                  ? friend.username.toLowerCase()
-                  : "";
-                return friendName.includes(searchFriend.toLowerCase());
-              })
-
-              .map((friend, i) => (
-                <div key={i}>
-                  {friend.dataValues.username}
-                  <span>
-                    {friend.pending ? (
-                      friend.sent ? (
-                        <button
-                          onClick={() =>
-                            handleAcceptRejectRequest(
-                              friend?.dataValues?.id,
-                              "reject"
-                            )
-                          }
-                        >
-                          Cancel Request
-                        </button>
-                      ) : (
-                        <>
-                          <button
-                            onClick={() =>
-                              handleAcceptRejectRequest(
-                                friend?.dataValues?.id,
-                                "accept"
-                              )
-                            }
-                          >
-                            Accept
-                          </button>
+            {friends.length === undefined || friends?.length === 0 ? (
+              <div>No friends</div>
+            ) : (
+              <div>
+                {friends.map((friend, i) => (
+                  <div key={i}>
+                    {friend.dataValues.username}
+                    <span>
+                      {friend.pending ? (
+                        friend.sent ? (
                           <button
                             onClick={() =>
                               handleAcceptRejectRequest(
@@ -191,39 +221,50 @@ const Home = (props) => {
                               )
                             }
                           >
-                            Reject
+                            Cancel Request
                           </button>
-                        </>
-                      )
-                    ) : (
-                      <button
-                        onClick={() =>
-                          handleAcceptRejectRequest(
-                            friend?.dataValues?.id,
-                            "reject"
-                          )
-                        }
-                      >
-                        Remove Friend
-                      </button>
-                    )}
-                  </span>
-                </div>
-              ))}
-          </div>
-        )}
-        {nonFriends.length === undefined || nonFriends?.length == 0 ? (
-          <div>All Users are friends</div>
-        ) : (
-          <div>
-            {nonFriends?.map((nonFriend, i) => (
-              <div key={i}>
-                {nonFriend.username}{" "}
-                <button onClick={() => handleSendRequest(nonFriend.id)}>
-                  +
-                </button>
+                        ) : (
+                          <>
+                            <button
+                              onClick={() =>
+                                handleAcceptRejectRequest(
+                                  friend?.dataValues?.id,
+                                  "accept"
+                                )
+                              }
+                            >
+                              Accept
+                            </button>
+                            <button
+                              onClick={() =>
+                                handleAcceptRejectRequest(
+                                  friend?.dataValues?.id,
+                                  "reject"
+                                )
+                              }
+                            >
+                              Reject
+                            </button>
+                          </>
+                        )
+                      ) : (
+                        <button
+                          onClick={() =>
+                            handleAcceptRejectRequest(
+                              friend?.dataValues?.id,
+                              "reject"
+                            )
+                          }
+                        >
+
+                          Remove Friend
+                        </button>
+                      )}
+                    </span>
+                  </div>
+                ))}
               </div>
-            ))}
+            )}
           </div>
         )}
       </div>

@@ -29,11 +29,11 @@ const UserView = () => {
 
   async function fetchUser() {
     const data = await (await fetch("/api/users/" + id)).json();
-   
+
     setUser(data);
   }
   useEffect(() => {
-	console.log("placeholder", placeHolder)
+    console.log("placeholder", placeHolder);
     if (user) {
       setUser((state) => {
         const arr = [];
@@ -46,17 +46,17 @@ const UserView = () => {
   }, [placeHolder]);
   async function setToMe() {
     setUser(_user);
-	setPlaceHolder(
-		((arr) => {
-		  let str = "";
-		  arr.forEach((i) => {
-			console.log(i);
-			str += i + ", ";
-		  });
-  
-		  return str;
-		})(_user.interests) 
-	  );
+    setPlaceHolder(
+      ((arr) => {
+        let str = "";
+        arr.forEach((i) => {
+          console.log(i);
+          str += i + ", ";
+        });
+
+        return str;
+      })(_user.interests)
+    );
   }
   useEffect(() => {
     if (id) {
@@ -90,40 +90,36 @@ const UserView = () => {
     }
   }, [user]);
 
-  useEffect(()=>{
-if(id){
-    fetchUser()
-}else{
-    setToMe()
-}
-   
-          
-            
-            
-   },[])
+  useEffect(() => {
+    if (id) {
+      fetchUser();
+    } else {
+      setToMe();
+    }
+  }, []);
 
-const handleImageChange = async (e) => {
-	const inputValue = e.target.files[0];
-	let formData = new FormData();
+  const handleImageChange = async (e) => {
+    const inputValue = e.target.files[0];
+    let formData = new FormData();
 
-	formData.append("image", inputValue);
-	await axios.post("/api/upload", formData).then(async (res) => {
-		setImage(res?.data?.url);
-		await dispatch(
-			editUser({
-				id: user?.id,
-				image: res?.data?.url,
-			})
-		);
-	});
-};
+    formData.append("image", inputValue);
+    await axios.post("/api/upload", formData).then(async (res) => {
+      setImage(res?.data?.url);
+      await dispatch(
+        editUser({
+          id: user?.id,
+          image: res?.data?.url,
+        })
+      );
+    });
+  };
 
 
   return (
     <div className="userViewWrapper">
       <div className="profile">
         <div className="pfp">
-          <img src={image? image :user.image} alt="" />
+          <img src={image ? image : user.image} alt="" />
         </div>
         <input type="file" onChange={handleImageChange} />
         <div className="user-info">
@@ -279,13 +275,13 @@ const handleImageChange = async (e) => {
           </div>
           <div className="user-info-exta">
             <ul className="interests">
-              {editInterests ? <p>Edit Interests:</p> : <p>Interests</p>}
+              {editInterests ? <h4>Edit Interests:</h4> : <h4>Interests</h4>}
               {!editInterests && (
-             <>
+                <>
                   {user.interests?.map((i) => (
-                    <span>{i}</span>
+                    <p>{i}</p>
                   ))}
-               </>
+                </>
               )}
               {editInterests && (
                 <input

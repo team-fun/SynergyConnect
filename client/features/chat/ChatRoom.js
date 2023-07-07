@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
-import { sendNewChats, fetchOldChats, deleteUserFromRoom } from "./chatRoomSlice";
+import { useParams, Link } from "react-router-dom";
+import {
+  sendNewChats,
+  fetchOldChats,
+  deleteUserFromRoom,
+} from "./chatRoomSlice";
 import VideoCall from "./videoCall";
+import Whiteboard from "./WhiteBoard/Whiteboard";
 import { useNavigate } from "react-router-dom";
-
 
 /**
  * COMPONENT
@@ -16,7 +20,6 @@ const ChatRoom = ({ socket, username }) => {
   const [message, setMessage] = useState("");
   const pastMessages = useSelector((state) => state.chat);
   const [messageList, setMessageList] = useState([]);
-
 
   const sendMessage = () => {
     const currentTime = new Date();
@@ -42,10 +45,8 @@ const ChatRoom = ({ socket, username }) => {
     setMessage("");
   };
 
-
-
   useEffect(() => {
-    dispatch(fetchOldChats(code));
+    dispatch(fetchOldChats({ code, id }));
     socket.on("receive_message", (data) => {
       setMessageList((list) => {
         const newList = [...list];
@@ -75,6 +76,7 @@ const ChatRoom = ({ socket, username }) => {
   }, [pastMessages]);
 
   const [videoCall, setVideoCall] = useState(false);
+  const [whiteBoard, setWhiteBoard] = useState(false);
 
   const handleClick = () => {
     if (videoCall) {
@@ -83,12 +85,19 @@ const ChatRoom = ({ socket, username }) => {
     setVideoCall(true);
   };
 
-  const navigate = useNavigate()
+  const handleClickWB = () => {
+    if (whiteBoard) {
+      setWhiteBoard(false);
+    }
+    setWhiteBoard(true);
+  };
+
+  const navigate = useNavigate();
 
   const handleDelete = () => {
-    dispatch(deleteUserFromRoom({ id, code } ))
-    navigate('/home')
-  }
+    dispatch(deleteUserFromRoom({ id, code }));
+    navigate("/home");
+  };
 
   return (
     <div>
@@ -99,6 +108,14 @@ const ChatRoom = ({ socket, username }) => {
           {videoCall && <VideoCall code={code} username={username} />}
         </div>
         <div>
+          <Link to={`/home/`}>
+            <button>Back</button>
+          </Link>
+          <button style={{ backgroundColor: "red" }} onClick={handleDelete}>
+            Leave Chat Room
+          </button>
+          <button onClick={handleClickWB}>Create Whiteboard</button>
+          {whiteBoard && <Whiteboard socket={socket} />}
           <button onClick={handleDelete}>Leave Chat Room</button>
         </div>
       </header>
