@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Friend, Participant, Chat, MessageData },
+  models: { User, Friend, Participant, Chat, MessageData, Event },
 } = require("../server/db");
 
 /**
@@ -149,17 +149,31 @@ async function seed() {
     }),
   ]);
 
+const startDateTime = new Date(2023, 6, 10, 11, 0, 0);
+const endDateTime = new Date(2023, 6, 10, 11, 30, 0);
+
+  const events = await Promise.all([
+    Event.create({
+      title: "Event 1",
+      start: startDateTime,
+      end: endDateTime,
+      userId: 1
+    }),
+  ]);
+
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${friends.length} friends`);
   console.log(`seeded ${chats.length} chats`);
   console.log(`seeded ${participants.length} participants`);
   console.log(`seeded ${messages.length} messages`);
+  console.log(`seeded ${events.length} events`);
   console.log(`seeded successfully`);
   return {
     users,
     chats,
     friends,
     participants,
+    events,
   };
 }
 

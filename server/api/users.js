@@ -26,16 +26,6 @@ router.get("/:id", async(req , res)=>{
 		}
 })
 
-router.post("/", async (req, res, next) => {
-	console.log(req);
-	try {
-		const { username, email } = req.body;
-		const newUser = await User.create({ username, email });
-		res.status(201).json(newUser);
-	} catch (error) {
-		next(error);
-	}
-});
 
 
 router.put("/:id", async (req, res, next) => {
@@ -57,9 +47,6 @@ router.put("/:id", async (req, res, next) => {
 		next(error);
 	}
 });
-
-
-
 
 
 router.delete("/:id", async (req, res, next) => {
