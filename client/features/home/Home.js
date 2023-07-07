@@ -3,12 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import CreateRoomForm from "./CreateRoomForm";
 import {
-  sendFriendRequest,
   selectFriends,
   fetchAllFriends,
   acceptRejectRequest,
 } from "./AllFriendsSlice";
-import { fetchAllNonFriends, selectNonFriends } from "./AllNonFriendsSlice";
 import {
   selectChats,
   fetchAllChats,
@@ -27,7 +25,6 @@ const Home = (props) => {
   const results = useSelector(selectChats);
   const { chats, participating, allParticipants } = results;
   const friends = useSelector(selectFriends) || [];
-  const nonFriends = useSelector(selectNonFriends) || [];
   const [createFormVis, setCreateFormVis] = useState(false);
   const [filter, setFilter] = useState([]);
   const [code, setCode] = useState("");
@@ -41,7 +38,6 @@ const Home = (props) => {
 
   useEffect(() => {
     dispatch(fetchAllFriends({ id }));
-    dispatch(fetchAllNonFriends({ id }));
   }, [dispatch, friendListChange]);
 
   useEffect(() => {
@@ -69,19 +65,6 @@ const Home = (props) => {
 
   const create = () => {
     setCreateFormVis(true);
-  };
-
-  const handleSendRequest = (friendID) => {
-    dispatch(
-      sendFriendRequest({
-        loggedInUserId: id,
-        otherFriendId: friendID,
-      })
-    );
-
-    setTimeout(() => {
-      handleFriendListChange();
-    }, 1000);
   };
 
   const handleAcceptRejectRequest = (friendID, action) => {
@@ -224,7 +207,7 @@ const Home = (props) => {
         </section>
       )}
       <div>
-        <h1>Friends</h1>
+        <button>Friends</button>
         {friends.length === undefined || friends?.length == 0 ? (
           <div>No friends</div>
         ) : (
@@ -282,21 +265,6 @@ const Home = (props) => {
                     </button>
                   )}
                 </span>
-              </div>
-            ))}
-          </div>
-        )}
-        <h1>Non Friends</h1>
-        {nonFriends.length === undefined || nonFriends?.length == 0 ? (
-          <div>All Users are friends</div>
-        ) : (
-          <div>
-            {nonFriends?.map((nonFriend, i) => (
-              <div key={i}>
-                {nonFriend.username}{" "}
-                <button onClick={() => handleSendRequest(nonFriend.id)}>
-                  +
-                </button>
               </div>
             ))}
           </div>
