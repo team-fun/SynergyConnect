@@ -109,7 +109,13 @@ const ChatRoom = ({ socket, username }) => {
 
   const navigate = useNavigate();
 
+  const leaveRoom = () => {
+    socket.emit("leave_room", code);
+    navigate("/home");
+  };
+
   const handleDelete = () => {
+    socket.emit("leave_room", code);
     dispatch(deleteUserFromRoom({ id, code }));
     navigate("/home");
   };
@@ -123,9 +129,7 @@ const ChatRoom = ({ socket, username }) => {
           {videoCall && <VideoCall code={code} username={username} />}
         </div>
         <div>
-          <Link to={`/home/`}>
-            <button>Back</button>
-          </Link>
+          <button onClick={leaveRoom}>Back</button>
           <button style={{ backgroundColor: "red" }} onClick={handleDelete}>
             Leave Chat Room
           </button>
