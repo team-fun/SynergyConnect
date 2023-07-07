@@ -137,8 +137,11 @@ const ChatRoom = ({ socket, username }) => {
           {whiteBoard && <Whiteboard socket={socket} />}
           <button onClick={handleDelete}>Leave Chat Room</button>
         </div>
+        <h4>Users in this room: </h4>
+        {userList.map((user) => {
+          return <p key={user.id}>{user.username}</p>;
+        })}
       </header>
-
       <div>
         <section>
           <h3
