@@ -22,8 +22,6 @@ const ChatRoom = ({ socket, username }) => {
   const pastMessages = useSelector((state) => state.chat);
   const [messageList, setMessageList] = useState([]);
 
-  console.log(userList);
-
   const sendMessage = () => {
     const currentTime = new Date();
     const hours = currentTime.getHours();
