@@ -3,11 +3,7 @@ import React from "react";
 const SearchBox = ({ searchChange }) => {
   return (
     <div>
-      <input
-        type="search"
-        placeholder="search chat rooms"
-        onChange={searchChange}
-      />
+      <input type="search" placeholder="search..." onChange={searchChange} />
     </div>
   );
 };
