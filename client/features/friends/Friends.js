@@ -11,13 +11,22 @@ const Friends = () => {
   const id = useSelector((state) => state.auth.me.id);
   const [friendListChange, setfriendListChange] = useState(false);
   const nonFriends = useSelector(selectNonFriends) || [];
-  const [filter, setFilter] = useState([]);
+  const [filteredNonFriends, setFilteredNonFriends] = useState([]);
   const [search, setSearch] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchAllNonFriends({ id }));
   }, [dispatch, friendListChange]);
+
+  useEffect(() => {
+    setFilteredNonFriends(
+      nonFriends.filter((nonFriend) => {
+        const username = nonFriend.username.toLowerCase();
+        return username.includes(search.toLowerCase());
+      })
+    );
+  }, [nonFriends, search]);
 
   const handleFriendListChange = () => {
     setfriendListChange(!friendListChange);
@@ -43,12 +52,12 @@ const Friends = () => {
   return (
     <div>
       <SearchBox searchChange={onSearchChange} />
-      <h1>Non Friends</h1>
-      {nonFriends.length === undefined || nonFriends?.length == 0 ? (
+      {filteredNonFriends.length === 0 ? (
         <div>All Users are friends</div>
       ) : (
         <div>
-          {nonFriends?.map((nonFriend, i) => (
+          <h2>Users:</h2>
+          {filteredNonFriends.map((nonFriend, i) => (
             <div key={i}>
               {nonFriend.username}{" "}
               <button onClick={() => handleSendRequest(nonFriend.id)}>+</button>
