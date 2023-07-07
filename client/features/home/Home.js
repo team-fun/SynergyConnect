@@ -25,7 +25,7 @@ const Home = (props) => {
   const id = useSelector((state) => state.auth.me.id);
   const username = useSelector((state) => state.auth.me.username);
   const results = useSelector(selectChats);
-  const { chats, participating } = results;
+  const { chats, participating, allParticipants } = results;
   const friends = useSelector(selectFriends) || [];
   const nonFriends = useSelector(selectNonFriends) || [];
   const [createFormVis, setCreateFormVis] = useState(false);
@@ -44,15 +44,28 @@ const Home = (props) => {
     dispatch(fetchAllNonFriends({ id }));
   }, [dispatch, friendListChange]);
 
+  useEffect(() => {
+    if (participating && chats) {
+      const newFavoriteStatus = {};
+
+      participating.forEach((info) => {
+        const chatId = info.chatId;
+        const chat = chats.find((chat) => chat.id === chatId);
+
+        if (chat) {
+          const isFavorite = info.favorite;
+
+          newFavoriteStatus[chatId] = isFavorite;
+        }
+      });
+
+      setFavoriteStatus(newFavoriteStatus);
+    }
+  }, [participating, chats]);
+
   const handleFriendListChange = () => {
     setfriendListChange(!friendListChange);
   };
-
-  useEffect(() => {
-    if (chats) {
-      setFilter(chats.filter((chat) => chat.public));
-    }
-  }, [chats]);
 
   const create = () => {
     setCreateFormVis(true);
@@ -107,16 +120,22 @@ const Home = (props) => {
   };
 
   const joinRoom = (evt) => {
-    evt.preventDefault();
     dispatch(asyncJoinRoom({ code, id }));
     setCode("");
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      joinRoom();
+    }
   };
 
   const onSearchChange = (event) => {
     setSearch(event.target.value);
   };
 
-  const onFavorite = (isParticipating) => {
+  const onFavorite = (event, isParticipating) => {
+    event.preventDefault();
     const chatId = isParticipating.chatId;
     const oldFav = favoriteStatus[chatId] || false;
     const newFav = !oldFav;
@@ -142,6 +161,7 @@ const Home = (props) => {
           <input
             placeholder="Enter Room Code"
             onChange={(e) => setCode(e.target.value)}
+            onKeyUp={handleKeyPress}
           ></input>
           <button onClick={joinRoom}>Join Room</button>
           <div>
@@ -160,26 +180,35 @@ const Home = (props) => {
                 const isParticipating = participating?.find(
                   (info) => info.chatId === chat.id
                 );
+                const participants = allParticipants.filter(
+                  (participant) => participant.chatId === chat.id
+                );
                 const chatId = chat.id;
                 const fav = favoriteStatus[chatId] || false;
 
                 return (
                   <div key={chat.id}>
                     <h1>{chat.name}</h1>
+                    <p>{chat.description}</p>
+                    <p>👤 {participants.length}</p>
                     <Link to={`/chats/${chat.code}`}>
                       <button>Join Room</button>
                     </Link>
                     {isParticipating ? (
                       fav ? (
                         <span
-                          onClick={() => onFavorite(isParticipating)}
+                          onClick={(event) =>
+                            onFavorite(event, isParticipating)
+                          }
                           style={{ cursor: "pointer" }}
                         >
                           ❤️
                         </span>
                       ) : (
                         <span
-                          onClick={() => onFavorite(isParticipating)}
+                          onClick={(event) =>
+                            onFavorite(event, isParticipating)
+                          }
                           style={{ cursor: "pointer" }}
                         >
                           🖤
@@ -195,7 +224,7 @@ const Home = (props) => {
         </section>
       )}
       <div>
-        <button>Friends</button>
+        <h1>Friends</h1>
         {friends.length === undefined || friends?.length == 0 ? (
           <div>No friends</div>
         ) : (
@@ -257,6 +286,7 @@ const Home = (props) => {
             ))}
           </div>
         )}
+        <h1>Non Friends</h1>
         {nonFriends.length === undefined || nonFriends?.length == 0 ? (
           <div>All Users are friends</div>
         ) : (
