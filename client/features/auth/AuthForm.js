@@ -88,3 +88,13 @@ const AuthForm = ({ name, displayName }) => {
 };
 
 export default AuthForm;
+
+
+/*     <p>
+                    Introducing Synergy Connect: the all-in-one collaborative
+                    platform for seamless communication and productivity. Chat,
+                    video calls, audio calls, calendar integration, and a
+                    dynamic whiteboard revolutionize how you connect and
+                    collaborate. Unlock your team's potential with Synergy
+                    Connect's effortless synergy. Join the revolution today!
+                  </p> */

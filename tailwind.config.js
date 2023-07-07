@@ -5,24 +5,32 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        blue: {
-          light: "#87ceeb",
-          DEFAULT: "#0070f3",
-          dark: "#0000ff",
-        },
+        white: "#fff",
+        black: "#000",
+        grey: "#f5f5f7",
+        tomato: "#f45b5b",
       },
-      gradientColorStops: {
-        blue: {
-          light: "#87ceeb",
-          DEFAULT: "#0070f3",
-          dark: "#0000ff",
-        },
+      fontFamily: {
+        button: "Baloo Bhai",
+        tapestry: "Tapestry",
+        h1: "'Baloo Bhai'",
       },
-      gradientColors: {
-        blue: "var(--gradient-blue)",
+      borderRadius: {
+        sm: "14px",
+        "10xs": "3px",
       },
     },
+    fontSize: {
+      smi: "13px",
+      "45xl": "64px",
+      base: "16px",
+      "17xl": "36px",
+      "5xl": "24px",
+    },
   },
-  variants: {},
-  plugins: [],
+  corePlugins: {
+    preflight: false,
+  },
 };
+
+

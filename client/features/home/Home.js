@@ -87,41 +87,56 @@ const Home = (props) => {
   };
 
   return (
-    <div>
-      {createFormVis ? (
-        <>
-          <CreateRoomForm />
-          <button onClick={() => setCreateFormVis(false)}>Back</button>
-        </>
-      ) : (
-        <section>
-          <h3>Welcome, {username}</h3>
-          <button onClick={create}>Create Room</button>
-          <input
-            placeholder="Enter Room Code"
-            onChange={(e) => setCode(e.target.value)}
-          ></input>
-          <button onClick={joinRoom}>Join Room</button>
+  <div className="w-full my-6 flex justify-center">
+    <section className="flex-1 border-2 border-black p-4">
+      <div className="">
+        {createFormVis ? (
+          <>
+            <CreateRoomForm />
+            <button onClick={() => setCreateFormVis(false)}>Back</button>
+          </>
+        ) : (
           <div>
-            <button onClick={publicFilter}>Public Rooms</button>
-            <button onClick={privateFilter}>Private Rooms</button>
+            <div className="py-10 px-5 flex items-center justify-center">
+              <div>
+                <h3 className="text-3xl">Welcome, {username}</h3>
+                <p className="font-thin">It's good to see you</p>
+              </div>
+              <div>
+                <button>Select a theme</button>
+              </div>
+            </div>
+            <div className="py-10 px-5 flex items-center justify-center">
+              <button onClick={create}>Create Room</button>
+              <input
+                placeholder="Enter Room Code"
+                onChange={(e) => setCode(e.target.value)}
+              ></input>
+              <button onClick={joinRoom}>Join Room</button>
+              <div>
+                <button onClick={publicFilter}>Public Rooms</button>
+                <button onClick={privateFilter}>Private Rooms</button>
+              </div>
+            </div>
+            <div>
+              {filter.map((chat) => {
+                return (
+                  <div key={chat.id}>
+                    <h1>{chat.name}</h1>
+                    <Link to={`/chats/${chat.code}`}>
+                      <button>CLICK ME</button>
+                    </Link>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-          <div>
-            {filter.map((chat) => {
-              return (
-                <div key={chat.id}>
-                  <h1>{chat.name}</h1>
-                  <Link to={`/chats/${chat.code}`}>
-                    <button>CLICK ME</button>
-                  </Link>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-      )}
-      <div>
-        <button>Friends</button>
+        )}
+      </div>
+    </section>
+    <div className="flex flex-col items-center">
+      <div className="">
+        <button>Friends</button> 
         {friends.length === undefined || friends?.length == 0 ? (
           <div>No friends</div>
         ) : (
@@ -136,7 +151,7 @@ const Home = (props) => {
                         onClick={() =>
                           handleAcceptRejectRequest(
                             friend?.dataValues?.id,
-                            "reject"
+                            'reject'
                           )
                         }
                       >
@@ -148,7 +163,7 @@ const Home = (props) => {
                           onClick={() =>
                             handleAcceptRejectRequest(
                               friend?.dataValues?.id,
-                              "accept"
+                              'accept'
                             )
                           }
                         >
@@ -158,7 +173,7 @@ const Home = (props) => {
                           onClick={() =>
                             handleAcceptRejectRequest(
                               friend?.dataValues?.id,
-                              "reject"
+                              'reject'
                             )
                           }
                         >
@@ -171,7 +186,7 @@ const Home = (props) => {
                       onClick={() =>
                         handleAcceptRejectRequest(
                           friend?.dataValues?.id,
-                          "reject"
+                          'reject'
                         )
                       }
                     >
@@ -189,18 +204,18 @@ const Home = (props) => {
           <div>
             {nonFriends?.map((nonFriend, i) => (
               <div key={i}>
-                {nonFriend.username}{" "}
+                {nonFriend.username}{' '}
                 <button onClick={() => handleSendRequest(nonFriend.id)}>
                   +
                 </button>
-         
               </div>
             ))}
           </div>
         )}
       </div>
     </div>
-  );
-};
+  </div>
+);
+            }
 
 export default Home;

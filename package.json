@@ -4,7 +4,7 @@
   "description": "Some boilerplate code to get you started - get shakin'!",
   "main": "index.js",
   "scripts": {
-    "build:css": "npx tailwindcss build tailwind.css -o public/styles/style.css",
+    "build:css": "npx tailwindcss build tailwind.css -o public/styles/style.css --watch",
     "build": "webpack",
     "build:dev": "npm run build -- --watch --mode=development",
     "seed": "node script/seed.js",
@@ -39,6 +39,7 @@
     "multer": "^1.4.5-lts.1",
     "pg": "^8.8.0",
     "postcss": "^8.4.24",
+    "react-icons": "^4.10.1",
     "react-jitsi": "^1.0.4",
     "react-scroll-to-bottom": "^4.2.0",
     "sequelize": "^6.25.3",

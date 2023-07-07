@@ -13,8 +13,10 @@ const App = () => {
     <div>
    
     <Provider store={store}>
+      <div className = "flex">
       <Navbar />
       <AppRoutes />
+      </div>
       <Footer />
     </Provider>
     </div>
