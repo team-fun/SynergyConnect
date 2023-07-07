@@ -14,7 +14,6 @@ import {
   favoriteRoom,
 } from "./AllChatsSlice";
 import SearchBox from "../seachbar/SearchBar";
-import SearchFriend from "../seachbar/searchFriend";
 import CalendarSchedule from "../calendar/Calendar";
 
 const Home = () => {
@@ -25,7 +24,6 @@ const Home = () => {
   const results = useSelector(selectChats);
   const { chats, participating, allParticipants } = results;
   const friends = useSelector(selectFriends) || [];
-  const nonFriends = useSelector(selectNonFriends) || [];
   const [createFormVis, setCreateFormVis] = useState(false);
   const [filter, setFilter] = useState([]);
   const [code, setCode] = useState("");
@@ -117,7 +115,6 @@ const Home = () => {
     const newFav = !oldFav;
     dispatch(favoriteRoom({ newFav, isParticipating }));
     setFavoriteStatus((prevStatus) => ({ ...prevStatus, [chatId]: newFav }));
-
   };
 
   return (
@@ -197,7 +194,6 @@ const Home = () => {
         </section>
       )}
       <div>
-      
         <button
           onClick={toggleFriendsList}
         >{`${friends.length} Friends`}</button>
@@ -256,7 +252,6 @@ const Home = () => {
                             )
                           }
                         >
-
                           Remove Friend
                         </button>
                       )}
