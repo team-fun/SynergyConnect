@@ -15,7 +15,7 @@ import {
 } from "./AllChatsSlice";
 import SearchBox from "../seachbar/SearchBar";
 
-const Home = (props) => {
+const Home = () => {
   const [friendListChange, setfriendListChange] = useState(false);
   const [showFriends, setShowFriends] = useState(false);
   const id = useSelector((state) => state.auth.me.id);
