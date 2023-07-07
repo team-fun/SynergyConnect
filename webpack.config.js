@@ -17,6 +17,9 @@ module.exports = {
         },
       },
       {
+        test: /\.(sass|less|css)$/,
+        use: ['style-loader', 'css-loader', 'less-loader']
+      }
         test: /\.svg$/,
         use: 'file-loader',
       },

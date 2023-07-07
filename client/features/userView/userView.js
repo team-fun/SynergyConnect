@@ -11,6 +11,7 @@ import { fetchSingleUser, editUser } from "../admin/editUserSlice";
 import { me } from "../auth/authSlice";
 import { useParams } from "react-router-dom";
 
+
 const UserView = () => {
   const [user, setUser] = useState({});
   const dispatch = useDispatch();
@@ -112,6 +113,7 @@ const UserView = () => {
       );
     });
   };
+
 
   return (
     <div className="userViewWrapper">
