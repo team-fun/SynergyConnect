@@ -3,6 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../app/store";
 import { selectUser } from "../auth/authSlice";
+import { useState } from "react";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 
 const Navbar = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
@@ -14,7 +17,15 @@ const Navbar = () => {
   };
   const user = useSelector(selectUser);
   const isAdmin = user.me.isAdmin;
+  const [theme, setTheme] = useState(true);
 
+  function changeTheme() {
+
+    !theme ? 
+    document.querySelectorAll("*").forEach((e) => e.classList.remove("dark"))
+    :
+    document.querySelectorAll("*").forEach((e) => e.classList.add("dark"));
+  }
   return (
     <div>
       <h1>Synergy Connect</h1>
@@ -61,6 +72,17 @@ const Navbar = () => {
             </div>
           </div>
         )}
+        <div
+          className={"theme-btn" + (!theme ? " dark" : "")}
+          onClick={(e) => {
+            setTheme(!theme);
+            changeTheme()
+          }}
+        >
+          <div className="inner">
+            {theme ? <LightModeIcon /> : <DarkModeIcon />}
+          </div>
+        </div>
       </nav>
       <hr />
     </div>
