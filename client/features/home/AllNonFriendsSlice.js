@@ -6,7 +6,7 @@ export const fetchAllNonFriends = createAsyncThunk(
   async ({ id }) => {
     try {
       const { data } = await axios.get(`/api/friends/notFriends/${id}`);
-     
+
       return data.nonFriends;
     } catch (error) {
       console.error(error);
@@ -26,7 +26,6 @@ const nonFriendsSlice = createSlice({
 });
 
 export const selectNonFriends = (state) => {
-  //console.log(state);
   return state.notFriends;
 };
 

@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
-import { sendNewChats, fetchOldChats, deleteUserFromRoom } from "./chatRoomSlice";
+import { useParams, Link } from "react-router-dom";
+import {
+  sendNewChats,
+  fetchOldChats,
+  deleteUserFromRoom,
+} from "./chatRoomSlice";
 import VideoCall from "./videoCall";
+import Whiteboard from "./WhiteBoard/Whiteboard";
 import { useNavigate } from "react-router-dom";
-
 
 /**
  * COMPONENT
@@ -14,9 +18,9 @@ const ChatRoom = ({ socket, username }) => {
   const { code } = useParams();
   const id = useSelector((state) => state.auth.me.id);
   const [message, setMessage] = useState("");
+  const [userList, setUserList] = useState([]);
   const pastMessages = useSelector((state) => state.chat);
   const [messageList, setMessageList] = useState([]);
-
 
   const sendMessage = () => {
     const currentTime = new Date();
@@ -42,10 +46,8 @@ const ChatRoom = ({ socket, username }) => {
     setMessage("");
   };
 
-
-
   useEffect(() => {
-    dispatch(fetchOldChats(code));
+    dispatch(fetchOldChats({ code, id }));
     socket.on("receive_message", (data) => {
       setMessageList((list) => {
         const newList = [...list];
@@ -62,9 +64,21 @@ const ChatRoom = ({ socket, username }) => {
     });
 
     socket.emit("join_room", { code, username });
+    socket.emit("request_user_list", code);
+
+    socket.on("user_list", (users) => {
+      let uniqUsers = [];
+      for (let i = 0; i < users.length; i++) {
+        if (!uniqUsers.some((user) => user.id === users[i].id)) {
+          uniqUsers.push(users[i]);
+        }
+      }
+      setUserList(uniqUsers);
+    });
 
     return () => {
       socket.off("receive_message");
+      socket.off("user_list");
     };
   }, [socket, code, username]);
 
@@ -75,6 +89,7 @@ const ChatRoom = ({ socket, username }) => {
   }, [pastMessages]);
 
   const [videoCall, setVideoCall] = useState(false);
+  const [whiteBoard, setWhiteBoard] = useState(false);
 
   const handleClick = () => {
     if (videoCall) {
@@ -83,12 +98,25 @@ const ChatRoom = ({ socket, username }) => {
     setVideoCall(true);
   };
 
-  const navigate = useNavigate()
+  const handleClickWB = () => {
+    if (whiteBoard) {
+      setWhiteBoard(false);
+    }
+    setWhiteBoard(true);
+  };
+
+  const navigate = useNavigate();
+
+  const leaveRoom = () => {
+    socket.emit("leave_room", code);
+    navigate("/home");
+  };
 
   const handleDelete = () => {
-    dispatch(deleteUserFromRoom({ id, code } ))
-    navigate('/home')
-  }
+    socket.emit("leave_room", code);
+    dispatch(deleteUserFromRoom({ id, code }));
+    navigate("/home");
+  };
 
   return (
     <div>
@@ -99,10 +127,19 @@ const ChatRoom = ({ socket, username }) => {
           {videoCall && <VideoCall code={code} username={username} />}
         </div>
         <div>
+          <button onClick={leaveRoom}>Back</button>
+          <button style={{ backgroundColor: "red" }} onClick={handleDelete}>
+            Leave Chat Room
+          </button>
+          <button onClick={handleClickWB}>Create Whiteboard</button>
+          {whiteBoard && <Whiteboard socket={socket} />}
           <button onClick={handleDelete}>Leave Chat Room</button>
         </div>
+        <h4>Users in this room: </h4>
+        {userList.map((user) => {
+          return <p key={user.id}>{user.username}</p>;
+        })}
       </header>
-
       <div>
         <section>
           <h3

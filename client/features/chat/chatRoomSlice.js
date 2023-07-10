@@ -3,9 +3,9 @@ import axios from "axios";
 
 export const fetchOldChats = createAsyncThunk(
   "chats/fetchOldChats",
-  async (code) => {
+  async ({ code, id }) => {
     try {
-      const { data } = await axios.get(`/api/chats/${code}`);
+      const { data } = await axios.get(`/api/chats/${code}/${id}`);
       return data;
     } catch (error) {
       console.log(error);
@@ -33,14 +33,13 @@ export const deleteUserFromRoom = createAsyncThunk(
   "deleteUserFromRoom",
   async ({ code, id }) => {
     try {
-      const { data } = await axios.delete(`/api/chats/${code}/${id}`, { id } );
+      const { data } = await axios.delete(`/api/chats/${code}/${id}`);
       return data;
-      
     } catch (error) {
       console.log(error);
     }
   }
-)
+);
 
 const chatRoomSlice = createSlice({
   name: "chat",
@@ -54,9 +53,9 @@ const chatRoomSlice = createSlice({
       console.log("Message sent successfully");
     });
     builder.addCase(deleteUserFromRoom.fulfilled, (state, action) => {
-      const newState = state.filter((user) => user.id !== action.payload)
-      return newState
-    })
+      const newState = state.filter((user) => user.id !== action.payload);
+      return newState;
+    });
   },
 });
 

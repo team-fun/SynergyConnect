@@ -2,7 +2,7 @@ const Sequelize = require("sequelize");
 const db = require("../db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-require("dotenv").config()
+require("dotenv").config();
 
 const SALT_ROUNDS = 5;
 
@@ -25,13 +25,12 @@ const User = db.define("user", {
   isAdmin: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
-    defaultValue: false
+    defaultValue: false,
   },
   firstName: {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-     
       notEmpty: true,
     },
   },
@@ -39,15 +38,13 @@ const User = db.define("user", {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-      
       notEmpty: true,
     },
-  }, 
+  },
   email: {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
-     
       isEmail: true,
       notEmpty: true,
     },
@@ -60,10 +57,9 @@ const User = db.define("user", {
       notEmpty: true,
     },
   },
-  bio:{
-    type:Sequelize.STRING,
-    allowNull:true,
-
+  bio: {
+    type: Sequelize.STRING,
+    allowNull: true,
   },
   icon: {
     type: Sequelize.STRING,
@@ -78,21 +74,22 @@ const User = db.define("user", {
     allowNull: true,
     defaultValue: [],
   },
-  image:{
-    type:Sequelize.STRING,
-    allowNull:false,
-    defaultValue:process.env.DEFAULT_PROFILE_IMAGE
-
+  image: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: process.env.DEFAULT_PROFILE_IMAGE,
   },
-  location:{
-    type:Sequelize.STRING,
+  location: {
+    type: Sequelize.STRING,
     allowNull: true,
-    
+  },
+  online:{
+    type:Sequelize.BOOLEAN,
+    defaultValue:false
   }
 });
 
 module.exports = User;
-
 
 /**
  * instanceMethods

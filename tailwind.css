@@ -1,0 +1,27 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+/* Add your custom CSS here */
+/* @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap'); */
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;600;700;800;900;1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Baloo+Bhai:wght@100;200;300;400;500;600;700;800;900;1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Tapestry:wght@100;200;300;400;500;600;700;800;900;1000&display=swap");
+
+body {
+  font-family: Baloo Bhai;
+}
+
+/* Add your custom styles here */
+:root {
+  --gradient-blue: linear-gradient(
+    to right,
+    var(--blue-light),
+    var(--blue-dark)
+  );
+}
+.custom-icon {
+  color: white;
+}
+
