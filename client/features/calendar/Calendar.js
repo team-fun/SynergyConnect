@@ -51,9 +51,10 @@ const CalendarSchedule = () => {
   }
 
   const handleDelete = () => {
-    setDeleteEvent([...allEvents, deleteEvent]);
-    dispatch(deleteEventAsync({title: deleteEvent.title}))
-  }
+    setAllEvents(allEvents.filter(event => event.title !== deleteEvent.title));
+    dispatch(deleteEventAsync(deleteEvent.title));
+  };
+  
 
 
   //const events = useSelector((state) => state.event.events);

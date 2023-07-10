@@ -5,7 +5,6 @@ const User = require("../db/models/User");
 
 router.get("/", async (req, res, next) => {
   try {
-    //const { id } = req.params;
     const events = await Event.findAll({
       include: User,
     });
@@ -32,27 +31,27 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:title", async (req, res) => {
   try {
-    const {id, title} = req.params;
+    const eventTitle = req.params.title;
+    console.log("Event Title:", eventTitle);
 
-    const event = await Event.findAll(id, {where: {title: title}});
-    //const eventId = events[0].dataValues.id
-    
-    
+    const event = await Event.findOne({ where: { title: eventTitle } });
+    console.log("Event found:", event);
 
-    // const event = await Event.findByPk(req.params.id);
-
-    if(event){
+    if (event) {
+      const deleteEventId = event.id;
       await event.destroy();
-      res.send(event);
-    }else{
-      res.status(404)
+      console.log("Event deleted with ID:", deleteEventId);
+      res.json(deleteEventId);
+    } else {
+      console.log("Event not found");
+      res.status(404).send("Event not found");
     }
-    
   } catch (error) {
     console.log(error);
+    res.status(500).send("Internal Server Error");
   }
-})
+});
 
 module.exports = router;

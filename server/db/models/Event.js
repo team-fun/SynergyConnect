@@ -8,11 +8,11 @@ const Event = db.define("event", {
   },
   start: {
     type: Sequelize.DATE,
-    allowNull: false,
+    //allowNull: false,
   },
   end: {
     type: Sequelize.DATE,
-    allowNull: false,
+    //allowNull: false,
   },
 });
 
