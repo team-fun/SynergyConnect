@@ -3,6 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../app/store";
 import { selectUser } from "../auth/authSlice";
+import { useState } from "react";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 import { AiFillHome } from "react-icons/ai";
 import { FaUserAlt } from "react-icons/fa";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
@@ -20,7 +23,15 @@ const Navbar = () => {
   };
   const user = useSelector(selectUser);
   const isAdmin = user.me.isAdmin;
+  const [theme, setTheme] = useState(true);
 
+  function changeTheme() {
+
+    !theme ? 
+    document.querySelectorAll("*").forEach((e) => e.classList.remove("dark"))
+    :
+    document.querySelectorAll("*").forEach((e) => e.classList.add("dark"));
+  }
   return (
     <div>
       <div className="h-screen flex flex-col justify-center items-center w-40 [&>*]:text-lg">
@@ -75,6 +86,17 @@ const Navbar = () => {
                 <div></div>
               </div>
             )}
+                    <div
+          className={"theme-btn" + (!theme ? " dark" : "")}
+          onClick={(e) => {
+            setTheme(!theme);
+            changeTheme()
+          }}
+        >
+          <div className="inner">
+            {theme ? <LightModeIcon /> : <DarkModeIcon />}
+          </div>
+        </div>
           </nav>
         </div>
       </div>

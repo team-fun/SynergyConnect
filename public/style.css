@@ -2,6 +2,7 @@ body {
   font-family: sans-serif;
 }
 
+
 a {
   text-decoration: none;
 }
@@ -83,3 +84,52 @@ body {
 .cursor{
   transition: 0.1s;
 }
+
+
+/* ******Theme-button***** */
+
+.theme-btn{
+  height:32px;
+  width: 60px;
+  border-radius: 20px;
+  margin: 20px;
+  background: #f2c13733;
+  position: absolute;
+  top :30px;
+  right: 30px;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  box-sizing: border-box;
+  transition: all 0.33s ease-out;
+}
+
+.theme-btn .inner{
+  color: white;
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background: #f2c137;
+  transition: all 0.33s ease-out;
+}
+
+.theme-btn.dark{
+ background: #26aef433;
+}
+.theme-btn.dark .inner{
+  background-color: #26aef4;
+  transform: translate(27px,0);
+}
+
+body.dark{
+  background-color: black;
+  color: white;
+}
+
+a{
+  color: black;
+}
+a.dark{
+  color: white;
+}
+
