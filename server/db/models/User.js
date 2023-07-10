@@ -83,6 +83,10 @@ const User = db.define("user", {
     type: Sequelize.STRING,
     allowNull: true,
   },
+  online:{
+    type:Sequelize.BOOLEAN,
+    defaultValue:false
+  }
 });
 
 module.exports = User;
