@@ -17,8 +17,14 @@ module.exports = {
         },
       },
       {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        // test: /\.css$/,
+        // use: ["style-loader", "css-loader"],
+        test: /\.(sass|less|css)$/,
+        use: ["style-loader", "css-loader", "less-loader"],
+      },
+      {
+        test: /\.svg$/,
+        use: "file-loader",
       },
     ],
   },

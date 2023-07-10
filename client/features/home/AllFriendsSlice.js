@@ -6,7 +6,6 @@ export const fetchAllFriends = createAsyncThunk(
   async ({ id }) => {
     try {
       const { data } = await axios.get(`/api/friends/${id}`);
-      console.log(data);
       return data.friends;
     } catch (error) {
       console.error(error);
@@ -21,7 +20,6 @@ export const sendFriendRequest = createAsyncThunk(
 
     try {
       const data = await axios.post(`/api/friends/`, postData);
-      console.log(data);
       return data;
     } catch (error) {
       console.error(error);
@@ -35,7 +33,6 @@ export const acceptRejectRequest = createAsyncThunk(
 
     try {
       const data = await axios.put(`/api/friends/acceptRejectRequest`, putData);
-      console.log(data);
       return data;
     } catch (error) {
       console.error(error);
@@ -54,8 +51,8 @@ const friendsSlice = createSlice({
 });
 
 export const selectFriends = (state) => {
-  console.log(state);
   return state.friends;
 };
+
 
 export default friendsSlice.reducer;

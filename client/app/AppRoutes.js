@@ -10,8 +10,10 @@ import EditUser from "../features/admin/EditUser";
 import UserView from "../features/userView/userView";
 import ChatRoom from "../features/chat/ChatRoom";
 import ContactUs from "../features/ContactUs/ContactUs";
+// import WhiteBoard from "../features/chat/WhiteBoard/WhiteBoard";
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:3001/");
+import Friends from "../features/friends/Friends";
 
 /**
  * COMPONENT
@@ -35,12 +37,14 @@ const AppRoutes = () => {
           <Routes>
             <Route path="/*" element={<Home />} />
             <Route to="/home" element={<Home />} />
+            <Route path="/friends" element={<Friends />} />
             <Route path="/admin" element={<AdminView />} />
             <Route path="/admin/:id" element={<EditUser />} />
             <Route
               path="/chats/:code"
               element={<ChatRoom socket={socket} username={username} />}
             />
+            {/* <Route path="/whiteboard" element={<WhiteBoard />} /> */}
             <Route path="/profile" element={<UserView />} />
             <Route path="/profile/:id" element={<UserView />} />
             <Route path="/contactus" element={<ContactUs />} />
@@ -49,10 +53,13 @@ const AppRoutes = () => {
           <Routes>
             <Route path="/*" element={<Home />} />
             <Route to="/home" element={<Home />} />
+            <Route path="/friends" element={<Friends />} />
             <Route
               path="/chats/:code"
               element={<ChatRoom socket={socket} username={username} />}
             />
+            {/* <Route path="/whiteboard" element={<WhiteBoard />} /> */}
+
             <Route path="/profile" element={<UserView />} />
             <Route path="/profile/:id" element={<UserView />} />
             <Route path="/contactus" element={<ContactUs />} />

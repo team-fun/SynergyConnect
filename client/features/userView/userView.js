@@ -11,6 +11,7 @@ import { fetchSingleUser, editUser } from "../admin/editUserSlice";
 import { me } from "../auth/authSlice";
 import { useParams } from "react-router-dom";
 
+
 const UserView = () => {
   const [user, setUser] = useState({});
   const dispatch = useDispatch();
@@ -28,11 +29,11 @@ const UserView = () => {
 
   async function fetchUser() {
     const data = await (await fetch("/api/users/" + id)).json();
-   
+
     setUser(data);
   }
   useEffect(() => {
-	console.log("placeholder", placeHolder)
+    console.log("placeholder", placeHolder);
     if (user) {
       setUser((state) => {
         const arr = [];
@@ -89,34 +90,31 @@ const UserView = () => {
     }
   }, [user]);
 
-  useEffect(()=>{
-if(id){
-    fetchUser()
-}else{
-    setToMe()
-}
-   
-          
-            
-            
-   },[])
+  useEffect(() => {
+    if (id) {
+      fetchUser();
+    } else {
+      setToMe();
+    }
+  }, []);
 
-const handleImageChange = async (e) => {
-	const inputValue = e.target.files[0];
-	let formData = new FormData();
+  const handleImageChange = async (e) => {
+    const inputValue = e.target.files[0];
+    let formData = new FormData();
 
-	formData.append("image", inputValue);
-	await axios.post("/api/upload", formData).then(async (res) => {
-		setImage(res?.data?.url);
-		await dispatch(
-			editUser({
-				id: user?.id,
-				image: res?.data?.url,
-			})
-		);
-	});
-};
-return (
+    formData.append("image", inputValue);
+    await axios.post("/api/upload", formData).then(async (res) => {
+      setImage(res?.data?.url);
+      await dispatch(
+        editUser({
+          id: user?.id,
+          image: res?.data?.url,
+        })
+      );
+    });
+  };
+
+  return (
   <div className="userViewWrapper bg-gray-100 p-8">
    
     <div className="profile flex items-center mt-8">
@@ -319,8 +317,7 @@ return (
       </div>
     </div>
   </div>
-);
-
+  );
 };
 
 export default UserView;

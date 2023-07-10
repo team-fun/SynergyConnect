@@ -22,6 +22,22 @@ export const asyncJoinRoom = createAsyncThunk(
   }
 );
 
+export const favoriteRoom = createAsyncThunk(
+  "favoriteRoom",
+  async ({ newFav, isParticipating }) => {
+    const favorite = newFav;
+    try {
+      const { data } = await axios.put(`/api/chats`, {
+        favorite,
+        isParticipating,
+      });
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+
 const chatsSlice = createSlice({
   name: "chats",
   initialState: [],
@@ -31,6 +47,9 @@ const chatsSlice = createSlice({
       return action.payload;
     });
     builder.addCase(asyncJoinRoom.fulfilled, (state, action) => {
+      return action.payload;
+    });
+    builder.addCase(favoriteRoom.fulfilled, (state, action) => {
       return action.payload;
     });
   },

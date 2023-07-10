@@ -34,6 +34,7 @@ const Navbar = () => {
                   <Link className = "custon-icon" to="/home">
                     <AiFillHome />
                   </Link>
+                  <Link to="/friends">Find Friends!</Link>
                   <Link to="/ContactUs">C</Link>
                   <Link to="/profile">
                     <FaUserAlt />
@@ -54,6 +55,7 @@ const Navbar = () => {
                   <Link to="/profile">
                     <FaUserAlt />
                   </Link>
+                  <Link to="/friends">Find Friends!</Link>
                   <Link to="/ContactUs">C</Link>
                   <button type="button" onClick={logoutAndRedirectHome}>
                     Logout
@@ -76,8 +78,6 @@ const Navbar = () => {
           </nav>
         </div>
       </div>
-
-      <hr />
     </div>
   );
 };

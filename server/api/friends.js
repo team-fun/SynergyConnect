@@ -60,7 +60,6 @@ router.get("/notFriends/:id", async (req, res, next) => {
   }
 });
 router.post("/", async (req, res, next) => {
-  console.log(req);
   try {
     const { loggedInUserId, otherFriendId } = req.body;
     const newMyFriend = await Friend.create({
