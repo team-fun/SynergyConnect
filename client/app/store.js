@@ -8,6 +8,7 @@ import editUserSlice from "../features/admin/editUserSlice";
 import AllFriendsSlice from "../features/home/AllFriendsSlice";
 import AllNonFriendsSlice from "../features/home/AllNonFriendsSlice";
 import chatRoomSlice from "../features/chat/chatRoomSlice";
+import eventSlice from "../features/calendar/eventSlice";
 
 const store = configureStore({
   reducer: {
@@ -19,6 +20,7 @@ const store = configureStore({
     friends: AllFriendsSlice,
     notFriends: AllNonFriendsSlice,
     chat: chatRoomSlice,
+    events: eventSlice,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

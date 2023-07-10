@@ -26,7 +26,7 @@ const nonFriendsSlice = createSlice({
 });
 
 export const selectNonFriends = (state) => {
-  console.log(state);
+  //console.log(state);
   return state.notFriends;
 };
 

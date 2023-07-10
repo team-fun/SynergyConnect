@@ -1,15 +1,18 @@
-import { Calendar, dateFnsLocalizer } from 'react-big-calendar';
-import format from 'date-fns/format';
-import parse from 'date-fns/parse';
-import startOfWeek from 'date-fns/startOfWeek';
-import getDay from 'date-fns/getDay';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
-import React, { useState } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import { Calendar, dateFnsLocalizer } from "react-big-calendar";
+import format from "date-fns/format";
+import parse from "date-fns/parse";
+import startOfWeek from "date-fns/startOfWeek";
+import getDay from "date-fns/getDay";
+import "react-big-calendar/lib/css/react-big-calendar.css";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { fetchEventAsync, addEventAsync, deleteEventAsync } from "./eventSlice";
+import { id } from "date-fns/locale";
 
 const locales = {
-  'en-US': require('date-fns/locale/en-US')
+  "en-US": require("date-fns/locale/en-US"),
 };
 
 const localizer = dateFnsLocalizer({
@@ -17,7 +20,7 @@ const localizer = dateFnsLocalizer({
   parse,
   startOfWeek,
   getDay,
-  locales
+  locales,
 });
 
 const events = [
@@ -30,13 +33,38 @@ const events = [
 ];
 
 const CalendarSchedule = () => {
-  const [newEvent, setNewEvent] = useState({ title: '', start: '', end: '' });
+  const [newEvent, setNewEvent] = useState({ title: "", start: "", end: "" });
+  const [deleteEvent, setDeleteEvent] = useState({ id: id, title: ""});
+  const dispatch = useDispatch();
+
   const [allEvents, setAllEvents] = useState(events);
 
   function handleAddEvent() {
-    console.log("Add Event: ", events);
     setAllEvents([...allEvents, newEvent]);
+    dispatch(
+          addEventAsync({
+            title: newEvent.title,
+            start: newEvent.start,
+            end: newEvent.end,
+            //userId:  userId
+          }))
   }
+
+  const handleDelete = () => {
+    setDeleteEvent([...allEvents, deleteEvent]);
+    dispatch(deleteEventAsync({title: deleteEvent.title}))
+  }
+
+
+  //const events = useSelector((state) => state.event.events);
+
+//  if (!events) {
+//   return <div>Loading...</div>;
+// }
+
+  useEffect(() => {
+    dispatch(fetchEventAsync());
+  }, [dispatch]);
 
   return (
     <div>
@@ -46,13 +74,14 @@ const CalendarSchedule = () => {
         <input
           type="text"
           placeholder="Add Title"
-          style={{ width: '20%', marginRight: '10px' }}
+          style={{ width: "20%", marginRight: "10px" }}
           value={newEvent.title}
           onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
         />
+        
         <DatePicker
           placeholderText="Start Date and Time"
-          style={{ marginRight: '10px' }}
+          style={{ marginRight: "10px" }}
           selected={newEvent.start}
           onChange={(start) => setNewEvent({ ...newEvent, start })}
           showTimeSelect
@@ -63,7 +92,7 @@ const CalendarSchedule = () => {
         />
         <DatePicker
           placeholderText="End Date and Time"
-          style={{ marginRight: '10px' }}
+          style={{ marginRight: "10px" }}
           selected={newEvent.end}
           onChange={(end) => setNewEvent({ ...newEvent, end })}
           showTimeSelect
@@ -74,6 +103,18 @@ const CalendarSchedule = () => {
         />
         <button style={{ marginTop: "10px" }} onClick={handleAddEvent}>
           Add event
+        </button>
+      </div>
+      <div>
+      <input type="text"
+        placeholder="Delete Event"
+        style={{ width: "20%", marginRight: "10px" }}
+        value={deleteEvent.title}
+        onChange={(e) => setDeleteEvent({title: e.target.value })}
+        />
+
+        <button style={{ marginTop: "10px" }} onClick={handleDelete}>
+          delete Event
         </button>
       </div>
       <div>
@@ -90,6 +131,3 @@ const CalendarSchedule = () => {
 };
 
 export default CalendarSchedule;
-
-
-

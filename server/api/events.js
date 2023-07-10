@@ -19,17 +19,40 @@ router.post("/", async (req, res, next) => {
   try {
     const { title, start, end, userId } = req.body;
 
-    const event = await Event.create({
+    const events = await Event.create({
       title,
       start,
       end,
       userId,
     });
 
-    res.json(event);
+    res.json(events);
   } catch (err) {
     next(err);
   }
 });
+
+router.delete("/:id", async (req, res) => {
+  try {
+    const {id, title} = req.params;
+
+    const event = await Event.findAll(id, {where: {title: title}});
+    //const eventId = events[0].dataValues.id
+    
+    
+
+    // const event = await Event.findByPk(req.params.id);
+
+    if(event){
+      await event.destroy();
+      res.send(event);
+    }else{
+      res.status(404)
+    }
+    
+  } catch (error) {
+    console.log(error);
+  }
+})
 
 module.exports = router;
