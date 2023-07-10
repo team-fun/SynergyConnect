@@ -3,12 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import CreateRoomForm from "./CreateRoomForm";
 import {
-  sendFriendRequest,
   selectFriends,
   fetchAllFriends,
   acceptRejectRequest,
 } from "./AllFriendsSlice";
-import { fetchAllNonFriends, selectNonFriends } from "./AllNonFriendsSlice";
 import {
   selectChats,
   fetchAllChats,
@@ -16,49 +14,40 @@ import {
   favoriteRoom,
 } from "./AllChatsSlice";
 import SearchBox from "../seachbar/SearchBar";
+import CalendarSchedule from "../calendar/Calendar";
 
-/**
- * COMPONENT
- */
-const Home = (props) => {
+const Home = () => {
   const [friendListChange, setfriendListChange] = useState(false);
+  const [showFriends, setShowFriends] = useState(false);
   const id = useSelector((state) => state.auth.me.id);
   const username = useSelector((state) => state.auth.me.username);
   const results = useSelector(selectChats);
   const { chats, participating, allParticipants } = results;
   const friends = useSelector(selectFriends) || [];
-  const nonFriends = useSelector(selectNonFriends) || [];
   const [createFormVis, setCreateFormVis] = useState(false);
   const [filter, setFilter] = useState([]);
   const [code, setCode] = useState("");
-  const [favoriteStatus, setFavoriteStatus] = useState({});
   const [search, setSearch] = useState("");
+  const [searchFriend, setSearchFriend] = useState("");
+  const [favoriteStatus, setFavoriteStatus] = useState({});
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchAllChats(id));
-  }, [dispatch]);
-
-  useEffect(() => {
     dispatch(fetchAllFriends({ id }));
-    dispatch(fetchAllNonFriends({ id }));
-  }, [dispatch, friendListChange]);
+  }, [dispatch, friendListChange, id]);
 
   useEffect(() => {
     if (participating && chats) {
       const newFavoriteStatus = {};
-
       participating.forEach((info) => {
         const chatId = info.chatId;
         const chat = chats.find((chat) => chat.id === chatId);
-
         if (chat) {
           const isFavorite = info.favorite;
-
           newFavoriteStatus[chatId] = isFavorite;
         }
       });
-
       setFavoriteStatus(newFavoriteStatus);
     }
   }, [participating, chats]);
@@ -67,21 +56,12 @@ const Home = (props) => {
     setfriendListChange(!friendListChange);
   };
 
-  const create = () => {
-    setCreateFormVis(true);
+  const toggleFriendsList = () => {
+    setShowFriends(!showFriends);
   };
 
-  const handleSendRequest = (friendID) => {
-    dispatch(
-      sendFriendRequest({
-        loggedInUserId: id,
-        otherFriendId: friendID,
-      })
-    );
-
-    setTimeout(() => {
-      handleFriendListChange();
-    }, 1000);
+  const create = () => {
+    setCreateFormVis(true);
   };
 
   const handleAcceptRejectRequest = (friendID, action) => {
@@ -89,13 +69,10 @@ const Home = (props) => {
       acceptRejectRequest({
         loggedInUserId: id,
         otherFriendId: friendID,
-        action: action,
+        action,
       })
     );
-
-    setTimeout(() => {
-      handleFriendListChange();
-    }, 1000);
+    setTimeout(handleFriendListChange, 1000);
   };
 
   const publicFilter = () => {
@@ -108,14 +85,11 @@ const Home = (props) => {
 
   const favFilter = () => {
     setFilter(
-      chats.filter((chat) => {
-        const isParticipating = participating?.find(
-          (info) => info.chatId === chat.id
-        );
-        const chatId = chat.id;
-        const fav = favoriteStatus[chatId] || false;
-        return isParticipating && fav;
-      })
+      chats.filter(
+        (chat) =>
+          participating?.find((info) => info.chatId === chat.id) &&
+          (favoriteStatus[chat.id] || false)
+      )
     );
   };
 
@@ -140,15 +114,12 @@ const Home = (props) => {
     const oldFav = favoriteStatus[chatId] || false;
     const newFav = !oldFav;
     dispatch(favoriteRoom({ newFav, isParticipating }));
-
-    setFavoriteStatus((prevStatus) => ({
-      ...prevStatus,
-      [chatId]: newFav,
-    }));
+    setFavoriteStatus((prevStatus) => ({ ...prevStatus, [chatId]: newFav }));
   };
 
   return (
     <div>
+      <CalendarSchedule />
       {createFormVis ? (
         <>
           <CreateRoomForm />
@@ -172,10 +143,9 @@ const Home = (props) => {
           <SearchBox searchChange={onSearchChange} />
           <div>
             {filter
-              .filter((chat) => {
-                const chatName = chat.name.toLowerCase();
-                return chatName.includes(search.toLowerCase());
-              })
+              .filter((chat) =>
+                chat.name.toLowerCase().includes(search.toLowerCase())
+              )
               .map((chat) => {
                 const isParticipating = participating?.find(
                   (info) => info.chatId === chat.id
@@ -224,39 +194,56 @@ const Home = (props) => {
         </section>
       )}
       <div>
-        <h1>Friends</h1>
-        {friends.length === undefined || friends?.length == 0 ? (
-          <div>No friends</div>
-        ) : (
+        <button
+          onClick={toggleFriendsList}
+        >{`${friends.length} Friends`}</button>
+        {showFriends && (
           <div>
-            {friends?.map((friend, i) => (
-              <div key={i}>
-                {friend.dataValues.username}
-                <span>
-                  {friend.pending ? (
-                    friend.sent ? (
-                      <button
-                        onClick={() =>
-                          handleAcceptRejectRequest(
-                            friend?.dataValues?.id,
-                            "reject"
-                          )
-                        }
-                      >
-                        Cancel Request
-                      </button>
-                    ) : (
-                      <>
-                        <button
-                          onClick={() =>
-                            handleAcceptRejectRequest(
-                              friend?.dataValues?.id,
-                              "accept"
-                            )
-                          }
-                        >
-                          Accept
-                        </button>
+            {friends.length === undefined || friends?.length === 0 ? (
+              <div>No friends</div>
+            ) : (
+              <div>
+                {friends.map((friend, i) => (
+                  <div key={i}>
+                    {friend.dataValues.username}
+                    <span>
+                      {friend.pending ? (
+                        friend.sent ? (
+                          <button
+                            onClick={() =>
+                              handleAcceptRejectRequest(
+                                friend?.dataValues?.id,
+                                "reject"
+                              )
+                            }
+                          >
+                            Cancel Request
+                          </button>
+                        ) : (
+                          <>
+                            <button
+                              onClick={() =>
+                                handleAcceptRejectRequest(
+                                  friend?.dataValues?.id,
+                                  "accept"
+                                )
+                              }
+                            >
+                              Accept
+                            </button>
+                            <button
+                              onClick={() =>
+                                handleAcceptRejectRequest(
+                                  friend?.dataValues?.id,
+                                  "reject"
+                                )
+                              }
+                            >
+                              Reject
+                            </button>
+                          </>
+                        )
+                      ) : (
                         <button
                           onClick={() =>
                             handleAcceptRejectRequest(
@@ -265,40 +252,14 @@ const Home = (props) => {
                             )
                           }
                         >
-                          Reject
+                          Remove Friend
                         </button>
-                      </>
-                    )
-                  ) : (
-                    <button
-                      onClick={() =>
-                        handleAcceptRejectRequest(
-                          friend?.dataValues?.id,
-                          "reject"
-                        )
-                      }
-                    >
-                      Remove Friend
-                    </button>
-                  )}
-                </span>
+                      )}
+                    </span>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        )}
-        <h1>Non Friends</h1>
-        {nonFriends.length === undefined || nonFriends?.length == 0 ? (
-          <div>All Users are friends</div>
-        ) : (
-          <div>
-            {nonFriends?.map((nonFriend, i) => (
-              <div key={i}>
-                {nonFriend.username}{" "}
-                <button onClick={() => handleSendRequest(nonFriend.id)}>
-                  +
-                </button>
-              </div>
-            ))}
+            )}
           </div>
         )}
       </div>

@@ -54,4 +54,5 @@ export const selectFriends = (state) => {
   return state.friends;
 };
 
+
 export default friendsSlice.reducer;
