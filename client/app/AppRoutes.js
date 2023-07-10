@@ -14,6 +14,7 @@ import ContactUs from "../features/ContactUs/ContactUs";
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:3001/");
 import Friends from "../features/friends/Friends";
+import NonFriends from "../features/friends/NonFriends";
 
 /**
  * COMPONENT
@@ -37,7 +38,7 @@ const AppRoutes = () => {
           <Routes>
             <Route path="/*" element={<Home />} />
             <Route to="/home" element={<Home />} />
-            <Route path="/friends" element={<Friends />} />
+            <Route path="/friends" element={<NonFriends />} />
             <Route path="/admin" element={<AdminView />} />
             <Route path="/admin/:id" element={<EditUser />} />
             <Route
@@ -53,7 +54,7 @@ const AppRoutes = () => {
           <Routes>
             <Route path="/*" element={<Home />} />
             <Route to="/home" element={<Home />} />
-            <Route path="/friends" element={<Friends />} />
+            <Route path="/friends" element={<NonFriends />} />
             <Route
               path="/chats/:code"
               element={<ChatRoom socket={socket} username={username} />}

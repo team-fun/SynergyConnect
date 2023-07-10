@@ -10,12 +10,15 @@ import DoneIcon from "@mui/icons-material/Done";
 import { fetchSingleUser, editUser } from "../admin/editUserSlice";
 import { me } from "../auth/authSlice";
 import { useParams } from "react-router-dom";
-
+import Friends from "../friends/Friends";
+import { selectFriends } from "../home/AllFriendsSlice";
+import SearchBox from "../seachbar/SearchBar";
 
 const UserView = () => {
   const [user, setUser] = useState({});
   const dispatch = useDispatch();
   const _user = useSelector((state) => state.auth.me);
+  const friends = useSelector(selectFriends) || [];
   const { id } = useParams();
   const [editUsername, setEditUsername] = useState(false);
   const [editName, setEditName] = useState(false);
@@ -26,6 +29,8 @@ const UserView = () => {
   const [editEmail, setEditEmail] = useState(false);
   const [placeHolder, setPlaceHolder] = useState("");
   const [image, setImage] = useState();
+  const [showFriends, setShowFriends] = useState(false);
+  const [search, setSearch] = useState("");
 
   async function fetchUser() {
     const data = await (await fetch("/api/users/" + id)).json();
@@ -46,17 +51,16 @@ const UserView = () => {
   }, [placeHolder]);
   async function setToMe() {
     setUser(_user);
-	setPlaceHolder(
-		((arr) => {
-		  let str = "";
-		  arr.forEach((i) => {
-			
-			str += i + ", ";
-		  });
-  
-		  return str;
-		})(_user.interests) 
-	  );
+    setPlaceHolder(
+      ((arr) => {
+        let str = "";
+        arr.forEach((i) => {
+          str += i + ", ";
+        });
+
+        return str;
+      })(_user.interests)
+    );
   }
   useEffect(() => {
     if (id) {
@@ -65,7 +69,12 @@ const UserView = () => {
       setToMe();
     }
   }, []);
-
+  const onSearchChange = (event) => {
+    setSearch(event.target.value);
+  };
+  const toggleFriendsList = () => {
+    setShowFriends(!showFriends);
+  };
   async function updateUser() {
     if (
       !user.email.split("").includes("@") ||
@@ -115,208 +124,223 @@ const UserView = () => {
   };
 
   return (
-  <div className="userViewWrapper bg-gray-100 p-8">
-   <div className="profile flex items-center mt-8">
-      <div className="pfp mr-4">
-        <img src={image ? image : user.image} alt="" />
-        <div className="online-status"> <div style={{background : user.online? "#00cc11": "#888"}}></div></div>
+    <div className="profile">
+      <div className="py-10 w-full px-5 flex items-center justify-between">
+        <div className="pfp w-20 h-20 object-cover">
+          <img className="w-full" src={image ? image : user.image} alt="pfp" />
+          <input type="file" onChange={handleImageChange} />
+        </div>
+        <div>
+          <h3 className="text-3xl">
+            {" "}
+            {user.firstName} {user.lastName}
+          </h3>
+          <p className="font-medium"> Its good to see you</p>
+        </div>
+
+        <div className="flex justify-center items-center">
+          <div>
+            <SearchBox searchChange={onSearchChange} />
+
+            <button
+              onClick={toggleFriendsList}
+            >{`${friends.length} Friends`}</button>
+          </div>
+          {showFriends && <Friends />}
+        </div>
       </div>
-      <input type="file" onChange={handleImageChange} className="mb-4" />
-      <div className="user-info">
-        <div className="username flex items-center mb-4">
-          {!editUsername && user.username}
-          {editUsername && (
-            <>
-              Edit username:{" "}
-              <input
-                value={user.username}
-                onChange={(e) =>
-                  setUser((state) => {
-                    return { ...state, username: e.target.value };
-                  })
-                }
-                className="ml-2"
-              />
-            </>
-          )}
-          {!id &&
-            (!editUsername ? (
-              <button onClick={(e) => setEditUsername(true)}>
-                <EditIcon />
-              </button>
-            ) : (
-              <button onClick={(e) => setEditUsername(false)}>
-                <DoneIcon />
-              </button>
-            ))}
-        </div>
-        <div className="fullname flex items-center mb-4">
-          {!editName && (
-            <>
-              {user.firstName} {user.lastName}
-            </>
-          )}
-          {editName && (
-            <>
-              Edit Name:{" "}
-              <input
-                value={user.firstName}
-                onChange={(e) =>
-                  setUser((state) => {
-                    return { ...state, firstName: e.target.value };
-                  })
-                }
-                className="mr-2"
-              />
-              <input
-                value={user.lastName}
-                onChange={(e) =>
-                  setUser((state) => {
-                    return { ...state, lastName: e.target.value };
-                  })
-                }
-              />
-            </>
-          )}
-          {!id &&
-            (!editName ? (
-              <button onClick={(e) => setEditName(true)}>
-                <EditIcon />
-              </button>
-            ) : (
-              <button onClick={(e) => setEditName(false)}>
-                <DoneIcon />
-              </button>
-            ))}
-        </div>
-        <div className="email flex items-center mb-4">
-          {!editEmail &&
-            user.email &&
-            (user.email.split("").includes("@") &&
-            user.email.split("").includes(".")
-              ? user.email
-              : _user.email)}
-          {!editEmail && !user.email && <span>Add an Email</span>}
-          {editEmail && (
-            <>
-              Edit Email:{" "}
-              <input
-                type="email"
-                value={user.email}
-                onChange={(e) =>
-                  setUser((state) => {
-                    return { ...state, email: e.target.value };
-                  })
-                }
-                className="ml-2"
-              />
-            </>
-          )}
-          {!id &&
-            (!editEmail ? (
-              <button onClick={(e) => setEditEmail(true)}>
-                <EditIcon />
-              </button>
-            ) : (
-              <button onClick={(e) => setEditEmail(false)}>
-                <DoneIcon />
-              </button>
-            ))}
-        </div>
-        <div className="bio flex items-center mb-4">
-          {!editBio && (user.bio || (!id && "Add a Bio"))}
-          {editBio && (
-            <>
-              Edit Bio:{" "}
-              <input
-                value={user.bio}
-                onChange={(e) =>
-                  setUser((state) => {
-                    return { ...state, bio: e.target.value };
-                  })
-                }
-                className="ml-2"
-              />
-            </>
-          )}
-          {!id &&
-            (!editBio ? (
-              <button onClick={(e) => setEditBio(true)}>
-                <EditIcon />
-              </button>
-            ) : (
-              <button onClick={(e) => setEditBio(false)}>
-                <DoneIcon />
-              </button>
-            ))}{" "}
-        </div>
-        <div className="location flex items-center mb-4">
-          {!editLocation && (user.location || (!id && "Add a Location"))}
-          {editLocation && (
-            <>
-              Edit Location:
-              <input
-                value={user.location}
-                onChange={(e) =>
-                  setUser((state) => {
-                    return { ...state, location: e.target.value };
-                  })
-                }
-                className="ml-2"
-              />
-            </>
-          )}
-          {!id &&
-            (!editLocation ? (
-              <button onClick={(e) => setEditLocation(true)}>
-                <EditIcon />
-              </button>
-            ) : (
-              <button onClick={(e) => setEditLocation(false)}>
-                <DoneIcon />
-              </button>
-            ))}{" "}
-        </div>
-        <div className="user-info-exta">
-          <ul className="interests mb-4">
-            {editInterests ? <p>Edit Interests:</p> : <p>Interests</p>}
-            {!editInterests && (
+      <div className="mt-20">
+        <h3 className="ml-10 text-5xl">USER PROFILE</h3>
+        <div className="user-info [&>*]:my-4">
+          <div className="username flex items-center">
+            {!editUsername && user.username}
+            {editUsername && (
               <>
-                {user.interests?.map((interest, index) => (
-                  <span key={index}>{interest}</span>
-                ))}
+                Edit username:{" "}
+                <input
+                  value={user.username}
+                  onChange={(e) =>
+                    setUser((state) => {
+                      return { ...state, username: e.target.value };
+                    })
+                  }
+                />
               </>
             )}
-            {editInterests && (
-              <input
-                onChange={(e) => {
-                  setPlaceHolder(e.target.value);
-                }}
-                value={placeHolder}
-                className="ml-2"
-              />
+            {!id &&
+              (!editUsername ? (
+                <div onClick={(e) => setEditUsername(true)}>
+                  <EditIcon />
+                </div>
+              ) : (
+                <div onClick={(e) => setEditUsername(false)}>
+                  <DoneIcon />
+                </div>
+              ))}
+          </div>
+          <div className="fullname flex items-center">
+            {!editName && (
+              <>
+                {user.firstName} {user.lastName}
+              </>
+            )}
+            {editName && (
+              <>
+                Edit Name:{" "}
+                <input
+                  value={user.firstName}
+                  onChange={(e) =>
+                    setUser((state) => {
+                      return { ...state, firstName: e.target.value };
+                    })
+                  }
+                />
+                <input
+                  value={user.lastName}
+                  onChange={(e) =>
+                    setUser((state) => {
+                      return { ...state, lastName: e.target.value };
+                    })
+                  }
+                />
+              </>
             )}
             {!id &&
-              (!editInterests ? (
-                <button onClick={(e) => setEditInterests(true)}>
+              (!editName ? (
+                <div onClick={(e) => setEditName(true)}>
                   <EditIcon />
-                </button>
+                </div>
               ) : (
-                <button onClick={(e) => setEditInterests(false)}>
+                <div onClick={(e) => setEditName(false)}>
                   <DoneIcon />
-                </button>
+                </div>
               ))}
-          </ul>
-          <div className="link">
-            <InstagramIcon className="mr-2" />
-            <FacebookIcon className="mr-2" />
-            <TwitterIcon className="mr-2" />
-            <LinkedInIcon />
+          </div>
+          <div className="email flex items-center">
+            {!editEmail &&
+              user.email &&
+              (user.email.split("").includes("@") &&
+              user.email.split("").includes(".")
+                ? user.email
+                : _user.email)}
+            {!editEmail && !user.email && <span>Add an Email</span>}
+            {editEmail && (
+              <>
+                Edit Email:{" "}
+                <input
+                  type="email"
+                  value={user.email}
+                  onChange={(e) =>
+                    setUser((state) => {
+                      return { ...state, email: e.target.value };
+                    })
+                  }
+                />
+              </>
+            )}
+            {!id &&
+              (!editEmail ? (
+                <div onClick={(e) => setEditEmail(true)}>
+                  <EditIcon />
+                </div>
+              ) : (
+                <div onClick={(e) => setEditEmail(false)}>
+                  <DoneIcon />
+                </div>
+              ))}
+          </div>
+          <div className="bio flex items-center">
+            {" "}
+            {!editBio && (user.bio || (!id && "Add a Bio"))}
+            {editBio && (
+              <>
+                Edit Bio:{" "}
+                <input
+                  value={user.bio}
+                  onChange={(e) =>
+                    setUser((state) => {
+                      return { ...state, bio: e.target.value };
+                    })
+                  }
+                />
+              </>
+            )}
+            {!id &&
+              (!editBio ? (
+                <div onClick={(e) => setEditBio(true)}>
+                  <EditIcon />
+                </div>
+              ) : (
+                <div onClick={(e) => setEditBio(false)}>
+                  <DoneIcon />
+                </div>
+              ))}{" "}
+          </div>
+          <div className="location flex items-center">
+            {!editLocation && (user.location || (!id && "Add a Location"))}
+            {editLocation && (
+              <>
+                Edit Location:
+                <input
+                  value={user.location}
+                  onChange={(e) =>
+                    setUser((state) => {
+                      return { ...state, location: e.target.value };
+                    })
+                  }
+                />
+              </>
+            )}
+            {!id &&
+              (!editLocation ? (
+                <div onClick={(e) => setEditLocation(true)}>
+                  <EditIcon />
+                </div>
+              ) : (
+                <div onClick={(e) => setEditLocation(false)}>
+                  <DoneIcon />
+                </div>
+              ))}{" "}
+          </div>
+          <div className="user-info-exta">
+            <ul className="interests flex items-center">
+              {editInterests ? <p>Edit Interests:</p> : <p>Interests</p>}
+              {!editInterests && (
+                <>
+                  {user.interests?.map((interest, index) => (
+                    <span key={index}>{interest}</span>
+                  ))}
+                </>
+              )}
+              {editInterests && (
+                <input
+                  onChange={(e) => {
+                    setPlaceHolder(e.target.value);
+                  }}
+                  value={placeHolder}
+                />
+              )}
+              {!id &&
+                (!editInterests ? (
+                  <div onClick={(e) => setEditInterests(true)}>
+                    <EditIcon />
+                  </div>
+                ) : (
+                  <div onClick={(e) => setEditInterests(false)}>
+                    <DoneIcon />
+                  </div>
+                ))}
+            </ul>
+            <div className="link">
+              <InstagramIcon style={{ fontSize: "100px" }} />
+              <FacebookIcon style={{ fontSize: "100px" }} />
+              <TwitterIcon style={{ fontSize: "100px" }} />
+              <LinkedInIcon style={{ fontSize: "100px" }} />
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
   );
 };
 

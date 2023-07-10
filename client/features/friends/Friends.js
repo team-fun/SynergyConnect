@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { sendFriendRequest } from "../home/AllFriendsSlice";
+import { acceptRejectRequest, fetchAllFriends, selectFriends, sendFriendRequest } from "../home/AllFriendsSlice";
 import {
   fetchAllNonFriends,
   selectNonFriends,
@@ -14,9 +14,12 @@ const Friends = () => {
   const [filteredNonFriends, setFilteredNonFriends] = useState([]);
   const [search, setSearch] = useState("");
   const dispatch = useDispatch();
+  const friends = useSelector(selectFriends) || [];
 
   useEffect(() => {
     dispatch(fetchAllNonFriends({ id }));
+    dispatch(fetchAllFriends({ id }));
+
   }, [dispatch, friendListChange]);
 
   useEffect(() => {
@@ -28,6 +31,16 @@ const Friends = () => {
     );
   }, [nonFriends, search]);
 
+  const handleAcceptRejectRequest = (friendID, action) => {
+    dispatch(
+      acceptRejectRequest({
+        loggedInUserId: id,
+        otherFriendId: friendID,
+        action,
+      })
+    );
+    setTimeout(handleFriendListChange, 1000);
+  };
   const handleFriendListChange = () => {
     setfriendListChange(!friendListChange);
   };
@@ -50,21 +63,70 @@ const Friends = () => {
   };
 
   return (
-    <div>
-      <SearchBox searchChange={onSearchChange} />
-      {filteredNonFriends.length === 0 ? (
-        <div>All Users are friends</div>
-      ) : (
-        <div>
-          <h2>Users:</h2>
-          {filteredNonFriends.map((nonFriend, i) => (
-            <div key={i}>
-              {nonFriend.username}{" "}
-              <button onClick={() => handleSendRequest(nonFriend.id)}>+</button>
-            </div>
-          ))}
-        </div>
-      )}
+    <div className="relative">
+      <div className="absolute flex items-center justify-center rounded-md w-60 p-4 bg-slate-400 top-[20%] ">
+        {friends.length === undefined || friends?.length === 0 ? (
+          <div>No friends</div>
+        ) : (
+          <div>
+            {friends.map((friend, i) => (
+              <div className="my-2 mx-3 " key={i}>
+                {friend.dataValues.username}
+                <span>
+                  {friend.pending ? (
+                    friend.sent ? (
+                      <button
+                        onClick={() =>
+                          handleAcceptRejectRequest(
+                            friend?.dataValues?.id,
+                            "reject"
+                          )
+                        }
+                      >
+                        Cancel Request
+                      </button>
+                    ) : (
+                      <>
+                        <button
+                          onClick={() =>
+                            handleAcceptRejectRequest(
+                              friend?.dataValues?.id,
+                              "accept"
+                            )
+                          }
+                        >
+                          Accept
+                        </button>
+                        <button
+                          onClick={() =>
+                            handleAcceptRejectRequest(
+                              friend?.dataValues?.id,
+                              "reject"
+                            )
+                          }
+                        >
+                          Reject
+                        </button>
+                      </>
+                    )
+                  ) : (
+                    <button
+                      onClick={() =>
+                        handleAcceptRejectRequest(
+                          friend?.dataValues?.id,
+                          "reject"
+                        )
+                      }
+                    >
+                      Remove Friend
+                    </button>
+                  )}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
