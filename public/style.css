@@ -133,3 +133,18 @@ a.dark{
   color: white;
 }
 
+.online-status{
+  height:16px;
+  background-color: #888;
+  width: 16px;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+}
+.online-status div{
+  height: 16px ;
+  width: 16px ;
+  border-radius: 50%;
+}

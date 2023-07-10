@@ -116,10 +116,10 @@ const UserView = () => {
 
   return (
   <div className="userViewWrapper bg-gray-100 p-8">
-   
-    <div className="profile flex items-center mt-8">
+   <div className="profile flex items-center mt-8">
       <div className="pfp mr-4">
         <img src={image ? image : user.image} alt="" />
+        <div className="online-status"> <div style={{background : user.online? "#00cc11": "#888"}}></div></div>
       </div>
       <input type="file" onChange={handleImageChange} className="mb-4" />
       <div className="user-info">
