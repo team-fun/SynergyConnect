@@ -3,6 +3,7 @@ const router = require("express").Router();
 router.use("/users", require("./users"));
 router.use("/createroom", require("./createRoom"));
 router.use("/chats", require("./chats"));
+router.use('/events', require('./events'))
 
 const {
   models: { User },

@@ -16,11 +16,12 @@ import {
 import SearchBox from "../seachbar/SearchBar";
 import CalendarSchedule from "../calendar/Calendar";
 import Friends from "../friends/Friends";
+import { ChangeHistorySharp } from "@mui/icons-material";
 
 const Home = () => {
   const [friendListChange, setfriendListChange] = useState(false);
   const [showFriends, setShowFriends] = useState(false);
-  const [activeTab, setActiveTab] = useState("public");
+  const [activeTab, setActiveTab] = useState("all");
   const id = useSelector((state) => state.auth.me.id);
   const username = useSelector((state) => state.auth.me.username);
   const results = useSelector(selectChats);
@@ -30,7 +31,6 @@ const Home = () => {
   const [filter, setFilter] = useState([]);
   const [code, setCode] = useState("");
   const [search, setSearch] = useState("");
-  const [searchFriend, setSearchFriend] = useState("");
   const [favoriteStatus, setFavoriteStatus] = useState({});
   const dispatch = useDispatch();
 
@@ -56,12 +56,23 @@ const Home = () => {
     }
   }, [participating, chats]);
 
+  useEffect(() => {
+    if (chats) {
+      setFilter(chats);
+    }
+  }, [chats]);
+
   const toggleFriendsList = () => {
     setShowFriends(!showFriends);
   };
 
   const create = () => {
     setCreateFormVis(true);
+  };
+
+  const allFilter = () => {
+    setFilter(chats);
+    setActiveTab("all");
   };
 
   const publicFilter = () => {
@@ -106,12 +117,15 @@ const Home = () => {
     const oldFav = favoriteStatus[chatId] || false;
     const newFav = !oldFav;
     dispatch(favoriteRoom({ newFav, isParticipating }));
-    setFavoriteStatus((prevStatus) => ({ ...prevStatus, [chatId]: newFav }));
+    https: setFavoriteStatus((prevStatus) => ({
+      ...prevStatus,
+      [chatId]: newFav,
+    }));
   };
 
   return (
     <div>
-      {/* <CalendarSchedule /> */}
+      <CalendarSchedule />
       {createFormVis ? (
         <>
           <CreateRoomForm />
@@ -127,6 +141,7 @@ const Home = () => {
             <div>
               <div>
                 <div>
+                  <SearchBox searchChange={onSearchChange} />
                   <button
                     onClick={toggleFriendsList}
                   >{`${friends.length} Friends`}</button>
@@ -149,6 +164,14 @@ const Home = () => {
             <div className="flex">
               <h3
                 className={`mr-4 ${
+                  activeTab === "all" ? "activeHomeTab" : "nonActiveHomeTab"
+                }`}
+                onClick={allFilter}
+              >
+                All Chats
+              </h3>
+              <h3
+                className={`mx-4 ${
                   activeTab === "public" ? "activeHomeTab" : "nonActiveHomeTab"
                 }`}
                 onClick={publicFilter}
