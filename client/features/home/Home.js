@@ -68,6 +68,11 @@ const Home = () => {
     setCreateFormVis(true);
   };
 
+  const allFilter = () => {
+    setFilter(chats);
+    setActiveTab("all");
+  };
+
   const publicFilter = () => {
     setFilter(chats.filter((chat) => chat.public));
     setActiveTab("public");
@@ -110,7 +115,11 @@ const Home = () => {
     const oldFav = favoriteStatus[chatId] || false;
     const newFav = !oldFav;
     dispatch(favoriteRoom({ newFav, isParticipating }));
-    setFavoriteStatus((prevStatus) => ({ ...prevStatus, [chatId]: newFav }));
+    //www.youtube.com/watch?v=WcF8Aos4XDA
+    https: setFavoriteStatus((prevStatus) => ({
+      ...prevStatus,
+      [chatId]: newFav,
+    }));
   };
 
   return (
@@ -154,7 +163,7 @@ const Home = () => {
                 className={`mr-4 ${
                   activeTab === "all" ? "activeHomeTab" : "nonActiveHomeTab"
                 }`}
-                onClick={() => setActiveTab("all")}
+                onClick={allFilter}
               >
                 All Chats
               </h3>
