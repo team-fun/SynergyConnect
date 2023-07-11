@@ -61,7 +61,7 @@ async function seed() {
       interests: ["Jujutsu Kaisen", "being sad", "digimon"],
     }),
     User.create({
-      username: "BrooklynBandit",
+      username: "BronxsBandit",
       password: "123",
       isAdmin: true,
       firstName: "Femi",
@@ -168,15 +168,15 @@ async function seed() {
     }),
   ]);
 
-const startDateTime = new Date(2023, 6, 10, 11, 0, 0);
-const endDateTime = new Date(2023, 6, 10, 11, 30, 0);
+  const startDateTime = new Date(2023, 6, 10, 11, 0, 0);
+  const endDateTime = new Date(2023, 6, 10, 11, 30, 0);
 
   const events = await Promise.all([
     Event.create({
       title: "Event 1",
       start: startDateTime,
       end: endDateTime,
-      userId: 1
+      userId: 1,
     }),
   ]);
 
