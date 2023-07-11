@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
-import axios from "axios";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import axios from "axios";
 import EditIcon from "@mui/icons-material/Edit";
 import DoneIcon from "@mui/icons-material/Done";
 import { fetchSingleUser, editUser } from "../admin/editUserSlice";
@@ -128,7 +128,9 @@ const UserView = () => {
       <div className="py-10 w-full px-5 flex items-center justify-between">
         <div className="pfp w-20 h-20 object-cover">
           <img className="w-full" src={image ? image : user.image} alt="pfp" />
-          <div className="online-status"><div style={{background: user.online? "#00cc11": "#888"}}></div></div>
+          <div className="online-status">
+            <div style={{ background: user.online ? "#00cc11" : "#888" }}></div>
+          </div>
           <input type="file" onChange={handleImageChange} />
         </div>
         <div>
@@ -141,8 +143,6 @@ const UserView = () => {
 
         <div className="flex justify-center items-center">
           <div>
-            <SearchBox searchChange={onSearchChange} />
-
             <button
               onClick={toggleFriendsList}
             >{`${friends.length} Friends`}</button>
@@ -333,10 +333,18 @@ const UserView = () => {
                 ))}
             </ul>
             <div className="link">
-              <InstagramIcon style={{ fontSize: "100px" }} />
-              <FacebookIcon style={{ fontSize: "100px" }} />
-              <TwitterIcon style={{ fontSize: "100px" }} />
-              <LinkedInIcon style={{ fontSize: "100px" }} />
+              <a href="https://www.instagram.com/">
+                <InstagramIcon style={{ fontSize: "50px" }} />
+              </a>
+              <a href="https://www.facebook.com/">
+                <FacebookIcon style={{ fontSize: "50px" }} />
+              </a>
+              <a href="https://twitter.com/i/flow/login?redirect_after_login=%2F">
+                <TwitterIcon style={{ fontSize: "50px" }} />
+              </a>
+              <a href="https://www.linkedin.com/">
+                <LinkedInIcon style={{ fontSize: "50px" }} />
+              </a>
             </div>
           </div>
         </div>

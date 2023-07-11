@@ -12,6 +12,7 @@ import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import { BiLogOut } from "react-icons/bi";
 import { FiLogIn } from "react-icons/fi";
 import { ImProfile } from "react-icons/im";
+import {FaUserFriends} from "react-icons/fa"
 
 const Navbar = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
@@ -58,8 +59,7 @@ const Navbar = () => {
                     }`}
                     to="/friends"
                   >
-                    {" "}
-                    Fr
+                   <FaUserFriends/>
                   </Link>
                   <Link
                     className={` ${

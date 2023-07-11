@@ -32,7 +32,7 @@ const AppRoutes = () => {
   }, []);
 
   return (
-    <div>
+    <div className="w-full">
       {isLoggedIn ? (
         isAdmin ? (
           <Routes>
