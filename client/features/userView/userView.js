@@ -128,6 +128,7 @@ const UserView = () => {
       <div className="py-10 w-full px-5 flex items-center justify-between">
         <div className="pfp w-20 h-20 object-cover">
           <img className="w-full" src={image ? image : user.image} alt="pfp" />
+          <div className="online-status"><div style={{background: user.online? "#00cc11": "#888"}}></div></div>
           <input type="file" onChange={handleImageChange} />
         </div>
         <div>

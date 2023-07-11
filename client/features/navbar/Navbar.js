@@ -106,7 +106,7 @@ const Navbar = () => {
                     className={` ${
                       pathname == "/profile" ? "activeNav" : "nonActiveNav"
                     }`}
-                    to="/profile"
+                    to="/profile/1"
                   >
                     <FaUserAlt />
                   </Link>
