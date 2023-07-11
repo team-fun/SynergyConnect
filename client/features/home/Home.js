@@ -16,6 +16,7 @@ import {
 import SearchBox from "../seachbar/SearchBar";
 import CalendarSchedule from "../calendar/Calendar";
 import Friends from "../friends/Friends";
+import { ChangeHistorySharp } from "@mui/icons-material";
 
 const Home = () => {
   const [friendListChange, setfriendListChange] = useState(false);
@@ -30,7 +31,6 @@ const Home = () => {
   const [filter, setFilter] = useState([]);
   const [code, setCode] = useState("");
   const [search, setSearch] = useState("");
-  const [searchFriend, setSearchFriend] = useState("");
   const [favoriteStatus, setFavoriteStatus] = useState({});
   const dispatch = useDispatch();
 
@@ -54,6 +54,11 @@ const Home = () => {
     }
   }, [participating, chats]);
 
+  useEffect(() => {
+    if (chats) {
+      setFilter(chats);
+    }
+  }, [chats]);
 
   const toggleFriendsList = () => {
     setShowFriends(!showFriends);
@@ -62,8 +67,6 @@ const Home = () => {
   const create = () => {
     setCreateFormVis(true);
   };
-
-
 
   const publicFilter = () => {
     setFilter(chats.filter((chat) => chat.public));
@@ -129,14 +132,11 @@ const Home = () => {
               <div>
                 <div>
                   <SearchBox searchChange={onSearchChange} />
-
                   <button
                     onClick={toggleFriendsList}
                   >{`${friends.length} Friends`}</button>
                 </div>
-                {showFriends && (
-                <Friends/>
-                )}
+                {showFriends && <Friends />}
               </div>
             </div>
           </div>
