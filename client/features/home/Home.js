@@ -115,7 +115,6 @@ const Home = () => {
     const oldFav = favoriteStatus[chatId] || false;
     const newFav = !oldFav;
     dispatch(favoriteRoom({ newFav, isParticipating }));
-    //www.youtube.com/watch?v=WcF8Aos4XDA
     https: setFavoriteStatus((prevStatus) => ({
       ...prevStatus,
       [chatId]: newFav,
