@@ -34,15 +34,13 @@ router.post("/", async (req, res, next) => {
 router.delete("/:title", async (req, res) => {
   try {
     const eventTitle = req.params.title;
-    console.log("Event Title", eventTitle);
-
     const event = await Event.findOne({ where: { title: eventTitle } });
-    console.log("Event found", event);
+
 
     if (event) {
       const deleteEventId = event.id;
       await event.destroy();
-      console.log("Event deleted with ID", deleteEventId);
+  
       res.json(deleteEventId);
     } else {
       res.status(404).send("Event not found");
