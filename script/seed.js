@@ -54,10 +54,29 @@ async function seed() {
     User.create({
       username: "Emoman",
       password: "321",
+      isAdmin: true,
       firstName: "Keith",
       lastName: "Russell",
-      email: "Keith@gmail.com",
-      interests: ["Jujutsu Kaisen", "being sad"],
+      email: "keith@gmail.com",
+      interests: ["Jujutsu Kaisen", "being sad", "digimon"],
+    }),
+    User.create({
+      username: "BrooklynBandit",
+      password: "123",
+      isAdmin: true,
+      firstName: "Femi",
+      lastName: "Bamgbose",
+      email: "femi@gmail.com",
+      interests: ["basketball", "lebron lover", "pizza", "money"],
+    }),
+    User.create({
+      username: "doglover21",
+      password: "123",
+      isAdmin: true,
+      firstName: "Gina",
+      lastName: "Castromonte",
+      email: "gina@gmail.com",
+      interests: ["animals", "tv shows", "pizza"],
     }),
   ]);
 
