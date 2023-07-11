@@ -127,11 +127,10 @@ const ChatRoom = ({ socket, username }) => {
         <div>
           <button onClick={leaveRoom}>Back</button>
           <button style={{ backgroundColor: "red" }} onClick={handleDelete}>
-            Leave Chat Room
+            Disconnect
           </button>
           <button onClick={handleClickWB}>Create Whiteboard</button>
           {whiteBoard && <Whiteboard socket={socket} />}
-          <button onClick={handleDelete}>Leave Chat Room</button>
         </div>
         <div className=" w-full mt-4 flex justify-end">
           <div className=" w-[20%] text-center">
