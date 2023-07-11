@@ -28,6 +28,11 @@ app.use(express.static(path.join(__dirname, '..', 'public')))
 
 // any remaining requests with an extension (.js, .css, etc.) send 404
 app.use((req, res, next) => {
+
+if(path.extname(req.path)== ".css"){
+ return  res.sendFile(path.join(__dirname, '..', 'public/styles/style.css'))
+}
+
   if (path.extname(req.path).length) {
     const err = new Error('Not found')
     err.status = 404
