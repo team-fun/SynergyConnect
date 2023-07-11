@@ -41,6 +41,8 @@ const Home = () => {
 
   useEffect(() => {
     if (participating && chats) {
+      setFilter(chats.filter((chat) => chat.public));
+
       const newFavoriteStatus = {};
       participating.forEach((info) => {
         const chatId = info.chatId;
@@ -157,6 +159,8 @@ const Home = () => {
           <button onClick={joinRoom}>Join Room</button>
           <div>
             <h3 className="text-3xl">Chat Rooms</h3>
+            <SearchBox searchChange={onSearchChange} />
+
             <div className="flex">
               <h3
                 className={`mr-4 ${
@@ -197,7 +201,7 @@ const Home = () => {
               .filter((chat) =>
                 chat.name.toLowerCase().includes(search.toLowerCase())
               )
-              .map((chat) => {
+              .map((chat, i) => {
                 const isParticipating = participating?.find(
                   (info) => info.chatId === chat.id
                 );
@@ -209,8 +213,11 @@ const Home = () => {
 
                 return (
                   <div className="flex items-center my-10" key={chat.id}>
-                    <div className="w-10 h-10 rounded-full mr-16 bg-slate-500">
-                      {/* <img src="" alt="profilePic.jpg" /> */}
+                    <div className="w-10 h-10  mr-16">
+                      <img
+                        src={`./images/chat${i + 1}.png`}
+                        alt="profilePic.jpg"
+                      />
                     </div>
                     <div className=" w-64">
                       <h3 className=" w-full text-xl">{chat.name}</h3>
