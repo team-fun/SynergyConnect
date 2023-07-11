@@ -123,7 +123,7 @@ const Home = () => {
 
   return (
     <div>
-      {/* <CalendarSchedule /> */}
+      <CalendarSchedule />
       {createFormVis ? (
         <>
           <CreateRoomForm />
