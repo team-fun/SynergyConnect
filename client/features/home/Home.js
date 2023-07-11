@@ -141,7 +141,6 @@ const Home = () => {
             <div>
               <div>
                 <div>
-                  <SearchBox searchChange={onSearchChange} />
                   <button
                     onClick={toggleFriendsList}
                   >{`${friends.length} Friends`}</button>
