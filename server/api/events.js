@@ -34,18 +34,17 @@ router.post("/", async (req, res, next) => {
 router.delete("/:title", async (req, res) => {
   try {
     const eventTitle = req.params.title;
-    console.log("Event Title:", eventTitle);
+    console.log("Event Title", eventTitle);
 
     const event = await Event.findOne({ where: { title: eventTitle } });
-    console.log("Event found:", event);
+    console.log("Event found", event);
 
     if (event) {
       const deleteEventId = event.id;
       await event.destroy();
-      console.log("Event deleted with ID:", deleteEventId);
+      console.log("Event deleted with ID", deleteEventId);
       res.json(deleteEventId);
     } else {
-      console.log("Event not found");
       res.status(404).send("Event not found");
     }
   } catch (error) {
@@ -53,5 +52,6 @@ router.delete("/:title", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
 
 module.exports = router;

@@ -37,12 +37,14 @@ export const deleteEventAsync = createAsyncThunk(
   async (title) => {
     try {
       const { data } = await axios.delete(`/api/events/${title}`);
+      console.log("title from thunk ", title);
       return data;
     } catch (error) {
       console.log();
     }
   }
 );
+
 
 const eventSlice = createSlice({
   name: "events",

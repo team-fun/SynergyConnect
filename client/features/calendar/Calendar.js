@@ -23,49 +23,45 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
-const events = [
-  {
-    title: "Big Meetings",
-    allDay: true,
-    start: new Date(2023, 6, 7),
-    end: new Date(2023, 6, 7)
-  },
-];
-
 const CalendarSchedule = () => {
   const [newEvent, setNewEvent] = useState({ title: "", start: "", end: "" });
   const [deleteEvent, setDeleteEvent] = useState({ id: id, title: ""});
   const dispatch = useDispatch();
 
-  const [allEvents, setAllEvents] = useState(events);
+  const [allEvents, setAllEvents] = useState(() => {
+    const storedEvents = localStorage.getItem("events");
+    return storedEvents ? JSON.parse(storedEvents) : events
+  });
+
+  useEffect(() => {
+    localStorage.setItem('events', JSON.stringify(allEvents));
+  }, [allEvents]);
 
   function handleAddEvent() {
     setAllEvents([...allEvents, newEvent]);
     dispatch(
-          addEventAsync({
-            title: newEvent.title,
-            start: newEvent.start,
-            end: newEvent.end,
-            //userId:  userId
-          }))
+      addEventAsync({
+        title: newEvent.title,
+        start: newEvent.start,
+        end: newEvent.end,
+      })
+    );
   }
 
   const handleDelete = () => {
     setAllEvents(allEvents.filter(event => event.title !== deleteEvent.title));
     dispatch(deleteEventAsync(deleteEvent.title));
   };
-  
-
-
-  //const events = useSelector((state) => state.event.events);
-
-//  if (!events) {
-//   return <div>Loading...</div>;
-// }
 
   useEffect(() => {
     dispatch(fetchEventAsync());
   }, [dispatch]);
+
+  const currentDateTime = new Date();
+  const filteredEvents = allEvents.filter(event => {
+    const eventEnd = new Date(event.end);
+    return eventEnd > currentDateTime;
+  });
 
   return (
     <div>
@@ -107,13 +103,13 @@ const CalendarSchedule = () => {
         </button>
       </div>
       <div>
-      <input type="text"
-        placeholder="Delete Event"
-        style={{ width: "20%", marginRight: "10px" }}
-        value={deleteEvent.title}
-        onChange={(e) => setDeleteEvent({title: e.target.value })}
+        <input
+          type="text"
+          placeholder="Delete Event"
+          style={{ width: "20%", marginRight: "10px" }}
+          value={deleteEvent.title}
+          onChange={(e) => setDeleteEvent({title: e.target.value })}
         />
-
         <button style={{ marginTop: "10px" }} onClick={handleDelete}>
           delete Event
         </button>
@@ -121,7 +117,7 @@ const CalendarSchedule = () => {
       <div>
         <Calendar
           localizer={localizer}
-          events={allEvents}
+          events={filteredEvents}
           startAccessor="start"
           endAccessor="end"
           style={{ height: 500, margin: "50px" }}
