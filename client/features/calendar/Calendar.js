@@ -67,10 +67,12 @@ const CalendarSchedule = () => {
 
   return (
     <div>
-      <h1>Calendar</h1>
-      <h2>Add New Event</h2>
-      <div>
+      <h1 className="cal-title">Calendar</h1>
+      {/* <h2 className="cal-add-event">Add New Event</h2> */}
+      <div className="cal-container ">
+      <div className="cal-add-form">
         <input
+          className="title-input"
           type="text"
           placeholder="Add Title"
           style={{ width: "20%", marginRight: "10px" }}
@@ -79,6 +81,7 @@ const CalendarSchedule = () => {
         />
 
         <DatePicker
+        className="start-date-picker"
           placeholderText="Start Date and Time"
           style={{ marginRight: "10px" }}
           selected={newEvent.start}
@@ -90,6 +93,7 @@ const CalendarSchedule = () => {
           timeCaption="Time"
         />
         <DatePicker
+          className="end-date-picker"
           placeholderText="End Date and Time"
           style={{ marginRight: "10px" }}
           selected={newEvent.end}
@@ -104,19 +108,25 @@ const CalendarSchedule = () => {
           Add event
         </button>
       </div>
-      <div>
+      <div className="cal-delete-event">
+      
         <input
+          className="delete-input"
           type="text"
           placeholder="Delete Event"
           style={{ width: "20%", marginRight: "10px" }}
           value={deleteEvent.title}
           onChange={(e) => setDeleteEvent({ title: e.target.value })}
         />
-        <button style={{ marginTop: "10px" }} onClick={handleDelete}>
+        <button 
+        className="cal-delete-button"
+        style={{ marginTop: "10px" }} onClick={handleDelete}>
           delete Event
         </button>
+        
       </div>
-      <div>
+      </div>
+      <div className="calendar">
         <Calendar
           localizer={localizer}
           events={filteredEvents}
