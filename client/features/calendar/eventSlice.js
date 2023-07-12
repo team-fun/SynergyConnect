@@ -37,7 +37,6 @@ export const deleteEventAsync = createAsyncThunk(
   async (title) => {
     try {
       const { data } = await axios.delete(`/api/events/${title}`);
-      console.log("title from thunk ", title);
       return data;
     } catch (error) {
       console.log();
@@ -60,7 +59,6 @@ const eventSlice = createSlice({
     builder.addCase(deleteEventAsync.fulfilled, (state, action) => {
       const deleteEventId = action.payload;
       const newState = state.filter((event) => event.id !== deleteEventId);
-      console.log("PAYLOAD FROM DELETE EVENT SLICE", action.payload);
       return newState;
     });
   },

@@ -81,7 +81,6 @@ const ChatRoom = ({ socket, username }) => {
       socket.off("user_list");
     };
   }, [socket, code, username]);
-
   useEffect(() => {
     if (pastMessages) {
       setMessageList(pastMessages);
@@ -119,29 +118,29 @@ const ChatRoom = ({ socket, username }) => {
   };
 
   return (
-    <div>
+    <div className="w-full h-full">
       <header>
-        <p>Welcome to {code}</p>
-        <div>
-          <button onClick={handleClick}>Start Video Call</button>
-          {videoCall && <VideoCall code={code} username={username} />}
-        </div>
+        <p className=" text-[30px] text-center">
+          Welcome to the {code} Chat Room
+        </p>
+
         <div>
           <button onClick={leaveRoom}>Back</button>
           <button style={{ backgroundColor: "red" }} onClick={handleDelete}>
-            Leave Chat Room
+            Disconnect
           </button>
           <button onClick={handleClickWB}>Create Whiteboard</button>
           {whiteBoard && <Whiteboard socket={socket} />}
-          <button onClick={handleDelete}>Leave Chat Room</button>
         </div>
-        <h4>Users in this room: </h4>
-        {userList.map((user) => {
-          return <p key={user.id}>{user.username}</p>;
-        })}
+        <div className=" w-full mt-4 flex justify-end">
+          <div className=" w-[20%] text-center">
+            <button onClick={handleClick}>Start Video Call</button>
+          </div>
+          {videoCall && <VideoCall code={code} username={username} />}
+        </div>
       </header>
-      <div>
-        <section>
+      <div className="grid grid-cols-5 h-[60vh] ">
+        <section className="col-span-4 h-full px-4 py-2 mr-1 my-2 bg-slate-300 rounded-lg">
           <h3
             style={{
               textAlign: "center",
@@ -165,8 +164,14 @@ const ChatRoom = ({ socket, username }) => {
             );
           })}
         </section>
+        <section className="col-span-1 h-full  px-4 py-2 mx-1 my-2 bg-slate-300 rounded-lg">
+          <h4>Users in this room: </h4>
+          {userList.map((user) => {
+            return <p key={user.id}>{user.username}</p>;
+          })}
+        </section>
       </div>
-      <footer>
+      <div className="text-center mt-6 w-[80%]">
         <input
           type="text"
           value={message}
@@ -179,7 +184,7 @@ const ChatRoom = ({ socket, username }) => {
           }}
         />
         <button onClick={sendMessage}>send</button>
-      </footer>
+      </div>
     </div>
   );
 };

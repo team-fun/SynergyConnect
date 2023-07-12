@@ -54,10 +54,29 @@ async function seed() {
     User.create({
       username: "Emoman",
       password: "321",
+      isAdmin: true,
       firstName: "Keith",
       lastName: "Russell",
-      email: "Keith@gmail.com",
-      interests: ["Jujutsu Kaisen", "being sad"],
+      email: "keith@gmail.com",
+      interests: ["Jujutsu Kaisen", "being sad", "digimon"],
+    }),
+    User.create({
+      username: "BronxsBandit",
+      password: "123",
+      isAdmin: true,
+      firstName: "Femi",
+      lastName: "Bamgbose",
+      email: "femi@gmail.com",
+      interests: ["basketball", "lebron lover", "pizza", "money"],
+    }),
+    User.create({
+      username: "doglover21",
+      password: "123",
+      isAdmin: true,
+      firstName: "Gina",
+      lastName: "Castromonte",
+      email: "gina@gmail.com",
+      interests: ["animals", "tv shows", "pizza"],
     }),
   ]);
 
@@ -149,15 +168,15 @@ async function seed() {
     }),
   ]);
 
-const startDateTime = new Date(2023, 6, 10, 11, 0, 0);
-const endDateTime = new Date(2023, 6, 10, 11, 30, 0);
+  const startDateTime = new Date(2023, 6, 10, 11, 0, 0);
+  const endDateTime = new Date(2023, 6, 10, 11, 30, 0);
 
   const events = await Promise.all([
     Event.create({
       title: "Event 1",
       start: startDateTime,
       end: endDateTime,
-      userId: 1
+      userId: 1,
     }),
   ]);
 

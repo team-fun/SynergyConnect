@@ -25,16 +25,16 @@ const localizer = dateFnsLocalizer({
 
 const CalendarSchedule = () => {
   const [newEvent, setNewEvent] = useState({ title: "", start: "", end: "" });
-  const [deleteEvent, setDeleteEvent] = useState({ id: id, title: ""});
+  const [deleteEvent, setDeleteEvent] = useState({ id: id, title: "" });
   const dispatch = useDispatch();
 
   const [allEvents, setAllEvents] = useState(() => {
     const storedEvents = localStorage.getItem("events");
-    return storedEvents ? JSON.parse(storedEvents) : events
+    return storedEvents ? JSON.parse(storedEvents) : [];
   });
 
   useEffect(() => {
-    localStorage.setItem('events', JSON.stringify(allEvents));
+    localStorage.setItem("events", JSON.stringify(allEvents));
   }, [allEvents]);
 
   function handleAddEvent() {
@@ -49,7 +49,9 @@ const CalendarSchedule = () => {
   }
 
   const handleDelete = () => {
-    setAllEvents(allEvents.filter(event => event.title !== deleteEvent.title));
+    setAllEvents(
+      allEvents.filter((event) => event.title !== deleteEvent.title)
+    );
     dispatch(deleteEventAsync(deleteEvent.title));
   };
 
@@ -58,7 +60,7 @@ const CalendarSchedule = () => {
   }, [dispatch]);
 
   const currentDateTime = new Date();
-  const filteredEvents = allEvents.filter(event => {
+  const filteredEvents = allEvents.filter((event) => {
     const eventEnd = new Date(event.end);
     return eventEnd > currentDateTime;
   });
@@ -75,7 +77,7 @@ const CalendarSchedule = () => {
           value={newEvent.title}
           onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
         />
-        
+
         <DatePicker
           placeholderText="Start Date and Time"
           style={{ marginRight: "10px" }}
@@ -108,7 +110,7 @@ const CalendarSchedule = () => {
           placeholder="Delete Event"
           style={{ width: "20%", marginRight: "10px" }}
           value={deleteEvent.title}
-          onChange={(e) => setDeleteEvent({title: e.target.value })}
+          onChange={(e) => setDeleteEvent({ title: e.target.value })}
         />
         <button style={{ marginTop: "10px" }} onClick={handleDelete}>
           delete Event

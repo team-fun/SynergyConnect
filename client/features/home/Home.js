@@ -15,10 +15,13 @@ import {
 } from "./AllChatsSlice";
 import SearchBox from "../seachbar/SearchBar";
 import CalendarSchedule from "../calendar/Calendar";
+import Friends from "../friends/Friends";
+import { ChangeHistorySharp } from "@mui/icons-material";
 
 const Home = () => {
   const [friendListChange, setfriendListChange] = useState(false);
   const [showFriends, setShowFriends] = useState(false);
+  const [activeTab, setActiveTab] = useState("all");
   const id = useSelector((state) => state.auth.me.id);
   const username = useSelector((state) => state.auth.me.username);
   const results = useSelector(selectChats);
@@ -28,7 +31,6 @@ const Home = () => {
   const [filter, setFilter] = useState([]);
   const [code, setCode] = useState("");
   const [search, setSearch] = useState("");
-  const [searchFriend, setSearchFriend] = useState("");
   const [favoriteStatus, setFavoriteStatus] = useState({});
   const dispatch = useDispatch();
 
@@ -39,6 +41,8 @@ const Home = () => {
 
   useEffect(() => {
     if (participating && chats) {
+      setFilter(chats.filter((chat) => chat.public));
+
       const newFavoriteStatus = {};
       participating.forEach((info) => {
         const chatId = info.chatId;
@@ -52,9 +56,11 @@ const Home = () => {
     }
   }, [participating, chats]);
 
-  const handleFriendListChange = () => {
-    setfriendListChange(!friendListChange);
-  };
+  useEffect(() => {
+    if (chats) {
+      setFilter(chats);
+    }
+  }, [chats]);
 
   const toggleFriendsList = () => {
     setShowFriends(!showFriends);
@@ -64,23 +70,19 @@ const Home = () => {
     setCreateFormVis(true);
   };
 
-  const handleAcceptRejectRequest = (friendID, action) => {
-    dispatch(
-      acceptRejectRequest({
-        loggedInUserId: id,
-        otherFriendId: friendID,
-        action,
-      })
-    );
-    setTimeout(handleFriendListChange, 1000);
+  const allFilter = () => {
+    setFilter(chats);
+    setActiveTab("all");
   };
 
   const publicFilter = () => {
     setFilter(chats.filter((chat) => chat.public));
+    setActiveTab("public");
   };
 
   const privateFilter = () => {
     setFilter(chats.filter((chat) => !chat.public));
+    setActiveTab("private");
   };
 
   const favFilter = () => {
@@ -91,6 +93,7 @@ const Home = () => {
           (favoriteStatus[chat.id] || false)
       )
     );
+    setActiveTab("fav");
   };
 
   const joinRoom = (evt) => {
@@ -114,7 +117,10 @@ const Home = () => {
     const oldFav = favoriteStatus[chatId] || false;
     const newFav = !oldFav;
     dispatch(favoriteRoom({ newFav, isParticipating }));
-    setFavoriteStatus((prevStatus) => ({ ...prevStatus, [chatId]: newFav }));
+    https: setFavoriteStatus((prevStatus) => ({
+      ...prevStatus,
+      [chatId]: newFav,
+    }));
   };
 
   return (
@@ -127,7 +133,22 @@ const Home = () => {
         </>
       ) : (
         <section>
-          <h3>Welcome, {username}</h3>
+          <div className="py-10 w-full px-5 flex items-center justify-between">
+            <div>
+              <h3 className="text-5xl">Welcome, {username}</h3>
+              <p className="font-medium"> Its good to see you</p>
+            </div>
+            <div>
+              <div>
+                <div>
+                  <button
+                    onClick={toggleFriendsList}
+                  >{`${friends.length} Friends`}</button>
+                </div>
+                {showFriends && <Friends />}
+              </div>
+            </div>
+          </div>
           <button onClick={create}>Create Room</button>
           <input
             placeholder="Enter Room Code"
@@ -136,17 +157,50 @@ const Home = () => {
           ></input>
           <button onClick={joinRoom}>Join Room</button>
           <div>
-            <button onClick={publicFilter}>Public Rooms</button>
-            <button onClick={privateFilter}>Private Rooms</button>
-            <button onClick={favFilter}>Favorites⭐</button>
+            <h3 className="text-3xl">Chat Rooms</h3>
+            <SearchBox searchChange={onSearchChange} />
+
+            <div className="flex">
+              <h3
+                className={`mr-4 ${
+                  activeTab === "all" ? "activeHomeTab" : "nonActiveHomeTab"
+                }`}
+                onClick={allFilter}
+              >
+                All Chats
+              </h3>
+              <h3
+                className={`mx-4 ${
+                  activeTab === "public" ? "activeHomeTab" : "nonActiveHomeTab"
+                }`}
+                onClick={publicFilter}
+              >
+                Public Rooms
+              </h3>
+              <h3
+                className={`mx-4 ${
+                  activeTab === "private" ? "activeHomeTab" : "nonActiveHomeTab"
+                }`}
+                onClick={privateFilter}
+              >
+                Private Rooms
+              </h3>
+              <h3
+                className={`mx-4 ${
+                  activeTab === "fav" ? "activeHomeTab" : "nonActiveHomeTab"
+                }`}
+                onClick={favFilter}
+              >
+                Favorites⭐
+              </h3>
+            </div>
           </div>
-          <SearchBox searchChange={onSearchChange} />
           <div>
             {filter
               .filter((chat) =>
                 chat.name.toLowerCase().includes(search.toLowerCase())
               )
-              .map((chat) => {
+              .map((chat, i) => {
                 const isParticipating = participating?.find(
                   (info) => info.chatId === chat.id
                 );
@@ -157,11 +211,19 @@ const Home = () => {
                 const fav = favoriteStatus[chatId] || false;
 
                 return (
-                  <div key={chat.id}>
-                    <h1>{chat.name}</h1>
-                    <p>{chat.description}</p>
+                  <div className="flex items-center my-10" key={chat.id}>
+                    <div className="w-10 h-10  mr-16">
+                      <img
+                        src={`./images/chat${i + 1}.png`}
+                        alt="profilePic.jpg"
+                      />
+                    </div>
+                    <div className=" w-64">
+                      <h3 className=" w-full text-xl">{chat.name}</h3>
+                      <p className="w-full">{chat.description}</p>
+                    </div>
                     <p>👤 {participants.length}</p>
-                    <Link to={`/chats/${chat.code}`}>
+                    <Link className="mx-4" to={`/chats/${chat.code}`}>
                       <button>Join Room</button>
                     </Link>
                     {isParticipating ? (
@@ -193,76 +255,6 @@ const Home = () => {
           </div>
         </section>
       )}
-      <div>
-        <button
-          onClick={toggleFriendsList}
-        >{`${friends.length} Friends`}</button>
-        {showFriends && (
-          <div>
-            {friends.length === undefined || friends?.length === 0 ? (
-              <div>No friends</div>
-            ) : (
-              <div>
-                {friends.map((friend, i) => (
-                  <div key={i}>
-                    {friend.dataValues.username}
-                    <span>
-                      {friend.pending ? (
-                        friend.sent ? (
-                          <button
-                            onClick={() =>
-                              handleAcceptRejectRequest(
-                                friend?.dataValues?.id,
-                                "reject"
-                              )
-                            }
-                          >
-                            Cancel Request
-                          </button>
-                        ) : (
-                          <>
-                            <button
-                              onClick={() =>
-                                handleAcceptRejectRequest(
-                                  friend?.dataValues?.id,
-                                  "accept"
-                                )
-                              }
-                            >
-                              Accept
-                            </button>
-                            <button
-                              onClick={() =>
-                                handleAcceptRejectRequest(
-                                  friend?.dataValues?.id,
-                                  "reject"
-                                )
-                              }
-                            >
-                              Reject
-                            </button>
-                          </>
-                        )
-                      ) : (
-                        <button
-                          onClick={() =>
-                            handleAcceptRejectRequest(
-                              friend?.dataValues?.id,
-                              "reject"
-                            )
-                          }
-                        >
-                          Remove Friend
-                        </button>
-                      )}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-      </div>
     </div>
   );
 };
