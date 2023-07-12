@@ -125,7 +125,7 @@ const Home = () => {
 
   return (
     <div>
-      <CalendarSchedule />
+      {/* <CalendarSchedule /> */}
       {createFormVis ? (
         <>
           <CreateRoomForm />
@@ -139,7 +139,7 @@ const Home = () => {
               <p className="font-medium"> Its good to see you</p>
             </div>
             <div>
-              <div>
+              <div className=" mr-60">
                 <div>
                   <button
                     onClick={toggleFriendsList}
@@ -212,7 +212,7 @@ const Home = () => {
 
                 return (
                   <div className="flex items-center my-10" key={chat.id}>
-                    <div className="w-10 h-10  mr-16">
+                    <div className="w-10 h-10  mx-32">
                       <img
                         src={`./images/chat${i + 1}.png`}
                         alt="profilePic.jpg"
@@ -223,7 +223,7 @@ const Home = () => {
                       <p className="w-full">{chat.description}</p>
                     </div>
                     <p>👤 {participants.length}</p>
-                    <Link className="mx-4" to={`/chats/${chat.code}`}>
+                    <Link className="mx-20" to={`/chats/${chat.code}`}>
                       <button>Join Room</button>
                     </Link>
                     {isParticipating ? (
