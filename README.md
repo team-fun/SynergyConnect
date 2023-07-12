@@ -23,7 +23,8 @@ The world is full of ways to talk and share with others.  Synergy Connect helps 
 1.  `npm install` to install project dependencies
 1.  `createdb synergyconnect` to make a Postgres database
 1.  `npm run seed` to seed the database with data
-1.  In your first terminal (root folder) running `npm run start-dev` and running `npm run server` in your second terminal will make great things happen! 
+1.  In your first terminal (root folder) run `npm run start-dev` and running `npm run server` in your second terminal will make great things happen!
+1.  In your first terminal run `npm run build:css` to initiate css & Tailwind styling.
 1.  Open up `localhost:8080` in your favorite browser (this is client side); if needed, the server is ported to `localhost:3001`
 
 ## To-do Board
