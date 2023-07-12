@@ -13,7 +13,7 @@ import {SlCalender} from "react-icons/sl"
 import { BiLogOut } from "react-icons/bi";
 import { FiLogIn } from "react-icons/fi";
 import { ImProfile } from "react-icons/im";
-import {FaUserFriends} from "react-icons/fa"
+import { FaUserFriends } from "react-icons/fa";
 
 const Navbar = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
@@ -37,7 +37,7 @@ const Navbar = () => {
   return (
     <div>
       <div className="h-screen flex flex-col justify-center items-center w-40 [&>*]:text-lg">
-        <div className="flex flex-col justify-center items-center w-20 navbarArea shadow-lg  text-white rounded-3xl my-6 mx-10 h-full">
+        <div className="flex flex-col justify-center items-center w-20 navbarArea  text-white rounded-3xl my-6 mx-10 h-full">
           <h1 className="mainName">sC</h1>
           <nav>
             {isLoggedIn ? (
@@ -60,7 +60,7 @@ const Navbar = () => {
                     }`}
                     to="/friends"
                   >
-                   <FaUserFriends/>
+                    <FaUserFriends />
                   </Link>
                   <Link
                     className={` ${

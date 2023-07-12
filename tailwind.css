@@ -179,7 +179,7 @@ a.dark {
 }
 .navbarArea {
   background-color: black;
-  box-shadow: 10px 200px 50px black;
+  box-shadow: 10px 50px 50px black;
 }
 .navbarArea.dark {
   background-color: white;
