@@ -54,6 +54,7 @@ const Whiteboard = ({ socket }) => {
 
   useEffect(() => {
     socket.on("receive_element", (data) => {
+      setElements((ele) => [...ele, data]);
       console.log("Received element:", data);
     });
   }, [socket]);
@@ -83,10 +84,10 @@ const Whiteboard = ({ socket }) => {
         });
         setAction(actions.DRAWING);
         setSelectedElement(element);
-        console.log("ELLELELLELEL", element);
         setElements((ele) => [...ele, element]);
         const elementData = element;
         socket.emit("element-update", elementData);
+        dispatch(updateElementInStore(element));
         break;
       }
       case toolTypes.TEXT: {
