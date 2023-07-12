@@ -10,6 +10,7 @@ import EditUser from "../features/admin/EditUser";
 import UserView from "../features/userView/userView";
 import ChatRoom from "../features/chat/ChatRoom";
 import ContactUs from "../features/ContactUs/ContactUs";
+import CalendarSchedule from "../features/calendar/Calendar";
 // import WhiteBoard from "../features/chat/WhiteBoard/WhiteBoard";
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:3001/");
@@ -48,6 +49,7 @@ const AppRoutes = () => {
             <Route path="/profile" element={<UserView />} />
             <Route path="/profile/:id" element={<UserView />} />
             <Route path="/contactus" element={<ContactUs />} />
+            <Route path="/Calendar" element={<CalendarSchedule />} />
           </Routes>
         ) : (
           <Routes>
@@ -63,6 +65,7 @@ const AppRoutes = () => {
             <Route path="/profile" element={<UserView />} />
             <Route path="/profile/:id" element={<UserView />} />
             <Route path="/contactus" element={<ContactUs />} />
+            <Route path="/Calendar" element={<CalendarSchedule />} />
           </Routes>
         )
       ) : (

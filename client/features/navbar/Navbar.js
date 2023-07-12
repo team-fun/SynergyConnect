@@ -12,6 +12,7 @@ import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import {BiLogOut} from "react-icons/bi"
 import {FiLogIn} from "react-icons/fi"
 import {ImProfile} from "react-icons/im"
+import {SlCalender} from "react-icons/sl"
 
 const Navbar = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
@@ -54,6 +55,9 @@ const Navbar = () => {
                   <Link to="/admin">
                     <MdOutlineAdminPanelSettings />
                   </Link>
+                  <Link to="/Calendar">
+                    <SlCalender />
+                  </Link>
                   <button type="button" onClick={logoutAndRedirectHome}>
                     <BiLogOut />
                   </button>
@@ -69,6 +73,9 @@ const Navbar = () => {
                   </Link>
                   <Link to="/friends">Find Friends!</Link>
                   <Link to="/ContactUs">C</Link>
+                  <Link to="/Calendar">
+                    <SlCalender />
+                  </Link>
                   <button type="button" onClick={logoutAndRedirectHome}>
                     Logout
                   </button>
