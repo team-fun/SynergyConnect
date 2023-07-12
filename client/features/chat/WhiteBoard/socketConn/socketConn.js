@@ -14,23 +14,18 @@ export const connectWithSocketServer = () => {
     console.log("connected to socket.io server");
   });
   socket.on("whiteboard-state", (elements) => {
-    console.log("ELEMENTS", elements);
     store.dispatch(setElements(elements));
   });
   socket.on("element-update", (elementData) => {
-    console.log("ELEMENT DATA", elementData);
     store.dispatch(updateElement(elementData));
   });
   socket.on("whiteboard-clear", () => {
-    console.log("CLEARRRED");
     store.dispatch(setElements([]));
   });
   socket.on("cursor-position", (cursorData) => {
-    console.log("CURSOR DATA", cursorData);
     store.dispatch(updateCursorPosition(cursorData));
   });
   socket.on("user-disconnected", (disconnectedUserId) => {
-    console.log("USERID", disconnectedUserId);
     store.dispatch(removeCursorPosition(disconnectedUserId));
   });
 };

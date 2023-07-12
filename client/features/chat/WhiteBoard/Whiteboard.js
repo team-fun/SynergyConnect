@@ -25,18 +25,12 @@ let lastCursorPosition;
 const Whiteboard = ({ socket }) => {
   const canvasRef = useRef();
   const textAreaRef = useRef(null);
-  // const state = useSelector((state) => console.log(state.whiteboard));
   const { code } = useParams();
   const toolType = useSelector((state) => state.whiteboard.tool);
-  // const elements = useSelector((state) => state.whiteboard.elements);
-
-  // console.log("TOOLS", toolType);
 
   const [action, setAction] = useState(null);
   const [selectedElement, setSelectedElement] = useState(null);
   const [elements, setElements] = useState([]);
-
-  console.log(elements);
 
   const dispatch = useDispatch();
 
@@ -55,7 +49,6 @@ const Whiteboard = ({ socket }) => {
   useEffect(() => {
     socket.on("receive_element", (data) => {
       setElements((ele) => [...ele, data]);
-      console.log("Received element:", data);
     });
   }, [socket]);
 
