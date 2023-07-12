@@ -22,22 +22,21 @@ import { useParams } from "react-router-dom";
 let emitCursor = true;
 let lastCursorPosition;
 
-const Whiteboard = () => {
+const Whiteboard = ({ socket }) => {
   const canvasRef = useRef();
   const textAreaRef = useRef(null);
-  // const state = useSelector((state) => console.log(state.whiteboard));
+  const state = useSelector((state) => console.log(state.whiteboard));
   const { code } = useParams();
   const toolType = useSelector((state) => state.whiteboard.tool);
-  const elements = useSelector((state) => state.whiteboard.elements);
+  // const elements = useSelector((state) => state.whiteboard.elements);
 
   // console.log("TOOLS", toolType);
-  // console.log("ELEEEE", elements);
 
   const [action, setAction] = useState(null);
   const [selectedElement, setSelectedElement] = useState(null);
-  const [allElements, setAllElements] = useState([]);
+  const [elements, setElements] = useState([]);
 
-  // console.log(allElements);
+  console.log(elements);
 
   const dispatch = useDispatch();
 
@@ -78,8 +77,9 @@ const Whiteboard = () => {
         });
         setAction(actions.DRAWING);
         setSelectedElement(element);
-        console.log("AAAAAAAAAAAAAA", element);
-        dispatch(updateElementInStore(element));
+        console.log("ELLELELLELEL", element);
+        const elementData = element;
+        socket.emit("element-update", elementData);
         break;
       }
       case toolTypes.TEXT: {
@@ -96,7 +96,6 @@ const Whiteboard = () => {
         setAction(actions.WRITING);
         setSelectedElement(element);
         dispatch(updateElementInStore(element));
-        console.log("AAAAAAAAAAAAAA", element);
         if (textAreaRef.current) {
           const textareaX = canvasX - canvasRect.left;
           const textareaY = canvasY - canvasRect.top;
@@ -361,6 +360,12 @@ const Whiteboard = () => {
       setSelectedElement(null);
     }
   };
+
+  socket.on("element-update", (elementData) => {
+    console.log("ELEMENTDDDAA", elementData);
+    const newElements = [...elements, elementData];
+    console.log("NEWWWELEMMENTS", newElements);
+  });
 
   return (
     <div className="whiteboard-wrapper">

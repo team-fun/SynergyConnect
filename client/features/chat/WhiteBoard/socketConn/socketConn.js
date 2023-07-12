@@ -41,7 +41,8 @@ export const connectWithSocketServer = () => {
 };
 
 export const emitElementUpdate = (elementData) => {
-  //   console.log("ELEEE UPDATE", elementData); f
+  //   console.log("ELEEE UPDATE", elementData);
+  console.log("HELLO I WENT OFF");
   socket.emit("element-update", elementData);
 };
 
