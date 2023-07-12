@@ -54,10 +54,13 @@ const UserView = () => {
     setPlaceHolder(
       ((arr) => {
         let str = "";
-        arr.forEach((i) => {
-          str += i + ", ";
+        arr.forEach((i, index) => {
+          if (index !== arr.length - 1) {
+            str += i + ", ";
+          } else {
+            str += i;
+          }
         });
-
         return str;
       })(_user.interests)
     );
@@ -125,7 +128,7 @@ const UserView = () => {
 
   return (
     <div className="profile">
-      <div className="py-10 w-full px-5 flex items-center justify-between">
+      <div className="py-10 w-[70%] px-5 flex items-center justify-between">
         <div className="pfp w-20 h-20 object-cover">
           <img className="w-full" src={image ? image : user.image} alt="pfp" />
           <div className="online-status">
@@ -138,10 +141,10 @@ const UserView = () => {
             {" "}
             {user.firstName} {user.lastName}
           </h3>
-          <p className="font-medium"> Its good to see you</p>
+          <p className="font-medium"> It's good to see you</p>
         </div>
 
-        <div className="flex justify-center items-center">
+        <div className="">
           <div>
             <button
               onClick={toggleFriendsList}
@@ -150,107 +153,138 @@ const UserView = () => {
           {showFriends && <Friends />}
         </div>
       </div>
-      <div className="mt-20">
-        <h3 className="ml-10 text-5xl">USER PROFILE</h3>
+      <div className="w-[70%] text-center mt-10  bg-slate-300 py-2 px-4 rounded-lg">
+        <h3 className="ml-10 text-[30px]">USER PROFILE</h3>
         <div className="user-info [&>*]:my-4">
-          <div className="username flex items-center">
-            {!editUsername && user.username}
-            {editUsername && (
-              <>
-                Edit username:{" "}
-                <input
-                  value={user.username}
-                  onChange={(e) =>
-                    setUser((state) => {
-                      return { ...state, username: e.target.value };
-                    })
-                  }
-                />
-              </>
-            )}
-            {!id &&
-              (!editUsername ? (
-                <div onClick={(e) => setEditUsername(true)}>
-                  <EditIcon />
-                </div>
-              ) : (
-                <div onClick={(e) => setEditUsername(false)}>
-                  <DoneIcon />
-                </div>
-              ))}
+          <div className="flex justify-around">
+            <div className="username flex items-center">
+              {!editUsername && user.username}
+              {editUsername && (
+                <>
+                  Edit username:{" "}
+                  <input
+                    value={user.username}
+                    onChange={(e) =>
+                      setUser((state) => {
+                        return { ...state, username: e.target.value };
+                      })
+                    }
+                  />
+                </>
+              )}
+              {!id &&
+                (!editUsername ? (
+                  <div className="ml-2" onClick={(e) => setEditUsername(true)}>
+                    <EditIcon />
+                  </div>
+                ) : (
+                  <div className="ml-2" onClick={(e) => setEditUsername(false)}>
+                    <DoneIcon />
+                  </div>
+                ))}
+            </div>
+
+            <div className="fullname flex items-center">
+              {!editName && (
+                <>
+                  {user.firstName} {user.lastName}
+                </>
+              )}
+              {editName && (
+                <>
+                  Edit Name:{" "}
+                  <input
+                    value={user.firstName}
+                    onChange={(e) =>
+                      setUser((state) => {
+                        return { ...state, firstName: e.target.value };
+                      })
+                    }
+                  />
+                  <input
+                    value={user.lastName}
+                    onChange={(e) =>
+                      setUser((state) => {
+                        return { ...state, lastName: e.target.value };
+                      })
+                    }
+                  />
+                </>
+              )}
+              {!id &&
+                (!editName ? (
+                  <div className="ml-2" onClick={(e) => setEditName(true)}>
+                    <EditIcon />
+                  </div>
+                ) : (
+                  <div className="ml-2" onClick={(e) => setEditName(false)}>
+                    <DoneIcon />
+                  </div>
+                ))}
+            </div>
           </div>
-          <div className="fullname flex items-center">
-            {!editName && (
-              <>
-                {user.firstName} {user.lastName}
-              </>
-            )}
-            {editName && (
-              <>
-                Edit Name:{" "}
-                <input
-                  value={user.firstName}
-                  onChange={(e) =>
-                    setUser((state) => {
-                      return { ...state, firstName: e.target.value };
-                    })
-                  }
-                />
-                <input
-                  value={user.lastName}
-                  onChange={(e) =>
-                    setUser((state) => {
-                      return { ...state, lastName: e.target.value };
-                    })
-                  }
-                />
-              </>
-            )}
-            {!id &&
-              (!editName ? (
-                <div onClick={(e) => setEditName(true)}>
-                  <EditIcon />
-                </div>
-              ) : (
-                <div onClick={(e) => setEditName(false)}>
-                  <DoneIcon />
-                </div>
-              ))}
+          <div className="flex justify-around">
+            <div className="email flex items-center">
+              {!editEmail &&
+                user.email &&
+                (user.email.split("").includes("@") &&
+                user.email.split("").includes(".")
+                  ? user.email
+                  : _user.email)}
+              {!editEmail && !user.email && <span>Add an Email</span>}
+              {editEmail && (
+                <>
+                  Edit Email:{" "}
+                  <input
+                    type="email"
+                    value={user.email}
+                    onChange={(e) =>
+                      setUser((state) => {
+                        return { ...state, email: e.target.value };
+                      })
+                    }
+                  />
+                </>
+              )}
+              {!id &&
+                (!editEmail ? (
+                  <div className="ml-2" onClick={(e) => setEditEmail(true)}>
+                    <EditIcon />
+                  </div>
+                ) : (
+                  <div className="ml-2" onClick={(e) => setEditEmail(false)}>
+                    <DoneIcon />
+                  </div>
+                ))}
+            </div>
+            <div className="location flex items-center">
+              {!editLocation && (user.location || (!id && "Add a Location"))}
+              {editLocation && (
+                <>
+                  Edit Location:
+                  <input
+                    value={user.location}
+                    onChange={(e) =>
+                      setUser((state) => {
+                        return { ...state, location: e.target.value };
+                      })
+                    }
+                  />
+                </>
+              )}
+              {!id &&
+                (!editLocation ? (
+                  <div className="ml-2" onClick={(e) => setEditLocation(true)}>
+                    <EditIcon />
+                  </div>
+                ) : (
+                  <div className="ml-2" onClick={(e) => setEditLocation(false)}>
+                    <DoneIcon />
+                  </div>
+                ))}{" "}
+            </div>
           </div>
-          <div className="email flex items-center">
-            {!editEmail &&
-              user.email &&
-              (user.email.split("").includes("@") &&
-              user.email.split("").includes(".")
-                ? user.email
-                : _user.email)}
-            {!editEmail && !user.email && <span>Add an Email</span>}
-            {editEmail && (
-              <>
-                Edit Email:{" "}
-                <input
-                  type="email"
-                  value={user.email}
-                  onChange={(e) =>
-                    setUser((state) => {
-                      return { ...state, email: e.target.value };
-                    })
-                  }
-                />
-              </>
-            )}
-            {!id &&
-              (!editEmail ? (
-                <div onClick={(e) => setEditEmail(true)}>
-                  <EditIcon />
-                </div>
-              ) : (
-                <div onClick={(e) => setEditEmail(false)}>
-                  <DoneIcon />
-                </div>
-              ))}
-          </div>
-          <div className="bio flex items-center">
+          <div className="bio flex justify-center items-center">
             {" "}
             {!editBio && (user.bio || (!id && "Add a Bio"))}
             {editBio && (
@@ -268,50 +302,51 @@ const UserView = () => {
             )}
             {!id &&
               (!editBio ? (
-                <div onClick={(e) => setEditBio(true)}>
+                <div className="ml-2" onClick={(e) => setEditBio(true)}>
                   <EditIcon />
                 </div>
               ) : (
-                <div onClick={(e) => setEditBio(false)}>
+                <div className="ml-2" onClick={(e) => setEditBio(false)}>
                   <DoneIcon />
                 </div>
               ))}{" "}
           </div>
-          <div className="location flex items-center">
-            {!editLocation && (user.location || (!id && "Add a Location"))}
-            {editLocation && (
-              <>
-                Edit Location:
-                <input
-                  value={user.location}
-                  onChange={(e) =>
-                    setUser((state) => {
-                      return { ...state, location: e.target.value };
-                    })
-                  }
-                />
-              </>
-            )}
-            {!id &&
-              (!editLocation ? (
-                <div onClick={(e) => setEditLocation(true)}>
-                  <EditIcon />
-                </div>
-              ) : (
-                <div onClick={(e) => setEditLocation(false)}>
-                  <DoneIcon />
-                </div>
-              ))}{" "}
-          </div>
+
           <div className="user-info-exta">
-            <ul className="interests flex items-center">
-              {editInterests ? <p>Edit Interests:</p> : <p>Interests</p>}
-              {!editInterests && (
-                <>
-                  {user.interests?.map((interest, index) => (
-                    <span key={index}>{interest}</span>
+            <ul className="interests flex flex-col justify-center items-center">
+              <div className="flex justify-center items-center">
+                {editInterests ? (
+                  <p className="text-[20px] my-0">Edit Interests:</p>
+                ) : (
+                  <p className="text-[20px] my-0">Interests:</p>
+                )}
+                {!id &&
+                  (!editInterests ? (
+                    <div
+                      className="ml-2"
+                      onClick={(e) => setEditInterests(true)}
+                    >
+                      <EditIcon />
+                    </div>
+                  ) : (
+                    <div
+                      className="ml-2"
+                      onClick={(e) => setEditInterests(false)}
+                    >
+                      <DoneIcon />
+                    </div>
                   ))}
-                </>
+              </div>
+              {!editInterests && (
+                <div className="text-left flex flex-col ml-10">
+                  <ul className="list-disc">
+                    {user.interests?.map((interest, index) => (
+                      <li className="text-slate-500" key={index}>
+                        {interest}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               )}
               {editInterests && (
                 <input
@@ -321,33 +356,23 @@ const UserView = () => {
                   value={placeHolder}
                 />
               )}
-              {!id &&
-                (!editInterests ? (
-                  <div onClick={(e) => setEditInterests(true)}>
-                    <EditIcon />
-                  </div>
-                ) : (
-                  <div onClick={(e) => setEditInterests(false)}>
-                    <DoneIcon />
-                  </div>
-                ))}
             </ul>
-            <div className="link">
-              <a href="https://www.instagram.com/">
-                <InstagramIcon style={{ fontSize: "50px" }} />
-              </a>
-              <a href="https://www.facebook.com/">
-                <FacebookIcon style={{ fontSize: "50px" }} />
-              </a>
-              <a href="https://twitter.com/i/flow/login?redirect_after_login=%2F">
-                <TwitterIcon style={{ fontSize: "50px" }} />
-              </a>
-              <a href="https://www.linkedin.com/">
-                <LinkedInIcon style={{ fontSize: "50px" }} />
-              </a>
-            </div>
           </div>
         </div>
+      </div>
+      <div className="link w-[70%] text-center mt-3 ">
+        <a href="https://www.instagram.com/">
+          <InstagramIcon style={{ fontSize: "50px" }} />
+        </a>
+        <a href="https://www.facebook.com/">
+          <FacebookIcon style={{ fontSize: "50px" }} />
+        </a>
+        <a href="https://twitter.com/i/flow/login?redirect_after_login=%2F">
+          <TwitterIcon style={{ fontSize: "50px" }} />
+        </a>
+        <a href="https://www.linkedin.com/">
+          <LinkedInIcon style={{ fontSize: "50px" }} />
+        </a>
       </div>
     </div>
   );
