@@ -34,7 +34,7 @@ async function seed() {
       interests: ["shooting", "guns", "dogs", "snakes"],
     }),
     User.create({
-      username: "jdog",
+      username: "jovans",
       password: "123",
       isAdmin: true,
       firstName: "Jovan",
@@ -151,23 +151,6 @@ async function seed() {
     }),
   ]);
 
-  const messages = await Promise.all([
-    MessageData.create({
-      code: "main",
-      username: "jdog",
-      message: "HELLO THIS IS A TEST MESSAGE",
-      time: "12:00am",
-      chatId: 1,
-    }),
-    MessageData.create({
-      code: "main",
-      username: "adambomb",
-      message: "HIIII THIS IS ANOTHER TEST MESSAGAE",
-      time: "12:55am",
-      chatId: 1,
-    }),
-  ]);
-
   const startDateTime = new Date(2023, 6, 10, 11, 0, 0);
   const endDateTime = new Date(2023, 6, 10, 11, 30, 0);
 
@@ -184,7 +167,6 @@ async function seed() {
   console.log(`seeded ${friends.length} friends`);
   console.log(`seeded ${chats.length} chats`);
   console.log(`seeded ${participants.length} participants`);
-  console.log(`seeded ${messages.length} messages`);
   console.log(`seeded ${events.length} events`);
   console.log(`seeded successfully`);
   return {

@@ -25,6 +25,7 @@ const updateElementInElements = (elementData) => {
   if (index === -1) return elements.push(elementData);
 
   elements[index] = elementData;
+  console.log(elements);
 };
 
 io.on("connection", (socket) => {

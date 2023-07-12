@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   tool: null,
@@ -6,7 +6,7 @@ const initialState = {
 };
 
 const whiteboardSlice = createSlice({
-  name: 'whiteboard',
+  name: "whiteboard",
   initialState,
   reducers: {
     setToolType: (state, action) => {
@@ -24,10 +24,11 @@ const whiteboardSlice = createSlice({
     },
     setElements: (state, action) => {
       state.elements = action.payload;
-    }
+    },
   },
 });
 
-export const { setToolType, updateElement, setElements } = whiteboardSlice.actions;
+export const { setToolType, updateElement, setElements } =
+  whiteboardSlice.actions;
 
 export default whiteboardSlice.reducer;

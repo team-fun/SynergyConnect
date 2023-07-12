@@ -17,18 +17,27 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { updateElement as updateElementInStore } from "./whiteboardSlice";
 import { emitCursorPosition } from "./socketConn/socketConn";
+import { useParams } from "react-router-dom";
 
 let emitCursor = true;
 let lastCursorPosition;
 
-const Whiteboard = ({ socket }) => {
+const Whiteboard = () => {
   const canvasRef = useRef();
   const textAreaRef = useRef(null);
+  // const state = useSelector((state) => console.log(state.whiteboard));
+  const { code } = useParams();
   const toolType = useSelector((state) => state.whiteboard.tool);
   const elements = useSelector((state) => state.whiteboard.elements);
 
+  // console.log("TOOLS", toolType);
+  // console.log("ELEEEE", elements);
+
   const [action, setAction] = useState(null);
   const [selectedElement, setSelectedElement] = useState(null);
+  const [allElements, setAllElements] = useState([]);
+
+  // console.log(allElements);
 
   const dispatch = useDispatch();
 
@@ -59,6 +68,7 @@ const Whiteboard = ({ socket }) => {
       case toolTypes.LINE:
       case toolTypes.PENCIL: {
         const element = createElement({
+          code: code,
           x1: canvasX,
           y1: canvasY,
           x2: canvasX,
@@ -68,11 +78,13 @@ const Whiteboard = ({ socket }) => {
         });
         setAction(actions.DRAWING);
         setSelectedElement(element);
+        console.log("AAAAAAAAAAAAAA", element);
         dispatch(updateElementInStore(element));
         break;
       }
       case toolTypes.TEXT: {
         const element = createElement({
+          code: code,
           x1: canvasX,
           y1: canvasY,
           x2: canvasX,
@@ -84,7 +96,7 @@ const Whiteboard = ({ socket }) => {
         setAction(actions.WRITING);
         setSelectedElement(element);
         dispatch(updateElementInStore(element));
-
+        console.log("AAAAAAAAAAAAAA", element);
         if (textAreaRef.current) {
           const textareaX = canvasX - canvasRect.left;
           const textareaY = canvasY - canvasRect.top;
@@ -159,6 +171,7 @@ const Whiteboard = ({ socket }) => {
           );
           updateElement(
             {
+              code: code,
               id: selectedElement.id,
               index: selectedElementIndex,
               x1,
@@ -204,6 +217,7 @@ const Whiteboard = ({ socket }) => {
       if (index !== -1) {
         updateElement(
           {
+            code: code,
             index,
             id: elements[index].id,
             x1: elements[index].x1,
@@ -272,6 +286,7 @@ const Whiteboard = ({ socket }) => {
       if (index !== -1) {
         updateElement(
           {
+            code: code,
             id,
             x1: newX1,
             y1: newY1,
@@ -306,6 +321,7 @@ const Whiteboard = ({ socket }) => {
       if (selectedElementIndex !== -1) {
         updateElement(
           {
+            code: code,
             x1,
             y1,
             x2,
@@ -330,6 +346,7 @@ const Whiteboard = ({ socket }) => {
     if (index !== -1) {
       updateElement(
         {
+          code: code,
           id,
           x1,
           y1,
