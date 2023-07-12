@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { useLayoutEffect, useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Menu from "./Menu";
 import rough from "roughjs/bundled/rough.esm";
@@ -25,7 +25,7 @@ let lastCursorPosition;
 const Whiteboard = ({ socket }) => {
   const canvasRef = useRef();
   const textAreaRef = useRef(null);
-  const state = useSelector((state) => console.log(state.whiteboard));
+  // const state = useSelector((state) => console.log(state.whiteboard));
   const { code } = useParams();
   const toolType = useSelector((state) => state.whiteboard.tool);
   // const elements = useSelector((state) => state.whiteboard.elements);
@@ -51,6 +51,12 @@ const Whiteboard = ({ socket }) => {
       drawElement({ roughCanvas, context: ctx, element });
     });
   }, [elements]);
+
+  useEffect(() => {
+    socket.on("receive_element", (data) => {
+      console.log("Received element:", data);
+    });
+  }, [socket]);
 
   const handleMouseDown = (event) => {
     const { clientX, clientY } = event;
@@ -78,6 +84,7 @@ const Whiteboard = ({ socket }) => {
         setAction(actions.DRAWING);
         setSelectedElement(element);
         console.log("ELLELELLELEL", element);
+        setElements((ele) => [...ele, element]);
         const elementData = element;
         socket.emit("element-update", elementData);
         break;
@@ -360,12 +367,6 @@ const Whiteboard = ({ socket }) => {
       setSelectedElement(null);
     }
   };
-
-  socket.on("element-update", (elementData) => {
-    console.log("ELEMENTDDDAA", elementData);
-    const newElements = [...elements, elementData];
-    console.log("NEWWWELEMMENTS", newElements);
-  });
 
   return (
     <div className="whiteboard-wrapper">

@@ -81,6 +81,7 @@ const ChatRoom = ({ socket, username }) => {
       socket.off("user_list");
     };
   }, [socket, code, username]);
+
   useEffect(() => {
     if (pastMessages) {
       setMessageList(pastMessages);
