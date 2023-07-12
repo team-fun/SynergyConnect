@@ -22,6 +22,9 @@ const Footer = () => {
           <li style={{ marginRight: '10px' }}>
             <a href="https://github.com/kgr718">Keith</a>
           </li>
+          <li style={{ marginRight: '10px' }}>
+            <a href="https://github.com/D-A-Rod">Dan</a>
+          </li>
         </ul>
       </div>
       <div className="footer-bottom" style={{ marginLeft: '10px' }}>
