@@ -56,6 +56,7 @@ const Whiteboard = ({ socket }) => {
   }, [socket]);
 
   const handleMouseDown = (event) => {
+    console.log("IM DOWN");
     const { clientX, clientY } = event;
     const canvasRect = canvasRef.current.getBoundingClientRect();
     const canvasX = clientX - canvasRect.left;
@@ -99,6 +100,9 @@ const Whiteboard = ({ socket }) => {
 
         setAction(actions.WRITING);
         setSelectedElement(element);
+        setElements((ele) => [...ele, element]);
+        const elementData = element;
+        socket.emit("element-update", elementData);
         dispatch(updateElementInStore(element));
         if (textAreaRef.current) {
           const textareaX = canvasX - canvasRect.left;
@@ -162,6 +166,7 @@ const Whiteboard = ({ socket }) => {
   };
 
   const handleMouseUp = () => {
+    console.log("IM UP");
     const selectedElementIndex = elements.findIndex(
       (element) => element.id === selectedElement?.id
     );
