@@ -202,15 +202,15 @@ const Whiteboard = ({ socket }) => {
 
     lastCursorPosition = { x: canvasX, y: canvasY };
 
-    if (emitCursor) {
-      emitCursorPosition({ x: clientX, y: clientY });
-      emitCursor = false;
+    // if (emitCursor) {
+    //   emitCursorPosition({ x: clientX, y: clientY });
+    //   emitCursor = false;
 
-      setTimeout(() => {
-        emitCursor = true;
-        emitCursorPosition(lastCursorPosition);
-      }, [50]);
-    }
+    //   setTimeout(() => {
+    //     emitCursor = true;
+    //     emitCursorPosition(lastCursorPosition);
+    //   }, [50]);
+    // }
 
     if (action === actions.DRAWING) {
       const index = elements.findIndex(
