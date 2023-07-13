@@ -50,6 +50,10 @@ const Whiteboard = ({ socket }) => {
     socket.on("receive_element", (data) => {
       setElements((ele) => [...ele, data]);
     });
+    socket.on("whiteboard-clear", (data) => {
+      console.log(data);
+      setElements(data);
+    });
   }, [socket]);
 
   const handleMouseDown = (event) => {

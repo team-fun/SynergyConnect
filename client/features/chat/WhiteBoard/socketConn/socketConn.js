@@ -34,8 +34,8 @@ export const emitElementUpdate = (elementData) => {
   socket.emit("element-update", elementData);
 };
 
-export const emitClearWhiteboard = () => {
-  socket.emit("whiteboard-clear");
+export const emitClearWhiteboard = (code) => {
+  socket.emit("whiteboard-clear", code);
 };
 
 export const emitCursorPosition = (cursorData) => {

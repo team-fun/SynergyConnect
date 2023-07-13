@@ -68,9 +68,9 @@ io.on("connection", (socket) => {
     socket.to(elementData.code).emit("receive_element", elementData);
   });
 
-  socket.on("whiteboard-clear", () => {
+  socket.on("whiteboard-clear", (code) => {
     elements = [];
-    socket.broadcast.emit("whiteboard-clear");
+    socket.to(code).emit("whiteboard-clear", elements);
   });
 
   socket.on("cursor-position", (cursorData) => {
