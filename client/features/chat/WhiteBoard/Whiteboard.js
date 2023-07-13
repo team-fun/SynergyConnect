@@ -51,7 +51,6 @@ const Whiteboard = ({ socket }) => {
       setElements((ele) => [...ele, data]);
     });
     socket.on("whiteboard-clear", (data) => {
-      console.log(data);
       setElements(data);
     });
   }, [socket]);

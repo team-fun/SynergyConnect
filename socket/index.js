@@ -64,7 +64,6 @@ io.on("connection", (socket) => {
 
   socket.on("element-update", (elementData) => {
     updateElementInElements(elementData);
-    console.log(elementData);
     socket.to(elementData.code).emit("receive_element", elementData);
   });
 
