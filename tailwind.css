@@ -213,6 +213,9 @@ button {
   color: black;
 }
 
+img{
+  height:45px;
+}
 
 /* *****Login Page Styling***** */
 
@@ -342,8 +345,4 @@ button {
     margin-top: 10%;
   }
 }
-
-
-
-
 

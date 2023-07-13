@@ -11,8 +11,9 @@ import { fetchSingleUser, editUser } from "../admin/editUserSlice";
 import { me } from "../auth/authSlice";
 import { useParams } from "react-router-dom";
 import Friends from "../friends/Friends";
-import { selectFriends } from "../home/AllFriendsSlice";
+import { fetchAllFriends, selectFriends } from "../home/AllFriendsSlice";
 import SearchBox from "../seachbar/SearchBar";
+import AiFillGithub from "react-icons/ai";
 
 const UserView = () => {
   const [user, setUser] = useState({});
@@ -31,14 +32,13 @@ const UserView = () => {
   const [image, setImage] = useState();
   const [showFriends, setShowFriends] = useState(false);
   const [search, setSearch] = useState("");
-
+  console.log(friends);
   async function fetchUser() {
     const data = await (await fetch("/api/users/" + id)).json();
 
     setUser(data);
   }
   useEffect(() => {
-    console.log("placeholder", placeHolder);
     if (user) {
       setUser((state) => {
         const arr = [];
@@ -65,6 +65,7 @@ const UserView = () => {
       })(_user.interests)
     );
   }
+
   useEffect(() => {
     if (id) {
       fetchUser();
@@ -72,6 +73,9 @@ const UserView = () => {
       setToMe();
     }
   }, []);
+  useEffect(() => {
+    if (user) dispatch(fetchAllFriends({ id: user.id }));
+  }, [user]);
   const onSearchChange = (event) => {
     setSearch(event.target.value);
   };
@@ -130,30 +134,42 @@ const UserView = () => {
     <div className="profile">
       <div className="py-10 w-[70%] px-5 flex items-center justify-between">
         <div className="pfp w-20 h-20 object-cover">
-          <img className="w-full" src={image ? image : user.image} alt="pfp" />
+          <img
+            style={{ height: "unset" }}
+            className="w-full"
+            src={image ? image : user.image}
+            alt="pfp"
+          />
           <div className="online-status">
             <div style={{ background: user.online ? "#00cc11" : "#888" }}></div>
           </div>
           <input type="file" onChange={handleImageChange} />
         </div>
-        <div>
-          <h3 className="text-3xl">
+        <div className="mx-[auto]">
+          <h3 className="text-[30px] my-0 ">
             {" "}
             {user.firstName} {user.lastName}
           </h3>
-          <p className="font-medium"> It's good to see you</p>
+          <p className="font-medium my-0"> It's good to see you</p>
         </div>
 
-        <div className="">
+        <div
+          className={`absolute right-4 mt-[4.5rem] ${
+            showFriends ? "bg-[#D9D9D9]" : ""
+          }`}
+        >
           <div>
-            <button
-              onClick={toggleFriendsList}
-            >{`${friends.length} Friends`}</button>
+            <div className="w-72 text-center" onClick={toggleFriendsList}>
+              <span className="text-[36px] mr-2">{friends.length}</span> Friends
+            </div>
           </div>
           {showFriends && <Friends />}
         </div>
       </div>
-      <div className="w-[70%] text-center mt-10  bg-slate-300 py-2 px-4 rounded-lg">
+      <div
+        style={{ background: "#D9D9D9" }}
+        className="w-[70%] text-center mt-10 py-2 px-4 rounded-lg"
+      >
         <h3 className="ml-10 text-[30px]">USER PROFILE</h3>
         <div className="user-info [&>*]:my-4">
           <div className="flex justify-around">
@@ -370,8 +386,13 @@ const UserView = () => {
         <a href="https://twitter.com/i/flow/login?redirect_after_login=%2F">
           <TwitterIcon style={{ fontSize: "50px" }} />
         </a>
-        <a href="https://www.linkedin.com/">
-          <LinkedInIcon style={{ fontSize: "50px" }} />
+        <a href="https://www.linkedin.com/" />
+        <LinkedInIcon style={{ fontSize: "50px" }} />
+        <a href="https://github.com/team-fun/SynergyConnect">
+          <img
+            src="https://icons.veryicon.com/png/o/miscellaneous/mirror-icon/github-65.png"
+            alt="Github"
+          />
         </a>
       </div>
     </div>
