@@ -240,25 +240,12 @@ button {
   
 }
 
-.cal-container.light-mode .cal-add-form {
+/* .cal-container.light-mode .cal-add-form {
   background: linear-gradient(to right, white, gray, white);
 }
 
 .cal-container.light-mode .cal-delete-event {
   background: linear-gradient(to right, white, gray, white);
-}
-
-/* .delete-input {
-  margin: 10px;
-  justify-content: center;
-  width: 20px;
-
-} */
-
-/* .title-input{
-  width: 20px;
-  margin: 10px;
- 
 } */
 
 .cal-delete-button {
@@ -284,3 +271,11 @@ button {
   justify-content: center;
   align-items: center;
 }
+
+/* .light-mode {
+  background: linear-gradient(to right, rgb(244, 242, 242), rgb(81, 79, 79), rgb(253, 251, 251));
+}
+
+.dark-mode {
+  background: linear-gradient(to right, rgb(0, 0, 0), rgb(81, 79, 79), rgb(0,0,0));
+} */
