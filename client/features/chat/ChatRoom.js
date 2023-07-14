@@ -163,14 +163,13 @@ const ChatRoom = ({ socket, username }) => {
           </h3>
           {messageList.map((data) => {
             return (
-              <div
-                key={data.id}
-                id={username === data.username ? "you" : "other"}
-              >
+              <div key={data.id}>
                 <div>
                   <p>{data.username}:</p>
-                  <span>{data.message}</span>
-                  <span>{data.time}</span>
+                  <span style={{ overflowWrap: "break-word" }}>
+                    {data.message}
+                  </span>
+                  <span style={{ marginLeft: "5px" }}>{data.time}</span>
                 </div>
               </div>
             );
