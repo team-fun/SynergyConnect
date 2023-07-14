@@ -213,6 +213,72 @@ button {
   color: black;
 }
 
+.cal-add-form {
+  display: inline-block;
+  vertical-align: top;
+  height: 175px;
+  width: 250px;
+  background: linear-gradient(to right, rgb(0, 0, 0), rgb(81, 79, 79), rgb(0,0,0));
+  padding: 45px;
+  padding-top: 30px;
+  padding-bottom: 40px;
+  margin-right: 100px;
+}
+
+.cal-delete-event {
+  
+  display: inline-block;
+  vertical-align: top;
+  margin: 10px;
+  margin-left: 100px;
+  height: 150px;
+  width: 250px;
+  padding: 45px;
+  padding-top: 30px;
+  padding-bottom: 40px;
+  background: linear-gradient(to right, rgb(0, 0, 0), rgb(81, 79, 79), rgb(0,0,0));
+  
+}
+
+/* .cal-container.light-mode .cal-add-form {
+  background: linear-gradient(to right, white, gray, white);
+}
+
+.cal-container.light-mode .cal-delete-event {
+  background: linear-gradient(to right, white, gray, white);
+} */
+
+.cal-delete-button {
+  display: block; 
+}
+
+.cal-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.cal-title{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.cal-add-event{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* .light-mode {
+  background: linear-gradient(to right, rgb(244, 242, 242), rgb(81, 79, 79), rgb(253, 251, 251));
+}
+
+.dark-mode {
+  background: linear-gradient(to right, rgb(0, 0, 0), rgb(81, 79, 79), rgb(0,0,0));
+} */
 img{
   height:45px;
 }
