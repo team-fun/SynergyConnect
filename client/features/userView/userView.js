@@ -32,7 +32,6 @@ const UserView = () => {
   const [image, setImage] = useState();
   const [showFriends, setShowFriends] = useState(false);
   const [search, setSearch] = useState("");
-  console.log(friends);
   async function fetchUser() {
     const data = await (await fetch("/api/users/" + id)).json();
 
