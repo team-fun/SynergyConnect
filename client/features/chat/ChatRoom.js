@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   sendNewChats,
   fetchOldChats,
@@ -19,11 +19,12 @@ const ChatRoom = ({ socket, username }) => {
   const id = useSelector((state) => state.auth.me.id);
   const [message, setMessage] = useState("");
   const [userList, setUserList] = useState([]);
-  const pastMessages = useSelector((state) => state.chat);
+  const { messages, chat } = useSelector((state) => state.chat);
   const [messageList, setMessageList] = useState([]);
   const [showCode, setShowCode] = useState(false);
   const [showWhiteboard, setShowWhiteboard] = useState(false);
   const [showVideoCall, setShowVideoCall] = useState(false);
+  const [chatName, setChatName] = useState("the Chat");
 
   const sendMessage = () => {
     const currentTime = new Date();
@@ -83,22 +84,26 @@ const ChatRoom = ({ socket, username }) => {
       socket.off("receive_message");
       socket.off("user_list");
     };
-  }, [socket, code, username]);
-  useEffect(() => {
-    if (pastMessages) {
-      setMessageList(pastMessages);
-    }
-  }, [pastMessages]);
+  }, [socket, code, username, id]);
 
-  const [videoCall, setVideoCall] = useState(false);
-  const [whiteBoard, setWhiteBoard] = useState(false);
+  useEffect(() => {
+    if (messages) {
+      setMessageList(messages);
+    }
+  }, [messages]);
+
+  useEffect(() => {
+    if (chat) {
+      setChatName(chat.name);
+    }
+  }, [chat]);
 
   const handleClick = () => {
-    setShowVideoCall(!showVideoCall); // Toggle the value of showVideoCall
+    setShowVideoCall(!showVideoCall);
   };
 
   const handleClickWB = () => {
-    setShowWhiteboard(!showWhiteboard); // Toggle the value of showWhiteboard
+    setShowWhiteboard(!showWhiteboard);
   };
 
   const navigate = useNavigate();
@@ -115,15 +120,13 @@ const ChatRoom = ({ socket, username }) => {
   };
 
   const handleView = () => {
-    setShowCode(!showCode); // Toggle the value of showCode
+    setShowCode(!showCode);
   };
 
   return (
     <div className="w-full h-full">
       <header>
-        <p className=" text-[30px] text-center">
-          Welcome to the {code} Chat Room
-        </p>
+        <p className=" text-[30px] text-center">Welcome to {chatName} Room</p>
         <div>
           <button onClick={leaveRoom}>Back</button>
           <button style={{ backgroundColor: "red" }} onClick={handleDelete}>

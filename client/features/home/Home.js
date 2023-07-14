@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import CreateRoomForm from "./CreateRoomForm";
-import {
-  selectFriends,
-  fetchAllFriends,
-  acceptRejectRequest,
-} from "./AllFriendsSlice";
+import { selectFriends, fetchAllFriends } from "./AllFriendsSlice";
 import {
   selectChats,
   fetchAllChats,
@@ -14,9 +10,7 @@ import {
   favoriteRoom,
 } from "./AllChatsSlice";
 import SearchBox from "../seachbar/SearchBar";
-import CalendarSchedule from "../calendar/Calendar";
 import Friends from "../friends/Friends";
-import { ChangeHistorySharp } from "@mui/icons-material";
 
 const Home = () => {
   const [friendListChange, setfriendListChange] = useState(false);
@@ -125,7 +119,6 @@ const Home = () => {
 
   return (
     <div>
-      {/* <CalendarSchedule /> */}
       {createFormVis ? (
         <>
           <CreateRoomForm />
