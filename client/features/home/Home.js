@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CreateRoomForm from "./CreateRoomForm";
 import { selectFriends, fetchAllFriends } from "./AllFriendsSlice";
 import {
@@ -11,6 +11,7 @@ import {
 } from "./AllChatsSlice";
 import SearchBox from "../seachbar/SearchBar";
 import Friends from "../friends/Friends";
+import ChatModal from "./chatModal";
 
 const Home = () => {
   const [friendListChange, setfriendListChange] = useState(false);
@@ -26,8 +27,10 @@ const Home = () => {
   const [code, setCode] = useState("");
   const [search, setSearch] = useState("");
   const [favoriteStatus, setFavoriteStatus] = useState({});
-  const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(false);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(fetchAllChats(id));
     dispatch(fetchAllFriends({ id }));
@@ -116,7 +119,16 @@ const Home = () => {
       [chatId]: newFav,
     }));
   };
-
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+  const handleAcceptGuideline = (chat) => {
+    setShowModal(false);
+    navigate(`/chats/${chat.code}`);
+  };
   return (
     <div>
       {createFormVis ? (
@@ -126,13 +138,16 @@ const Home = () => {
         </>
       ) : (
         <section>
-          <div className="py-10 mt-2 w-full px-5 flex items-center justify-between">
+          <div className="py-10 mt-2 w-full  flex items-center justify-between">
             <div
               style={{ background: "#D9D9D9" }}
               className="py-2 px-4 rounded-md"
             >
-              <h3 className="text-5xl my-0">Welcome, {username}</h3>
-              <p className="font-medium my-0"> It's good to see you</p>
+              <h3 className="keepDark text-5xl my-0">Welcome, {username}</h3>
+              <p className=" keepDark font-medium my-0">
+                {" "}
+                It's good to see you
+              </p>
             </div>
             <div>
               <div
@@ -141,8 +156,13 @@ const Home = () => {
                 }`}
               >
                 <div>
-                  <div className="w-72 text-center" onClick={toggleFriendsList}>
-                    <span className="text-[36px] mr-2">{friends.length}</span>{" "}
+                  <div
+                    className="w-72 keepDark text-center"
+                    onClick={toggleFriendsList}
+                  >
+                    <span className="text-[36px] keepDark mr-2">
+                      {friends.length}
+                    </span>{" "}
                     Friends
                   </div>
                 </div>
@@ -213,20 +233,30 @@ const Home = () => {
 
                 return (
                   <div
-                    className="flex w-[70%] py-4 justify-around items-center mb-2 bg-[#D9D9D9] rounded-lg"
+                    className="flex w-[95%] lg:w-[70%] py-4 justify-around items-center mb-2 bg-[#D9D9D9] rounded-lg"
                     key={chat.id}
                   >
                     <div className="w-15 h-15">
                       <img src={`${chat.image}`} alt="profilePic.jpg" />
                     </div>
                     <div className=" w-64">
-                      <h3 className=" w-full my-0 text-xl">{chat.name}</h3>
-                      <p className="w-full my-0">{chat.description}</p>
+                      <h3 className="keepDark w-full my-0 text-xl">
+                        {chat.name}
+                      </h3>
+                      <p className="keepDark w-full my-0">{chat.description}</p>
                     </div>
-                    <p>👤 {participants.length}</p>
-                    <Link className="" to={`/chats/${chat.code}`}>
-                      <button>Join Room</button>
-                    </Link>
+                    <p className="keepDark">👤 {participants.length}</p>
+
+                    <button onClick={handleShowModal}>Join Room</button>
+
+                    {showModal && (
+                      <ChatModal
+                        handleCloseModal={handleCloseModal}
+                        handleAcceptGuideline={() =>
+                          handleAcceptGuideline(chat)
+                        }
+                      />
+                    )}
                     {isParticipating ? (
                       fav ? (
                         <span

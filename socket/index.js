@@ -5,7 +5,7 @@ const cors = require("cors");
 const { Server } = require("socket.io");
 
 const corsOptions = {
-  origin: "http://localhost:8080",
+  origin: "http://localhost:8080/",
 };
 
 app.use(cors(corsOptions));
@@ -42,7 +42,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("send_message", (data) => {
-    console.log(data);
     socket.to(data.code).emit("receive_message", data);
   });
 

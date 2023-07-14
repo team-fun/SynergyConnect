@@ -11,10 +11,8 @@ import UserView from "../features/userView/userView";
 import ChatRoom from "../features/chat/ChatRoom";
 import ContactUs from "../features/ContactUs/ContactUs";
 import CalendarSchedule from "../features/calendar/Calendar";
-// import WhiteBoard from "../features/chat/WhiteBoard/WhiteBoard";
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:3001/");
-import Friends from "../features/friends/Friends";
 import NonFriends from "../features/friends/NonFriends";
 
 /**
@@ -46,7 +44,6 @@ const AppRoutes = () => {
               path="/chats/:code"
               element={<ChatRoom socket={socket} username={username} />}
             />
-            {/* <Route path="/whiteboard" element={<WhiteBoard />} /> */}
             <Route path="/profile" element={<UserView />} />
             <Route path="/profile/:id" element={<UserView />} />
             <Route path="/contactus" element={<ContactUs />} />
@@ -61,8 +58,6 @@ const AppRoutes = () => {
               path="/chats/:code"
               element={<ChatRoom socket={socket} username={username} />}
             />
-            {/* <Route path="/whiteboard" element={<WhiteBoard />} /> */}
-
             <Route path="/profile" element={<UserView />} />
             <Route path="/profile/:id" element={<UserView />} />
             <Route path="/contactus" element={<ContactUs />} />

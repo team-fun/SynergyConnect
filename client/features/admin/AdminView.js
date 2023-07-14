@@ -14,7 +14,6 @@ const AllUsers = () => {
   useEffect(() => {
     dispatch(fetchAllUsers());
   }, [dispatch]);
-  console.log(allUsers);
   const usersDiv = allUsers ? (
     <div>
       <div className="adminOuter-wrapper">

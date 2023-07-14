@@ -103,8 +103,7 @@ async function seed() {
       description: "this the main chat",
       code: "main",
       public: true,
-      image:
-        "https://upload.wikimedia.org/wikipedia/commons/f/f3/Exclamation_mark.png",
+      image: "https://cdn-icons-png.flaticon.com/512/6676/6676508.png",
     }),
     Chat.create({
       name: "test",

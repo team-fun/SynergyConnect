@@ -55,6 +55,11 @@ body {
   padding: 0;
 }
 
+li{
+  list-style-type: none;
+}
+
+
 .whiteboard-wrapper {
   width: 500px;
   height: 500px;
@@ -162,9 +167,14 @@ a.dark {
 }
 .activeNav {
   color: white;
+  scale: 1.5;
 }
 .activeNav.dark {
+  scale: 1.5;
   color: black;
+}
+.nonActiveNav:hover {
+  scale: 1.5;
 }
 .nonActiveNav {
   color: rgb(207, 202, 202);
@@ -184,7 +194,7 @@ a.dark {
 }
 .navbarArea.dark {
   background-color: white;
-  box-shadow: 10px 200px 50px white;
+  box-shadow: 10px 50px 50px white;
 }
 .online-status {
   height: 16px;
@@ -213,13 +223,23 @@ button {
 .activeHomeTab {
   color: black;
 }
+
+.activeHomeTab.dark {
+  color: white;
+}
+
 /* 
 .cal-add-form {
   display: inline-block;
   vertical-align: top;
   height: 175px;
   width: 250px;
-  background: linear-gradient(to right, rgb(0, 0, 0), rgb(81, 79, 79), rgb(0,0,0));
+  background: linear-gradient(
+    to right,
+    rgb(0, 0, 0),
+    rgb(81, 79, 79),
+    rgb(0, 0, 0)
+  );
   padding: 45px;
   padding-top: 30px;
   padding-bottom: 40px;
@@ -227,7 +247,6 @@ button {
 } */
 /* 
 .cal-delete-event {
-  
   display: inline-block;
   vertical-align: top;
   margin: 10px;
@@ -255,19 +274,24 @@ button {
 
 /* .cal-container{ */
   /* display: flex;
-  justify-content: center;
-  align-items: center;
 
+.cal-delete-button {
+  display: block;
 }
 
-.cal-title{
+.cal-container {
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
-.cal-add-event{
+.cal-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cal-add-event {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -280,8 +304,8 @@ button {
 .dark-mode {
   background: linear-gradient(to right, rgb(0, 0, 0), rgb(81, 79, 79), rgb(0,0,0));
 } */
-img{
-  height:45px;
+img {
+  height: 45px;
 }
 
 /* *****Login Page Styling***** */
@@ -384,6 +408,10 @@ img{
 .authForm-container h2 {
   margin-top: 5%;
   margin-bottom: 0;
+}
+
+.keepDark.dark {
+  color: black;
 }
 
 /* Chat room */
@@ -576,6 +604,116 @@ img{
   }
 }
 
+.ContactUsHeader{
+  text-align: center;
+}
 
 
+/* admin - edit user */
 
+.editUser-shell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #fff;
+}
+
+.editUser-mainWrapper {
+  max-width: 90%; 
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: black;
+  text-align: center;
+  color: #fff;
+  margin: 20px; 
+}
+
+.editUserForm-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.editUserForm-wrapper label {
+  margin-bottom: 10px;
+}
+
+.editUserForm-wrapper input {
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.button-box {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.button-box button {
+  flex: 1;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 5px;
+  height: 40px;
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+.cancelLink {
+  display: inline-block;
+  width: 33%;
+}
+
+.submitBtn,
+.cancelBtn,
+.deleteBtn {
+  flex: 1;
+  height: 40px;
+}
+
+.submitBtn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.cancelBtn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+}
+
+.deleteBtn {
+  background-color: #ff9800;
+  color: white;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .editUser-mainWrapper {
+    max-width: 80%; 
+  }
+
+  .button-box {
+    flex-wrap: wrap; 
+    margin-top: 10px;
+  }
+
+  .button-box button {
+    margin: 5px;
+  }
+
+  .cancelLink {
+    width: 100%; 
+  }
+}
