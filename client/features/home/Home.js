@@ -213,10 +213,10 @@ const Home = () => {
 
                 return (
                   <div
-                    className="flex w-[70%] py-4 justify-around items-center mb-2 bg-[#D9D9D9]"
+                    className="flex w-[70%] py-4 justify-around items-center mb-2 bg-[#D9D9D9] rounded-lg"
                     key={chat.id}
                   >
-                    <div className="w-10 h-10 m-5">
+                    <div className="w-15 h-15">
                       <img src={`${chat.image}`} alt="profilePic.jpg" />
                     </div>
                     <div className=" w-64">

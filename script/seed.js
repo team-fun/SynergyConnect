@@ -103,24 +103,30 @@ async function seed() {
       description: "this the main chat",
       code: "main",
       public: true,
+      image:
+        "https://upload.wikimedia.org/wikipedia/commons/f/f3/Exclamation_mark.png",
     }),
     Chat.create({
       name: "test",
       description: "test chat",
       code: "test",
       public: false,
+      image: "https://cdn-icons-png.flaticon.com/512/2916/2916315.png",
     }),
     Chat.create({
       name: "admin",
       description: "this is the super secret chat",
       code: "admin",
       public: false,
+      image: "https://www.pngmart.com/files/21/Admin-Profile-PNG-Clipart.png",
     }),
     Chat.create({
       name: "sports",
       description: "FOOTTBALL!!!",
       code: "sports",
       public: true,
+      image:
+        "https://static.vecteezy.com/system/resources/previews/008/470/102/original/orange-basketball-sport-hand-drawn-free-png.png",
     }),
   ]);
 
