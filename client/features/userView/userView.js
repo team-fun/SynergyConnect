@@ -158,7 +158,10 @@ const UserView = () => {
           }`}
         >
           <div>
-            <div className="w-72 text-center" onClick={toggleFriendsList}>
+            <div
+              className="w-72 keepDark text-center"
+              onClick={toggleFriendsList}
+            >
               <span className="text-[36px] mr-2">{friends.length}</span> Friends
             </div>
           </div>
@@ -167,7 +170,7 @@ const UserView = () => {
       </div>
       <div
         style={{ background: "#D9D9D9" }}
-        className="w-[70%] text-center mt-10 py-2 px-4 rounded-lg"
+        className="w-[95%] lg:w-[70%] keepDark text-center mt-10 py-2 px-4 rounded-lg"
       >
         <h3 className="ml-10 text-[30px]">USER PROFILE</h3>
         <div className="user-info [&>*]:my-4">
@@ -375,7 +378,7 @@ const UserView = () => {
           </div>
         </div>
       </div>
-      <div className="link w-[70%] text-center mt-3 ">
+      <div className="link w-[95%] lg:w-[70%] text-center mt-3 ">
         <a href="https://www.instagram.com/">
           <InstagramIcon style={{ fontSize: "50px" }} />
         </a>

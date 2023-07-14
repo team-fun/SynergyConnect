@@ -70,7 +70,7 @@ const Friends = () => {
     <div className="relative">
       <div
         style={{ background: "#D9D9D9" }}
-        className="absolute flex items-center justify-center rounded-md w-72 p-4 top-[20%] "
+        className="absolute keepDark flex items-center justify-center rounded-md w-72 p-4 top-[20%] "
       >
         {friends.length === undefined || friends?.length === 0 ? (
           <div>No friends</div>

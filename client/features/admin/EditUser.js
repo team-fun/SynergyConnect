@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { deleteUser } from "./adminViewSlice";
@@ -12,13 +12,13 @@ const EditUser = () => {
 	const navigate = useNavigate();
 	const { id } = useParams();
 
-    const allUsers = useSelector((state) => {
-        return state.allUsers.userList
-    })
+	useEffect(() => {
+		dispatch(fetchSingleUser(id));
+	}, [dispatch]);
 
-	const singleUser = allUsers.filter((user) => {
-		return user.id == id;
-	});
+    const editUser = useSelector((state) => {
+        return state.editUser.editUserObj
+    })
 
 	const [username, setUserName] = useState("");
 	const [password, setPassword] = useState("");
@@ -62,19 +62,19 @@ const EditUser = () => {
 	};
 
 	return (
-		<div className="login-shell">
-			<div className="login-mainWrapper">
+		<div className="editUser-shell">
+			<div className="editUser-mainWrapper">
 				<li key={id}>
 					<h2> Edit User Info Below</h2>
 				</li>
 
-				<form className="loginForm-wrapper" onSubmit={handleSubmit}>
+				<form className="editUserForm-wrapper" onSubmit={handleSubmit}>
 
 					<label htmlFor="username">User Name:</label>
 					<input
 						name="username" 
 						value={username}
-						placeholder={`${singleUser[0].username}`}
+						placeholder={`${editUser.firstName}`}
 						onChange={(e) => setUserName(e.target.value)}
 					/>
 
@@ -90,7 +90,7 @@ const EditUser = () => {
 					<input
 						name="firstName" 
 						value={firstName}
-						placeholder={`${singleUser[0].firstName}`}
+						placeholder={`${editUser.firstName}`}
 						onChange={(e) => setFirstName(e.target.value)}
 					/>
 
@@ -98,7 +98,7 @@ const EditUser = () => {
 					<input
 						name="lastName"
 						value={lastName}
-						placeholder={`${singleUser[0].lastName}`}
+						placeholder={`${editUser.lastName}`}
 						onChange={(e) => setLastName(e.target.value)}
 					/>
 
@@ -106,7 +106,7 @@ const EditUser = () => {
 					<input
 						name="email"
 						value={email}
-						placeholder={`${singleUser[0].email}`}
+						placeholder={`${editUser.email}`}
 						onChange={(e) => setEmail(e.target.value)}
 					/>
 
@@ -114,7 +114,7 @@ const EditUser = () => {
 					<input
 						name="bio"
 						value={bio}
-						placeholder={`${singleUser[0].bio}`}
+						placeholder={`${editUser.bio}`}
 						onChange={(e) => setBio(e.target.value)}
 					/>
 
@@ -122,7 +122,7 @@ const EditUser = () => {
 					<input
 						name="icon"
 						value={icon}
-						placeholder={`${singleUser[0].icon}`}
+						placeholder={`${editUser.icon}`}
 						onChange={(e) => setIcon(e.target.value)}
 					/>
 
@@ -130,14 +130,11 @@ const EditUser = () => {
 					<div className="button-box">
 						<button className="submitBtn" type="submit">Submit Changes</button>
 
-						<Link to="/admin">
+						<Link to="/admin" className="cancelLink">
 							<button className="cancelBtn">Cancel</button>
 						</Link>
 
-						<div>
-							<button className="deleteBtn" onClick={handleDelete}>Delete</button>
-						</div>
-						
+						<button className="deleteBtn" onClick={handleDelete}>Delete</button>
 					</div>
 				</form>
 			</div>
