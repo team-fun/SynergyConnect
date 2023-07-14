@@ -294,10 +294,6 @@
   display: none;
 }
 
-.h-10{
-  height: 2.5rem;
-}
-
 .h-20{
   height: 5rem;
 }
@@ -320,10 +316,6 @@
 
 .h-screen{
   height: 100vh;
-}
-
-.w-10{
-  width: 2.5rem;
 }
 
 .w-20{
