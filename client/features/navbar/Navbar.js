@@ -8,8 +8,8 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import { AiFillHome } from "react-icons/ai";
 import { FaUserAlt } from "react-icons/fa";
-import {SlCalender} from "react-icons/sl"
-import { MdOutlineAdminPanelSettings, MdContactMail, MdOutlineAdminPanelSettings } from "react-icons/md";
+import { SlCalender } from "react-icons/sl";
+import { MdContactMail, MdOutlineAdminPanelSettings } from "react-icons/md";
 import { BiLogOut } from "react-icons/bi";
 import { FiLogIn } from "react-icons/fi";
 import { ImProfile } from "react-icons/im";
@@ -86,9 +86,12 @@ const Navbar = () => {
                   >
                     <MdOutlineAdminPanelSettings />
                   </Link>
-                  <Link  className={` ${
+                  <Link
+                    className={` ${
                       pathname == "/Calendar" ? "activeNav" : "nonActiveNav"
-                    }`} to="/Calendar">
+                    }`}
+                    to="/Calendar"
+                  >
                     <SlCalender />
                   </Link>
                   <button type="button" onClick={logoutAndRedirectHome}>
@@ -116,9 +119,12 @@ const Navbar = () => {
                   >
                     <FaUserAlt />
                   </Link>
-                  <Link  className={` ${
+                  <Link
+                    className={` ${
                       pathname == "/Calendar" ? "activeNav" : "nonActiveNav"
-                    }`} to="/Calendar">
+                    }`}
+                    to="/Calendar"
+                  >
                     <SlCalender />
                   </Link>
                   <Link
