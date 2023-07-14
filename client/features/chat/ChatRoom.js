@@ -22,6 +22,8 @@ const ChatRoom = ({ socket, username }) => {
   const pastMessages = useSelector((state) => state.chat);
   const [messageList, setMessageList] = useState([]);
   const [showCode, setShowCode] = useState(false);
+  const [showWhiteboard, setShowWhiteboard] = useState(false);
+  const [showVideoCall, setShowVideoCall] = useState(false);
 
   const sendMessage = () => {
     const currentTime = new Date();
@@ -92,17 +94,11 @@ const ChatRoom = ({ socket, username }) => {
   const [whiteBoard, setWhiteBoard] = useState(false);
 
   const handleClick = () => {
-    if (videoCall) {
-      setVideoCall(false);
-    }
-    setVideoCall(true);
+    setShowVideoCall(!showVideoCall); // Toggle the value of showVideoCall
   };
 
   const handleClickWB = () => {
-    if (whiteBoard) {
-      setWhiteBoard(false);
-    }
-    setWhiteBoard(true);
+    setShowWhiteboard(!showWhiteboard); // Toggle the value of showWhiteboard
   };
 
   const navigate = useNavigate();
@@ -135,14 +131,18 @@ const ChatRoom = ({ socket, username }) => {
           </button>
           <button onClick={handleView}>View Code</button>
           <span>{showCode ? code : ""}</span>
-          <button onClick={handleClickWB}>Create Whiteboard</button>
-          {whiteBoard && <Whiteboard socket={socket} />}
+          <button onClick={handleClickWB}>
+            {showWhiteboard ? "Close Whiteboard" : "Open Whiteboard"}
+          </button>
+          {showWhiteboard && <Whiteboard socket={socket} />}
         </div>
         <div className=" w-full mt-4 flex justify-end">
           <div className=" w-[20%] text-center">
-            <button onClick={handleClick}>Start Video Call</button>
+            <button onClick={handleClick}>
+              {showVideoCall ? "Close Video Call" : "Start Video Call"}
+            </button>
           </div>
-          {videoCall && <VideoCall code={code} username={username} />}
+          {showVideoCall && <VideoCall code={code} username={username} />}
         </div>
       </header>
       <div className="grid grid-cols-5 h-[60vh] ">
