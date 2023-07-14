@@ -151,6 +151,7 @@ const ChatRoom = ({ socket, username }) => {
           </section>
         </div>
 
+
       </header>
       <div className="grid grid-cols-5 h-[60vh] ">
         <section

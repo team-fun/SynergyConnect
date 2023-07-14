@@ -266,10 +266,6 @@
   margin-top: 0.75rem;
 }
 
-.mt-4{
-  margin-top: 1rem;
-}
-
 .mt-6{
   margin-top: 1.5rem;
 }
@@ -338,10 +334,6 @@
   width: 18rem;
 }
 
-.w-\[20\%\]{
-  width: 20%;
-}
-
 .w-\[200px\]{
   width: 200px;
 }
@@ -356,6 +348,10 @@
 
 .w-full{
   width: 100%;
+}
+
+.transform{
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .resize{
@@ -384,10 +380,6 @@
 
 .items-center{
   align-items: center;
-}
-
-.justify-end{
-  justify-content: flex-end;
 }
 
 .justify-center{
@@ -539,6 +531,14 @@
 
 .filter{
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.transition{
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
 }
 
 /* Add your custom CSS here */
@@ -768,6 +768,7 @@ button {
   color: black;
 }
 
+/* 
 .cal-add-form {
   display: inline-block;
   vertical-align: top;
@@ -778,9 +779,11 @@ button {
   padding-top: 30px;
   padding-bottom: 40px;
   margin-right: 100px;
-}
+} */
 
+/* 
 .cal-delete-event {
+  
   display: inline-block;
   vertical-align: top;
   margin: 10px;
@@ -791,7 +794,8 @@ button {
   padding-top: 30px;
   padding-bottom: 40px;
   background: linear-gradient(to right, rgb(0, 0, 0), rgb(81, 79, 79), rgb(0,0,0));
-}
+  
+} */
 
 /* .cal-container.light-mode .cal-add-form {
   background: linear-gradient(to right, white, gray, white);
@@ -801,27 +805,30 @@ button {
   background: linear-gradient(to right, white, gray, white);
 } */
 
-.cal-delete-button {
-  display: block;
-}
+/* .cal-delete-button {
+  display: block; 
+} */
 
-.cal-container{
-  display: flex;
+/* .cal-container{ */
+
+/* display: flex;
   justify-content: center;
   align-items: center;
+
 }
 
 .cal-title{
   display: flex;
   justify-content: center;
   align-items: center;
+
 }
 
 .cal-add-event{
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 /* .light-mode {
   background: linear-gradient(to right, rgb(244, 242, 242), rgb(81, 79, 79), rgb(253, 251, 251));
