@@ -37,7 +37,7 @@ router.get("/:code/:id", async (req, res) => {
       });
     }
     const messages = await MessageData.findAll({ where: { chatId } });
-    res.send(messages);
+    res.send({ messages, chat });
   } catch (error) {
     console.error(error);
   }

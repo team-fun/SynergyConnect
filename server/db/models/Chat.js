@@ -29,6 +29,11 @@ const Chat = db.define("chat", {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
   },
+  image: {
+    type: Sequelize.STRING,
+    defaultValue:
+      "https://www.pngall.com/wp-content/uploads/2016/04/Chat-PNG.png",
+  },
 });
 
 module.exports = Chat;
