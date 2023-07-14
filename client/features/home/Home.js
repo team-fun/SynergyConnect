@@ -216,11 +216,8 @@ const Home = () => {
                     className="flex w-[70%] py-4 justify-around items-center mb-2 bg-[#D9D9D9]"
                     key={chat.id}
                   >
-                    <div className="w-10 h-10 ">
-                      <img
-                        src={`./images/chat${i + 1}.png`}
-                        alt="profilePic.jpg"
-                      />
+                    <div className="w-10 h-10 m-5">
+                      <img src={`${chat.image}`} alt="profilePic.jpg" />
                     </div>
                     <div className=" w-64">
                       <h3 className=" w-full my-0 text-xl">{chat.name}</h3>
