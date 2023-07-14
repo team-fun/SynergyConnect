@@ -142,7 +142,7 @@ const ChatRoom = ({ socket, username }) => {
       <div className="grid grid-cols-5 h-[60vh] ">
         <section
           style={{ background: "#D9D9D9" }}
-          className="col-span-4 h-full px-4 py-2 mr-1 my-2 rounded-lg"
+          className="col-span-4 h-full px-4 py-2 mr-1 my-2 rounded-lg chatRoom"
         >
           <h3
             style={{
@@ -169,7 +169,7 @@ const ChatRoom = ({ socket, username }) => {
         </section>
         <section
           style={{ background: "#D9D9D9" }}
-          className="col-span-1 h-full  px-4 py-2 mx-1 my-2 rounded-lg"
+          className="col-span-1 h-full  px-4 py-2 mx-1 my-2 rounded-lg userView"
         >
           <h4>Users in this room: </h4>
           {userList.map((user) => {

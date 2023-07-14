@@ -938,6 +938,18 @@ img{
   margin-bottom: 0;
 }
 
+/* Chat room */
+
+.chatRoom {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.userView {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
 /* Media Queries */
 
 @media screen and (max-width: 768px) {
