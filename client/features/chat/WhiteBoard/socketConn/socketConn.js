@@ -1,7 +1,6 @@
 import io from 'socket.io-client';
 import { setElements, updateElement } from '../whiteboardSlice';
 import store  from "../../../../app/store";
-import { updateCursorPosition, removeCursorPosition } from '../CursorOverlay/cursorSlice';
 
 let socket;
 
@@ -23,15 +22,6 @@ export const connectWithSocketServer = () => {
     socket.on('whiteboard-clear', () => {
         store.dispatch(setElements([]))
     });
-
-    socket.on('cursor-position', (cursorData) => {
-        store.dispatch(updateCursorPosition(cursorData));
-    });
-
-    socket.on('user-disconnected', (disconnectedUserId) => {
-        store.dispatch(removeCursorPosition(disconnectedUserId));
-    });
-
 };
 
 export const emitElementUpdate = (elementData) => {

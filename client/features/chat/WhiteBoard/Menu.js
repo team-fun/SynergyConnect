@@ -24,9 +24,17 @@ const IconButton = ({ src, type, isRubber }) => {
         emitClearWhiteboard();
     };
 
-    return <button onClick={isRubber ? handleClearCanvas : handleToolChange} className={selectedToolType === type ? 'menu-button-active' : 'menu-button'}>
-        <img width="80%" height="80%" src={src} alt={type}/>
-    </button>
+    return (
+        <button
+          onClick={isRubber ? handleClearCanvas : handleToolChange}
+          className={
+            selectedToolType === type ? "menu-button-active" : "menu-button"
+          }
+          style={isRubber ? { justifyContent: "center" } : {}}
+        >
+          <img width="80%" height="80%" src={src} alt={type} />
+        </button>
+      );
 }
 
 const Menu = () => {
