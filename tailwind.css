@@ -161,9 +161,14 @@ a.dark {
 }
 .activeNav {
   color: white;
+  scale: 1.5;
 }
 .activeNav.dark {
+  scale: 1.5;
   color: black;
+}
+.nonActiveNav:hover {
+  scale: 1.5;
 }
 .nonActiveNav {
   color: rgb(207, 202, 202);
@@ -183,7 +188,7 @@ a.dark {
 }
 .navbarArea.dark {
   background-color: white;
-  box-shadow: 10px 200px 50px white;
+  box-shadow: 10px 50px 50px white;
 }
 .online-status {
   height: 16px;
@@ -212,13 +217,20 @@ button {
 .activeHomeTab {
   color: black;
 }
-
+.activeHomeTab.dark {
+  color: white;
+}
 .cal-add-form {
   display: inline-block;
   vertical-align: top;
   height: 175px;
   width: 250px;
-  background: linear-gradient(to right, rgb(0, 0, 0), rgb(81, 79, 79), rgb(0,0,0));
+  background: linear-gradient(
+    to right,
+    rgb(0, 0, 0),
+    rgb(81, 79, 79),
+    rgb(0, 0, 0)
+  );
   padding: 45px;
   padding-top: 30px;
   padding-bottom: 40px;
@@ -226,7 +238,6 @@ button {
 }
 
 .cal-delete-event {
-  
   display: inline-block;
   vertical-align: top;
   margin: 10px;
@@ -236,8 +247,12 @@ button {
   padding: 45px;
   padding-top: 30px;
   padding-bottom: 40px;
-  background: linear-gradient(to right, rgb(0, 0, 0), rgb(81, 79, 79), rgb(0,0,0));
-  
+  background: linear-gradient(
+    to right,
+    rgb(0, 0, 0),
+    rgb(81, 79, 79),
+    rgb(0, 0, 0)
+  );
 }
 
 /* .cal-container.light-mode .cal-add-form {
@@ -249,24 +264,22 @@ button {
 } */
 
 .cal-delete-button {
-  display: block; 
+  display: block;
 }
 
-.cal-container{
+.cal-container {
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
-.cal-title{
+.cal-title {
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
-.cal-add-event{
+.cal-add-event {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -279,8 +292,8 @@ button {
 .dark-mode {
   background: linear-gradient(to right, rgb(0, 0, 0), rgb(81, 79, 79), rgb(0,0,0));
 } */
-img{
-  height:45px;
+img {
+  height: 45px;
 }
 
 /* *****Login Page Styling***** */
@@ -380,7 +393,9 @@ img{
   margin-top: 5%;
   margin-bottom: 0;
 }
-
+.keepDark.dark {
+  color: black;
+}
 /* Media Queries */
 @media screen and (max-width: 768px) {
   .authForm,
@@ -412,4 +427,3 @@ img{
     margin-top: 10%;
   }
 }
-

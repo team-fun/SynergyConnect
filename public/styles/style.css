@@ -162,10 +162,6 @@
   grid-column: span 4 / span 4;
 }
 
-.m-0{
-  margin: 0px;
-}
-
 .mx-1{
   margin-left: 0.25rem;
   margin-right: 0.25rem;
@@ -252,6 +248,10 @@
 
 .mr-4{
   margin-right: 1rem;
+}
+
+.mr-5{
+  margin-right: 1.25rem;
 }
 
 .mt-10{
@@ -358,6 +358,10 @@
   width: 80%;
 }
 
+.w-\[95\%\]{
+  width: 95%;
+}
+
 .w-full{
   width: 100%;
 }
@@ -434,10 +438,6 @@
 .object-cover{
   -o-object-fit: cover;
      object-fit: cover;
-}
-
-.p-0{
-  padding: 0px;
 }
 
 .p-4{
@@ -710,10 +710,16 @@ a.dark {
 
 .activeNav {
   color: white;
+  scale: 1.5;
 }
 
 .activeNav.dark {
+  scale: 1.5;
   color: black;
+}
+
+.nonActiveNav:hover {
+  scale: 1.5;
 }
 
 .nonActiveNav {
@@ -739,7 +745,7 @@ a.dark {
 
 .navbarArea.dark {
   background-color: white;
-  box-shadow: 10px 200px 50px white;
+  box-shadow: 10px 50px 50px white;
 }
 
 .online-status {
@@ -773,12 +779,21 @@ button {
   color: black;
 }
 
+.activeHomeTab.dark {
+  color: white;
+}
+
 .cal-add-form {
   display: inline-block;
   vertical-align: top;
   height: 175px;
   width: 250px;
-  background: linear-gradient(to right, rgb(0, 0, 0), rgb(81, 79, 79), rgb(0,0,0));
+  background: linear-gradient(
+    to right,
+    rgb(0, 0, 0),
+    rgb(81, 79, 79),
+    rgb(0, 0, 0)
+  );
   padding: 45px;
   padding-top: 30px;
   padding-bottom: 40px;
@@ -795,7 +810,12 @@ button {
   padding: 45px;
   padding-top: 30px;
   padding-bottom: 40px;
-  background: linear-gradient(to right, rgb(0, 0, 0), rgb(81, 79, 79), rgb(0,0,0));
+  background: linear-gradient(
+    to right,
+    rgb(0, 0, 0),
+    rgb(81, 79, 79),
+    rgb(0, 0, 0)
+  );
 }
 
 /* .cal-container.light-mode .cal-add-form {
@@ -810,19 +830,19 @@ button {
   display: block;
 }
 
-.cal-container{
+.cal-container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.cal-title{
+.cal-title {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.cal-add-event{
+.cal-add-event {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -836,8 +856,8 @@ button {
   background: linear-gradient(to right, rgb(0, 0, 0), rgb(81, 79, 79), rgb(0,0,0));
 } */
 
-img{
-  height:45px;
+img {
+  height: 45px;
 }
 
 /* *****Login Page Styling***** */
@@ -938,6 +958,10 @@ img{
   margin-bottom: 0;
 }
 
+.keepDark.dark {
+  color: black;
+}
+
 /* Media Queries */
 
 @media screen and (max-width: 768px) {
@@ -983,15 +1007,13 @@ img{
     margin-left: -1rem;
     margin-right: -1rem;
   }
-}
 
-.\[\&\>\*\]\:mx-2>*{
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
+  .lg\:w-\[70\%\]{
+    width: 70%;
+  }
 }
 
 .\[\&\>\*\]\:my-4>*{
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
-
