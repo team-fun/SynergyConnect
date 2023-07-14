@@ -21,6 +21,7 @@ const ChatRoom = ({ socket, username }) => {
   const [userList, setUserList] = useState([]);
   const pastMessages = useSelector((state) => state.chat);
   const [messageList, setMessageList] = useState([]);
+  const [showCode, setShowCode] = useState(false);
 
   const sendMessage = () => {
     const currentTime = new Date();
@@ -117,18 +118,23 @@ const ChatRoom = ({ socket, username }) => {
     navigate("/home");
   };
 
+  const handleView = () => {
+    setShowCode(!showCode); // Toggle the value of showCode
+  };
+
   return (
     <div className="w-full h-full">
       <header>
         <p className=" text-[30px] text-center">
           Welcome to the {code} Chat Room
         </p>
-
         <div>
           <button onClick={leaveRoom}>Back</button>
           <button style={{ backgroundColor: "red" }} onClick={handleDelete}>
             Disconnect
           </button>
+          <button onClick={handleView}>View Code</button>
+          <span>{showCode ? code : ""}</span>
           <button onClick={handleClickWB}>Create Whiteboard</button>
           {whiteBoard && <Whiteboard socket={socket} />}
         </div>
