@@ -74,9 +74,9 @@ const editUserSlice = createSlice({
 		editUserObj: {},
 	},
 	extraReducers: (builder) => {
-		builder.addCase(fetchSingleUser.fulfilled, (state, action) => {
-			state.editUserObj = action.payload;
-		}),
+			builder.addCase(fetchSingleUser.fulfilled, (state, action) => {
+				state.editUserObj = action.payload;
+			}),
 			builder.addCase(editUser.fulfilled, (state, action) => {
 				state.editUserObj = action.payload;
 			});
