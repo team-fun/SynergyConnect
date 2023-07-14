@@ -158,13 +158,17 @@ const ChatRoom = ({ socket, username }) => {
               textAlign: "center",
               borderBottom: "3px solid rgb(25, 25, 25)",
             }}
+            className="keepDark"
           >
             Start of chat history
           </h3>
           {messageList.map((data) => {
             return (
-              <div key={data.id}>
-                <div>
+              <div
+                key={data.id}
+                id={username === data.username ? "you" : "other"}
+              >
+                <div className="keepDark">
                   <p>{data.username}:</p>
                   <span style={{ overflowWrap: "break-word" }}>
                     {data.message}
@@ -177,11 +181,15 @@ const ChatRoom = ({ socket, username }) => {
         </section>
         <section
           style={{ background: "#D9D9D9" }}
-          className="col-span-1 h-full  px-4 py-2 mx-1 my-2 rounded-lg userView"
+          className="col-span-1 h-full  px-4 py-2 mx-1 my-2 rounded-lg keepDark userView"
         >
-          <h4>Users in this room: </h4>
+          <h4 className="keepDark">Users in this room: </h4>
           {userList.map((user) => {
-            return <p key={user.id}>{user.username}</p>;
+            return (
+              <p className="keepDark" key={user.id}>
+                {user.username}
+              </p>
+            );
           })}
         </section>
       </div>
