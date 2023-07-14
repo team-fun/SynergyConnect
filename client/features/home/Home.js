@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import CreateRoomForm from "./CreateRoomForm";
-import {
-  selectFriends,
-  fetchAllFriends,
-  acceptRejectRequest,
-} from "./AllFriendsSlice";
+import { selectFriends, fetchAllFriends } from "./AllFriendsSlice";
 import {
   selectChats,
   fetchAllChats,
@@ -14,9 +10,7 @@ import {
   favoriteRoom,
 } from "./AllChatsSlice";
 import SearchBox from "../seachbar/SearchBar";
-import CalendarSchedule from "../calendar/Calendar";
 import Friends from "../friends/Friends";
-import { ChangeHistorySharp } from "@mui/icons-material";
 
 const Home = () => {
   const [friendListChange, setfriendListChange] = useState(false);
@@ -125,7 +119,6 @@ const Home = () => {
 
   return (
     <div>
-      {/* <CalendarSchedule /> */}
       {createFormVis ? (
         <>
           <CreateRoomForm />
@@ -228,14 +221,11 @@ const Home = () => {
 
                 return (
                   <div
-                    className="flex w-[95%] lg:w-[70%] py-4 justify-around items-center mb-2 bg-[#D9D9D9]"
+                    className="flex w-[95%] lg:w-[70%] py-4 justify-around items-center mb-2 bg-[#D9D9D9] rounded-lg"
                     key={chat.id}
                   >
-                    <div className="w-10 h-10 ">
-                      <img
-                        src={`./images/chat${i + 1}.png`}
-                        alt="profilePic.jpg"
-                      />
+                    <div className="w-15 h-15">
+                      <img src={`${chat.image}`} alt="profilePic.jpg" />
                     </div>
                     <div className=" w-64">
                       <h3 className="keepDark w-full my-0 text-xl">

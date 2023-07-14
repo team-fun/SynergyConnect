@@ -17,6 +17,9 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import { updateElement as updateElementInStore } from "./whiteboardSlice";
 import { emitCursorPosition } from "./socketConn/socketConn";
+import Modal from "react-modal"; 
+
+Modal.setAppElement('#app'); 
 
 let emitCursor = true;
 let lastCursorPosition;
@@ -29,6 +32,7 @@ const Whiteboard = ({ socket }) => {
 
   const [action, setAction] = useState(null);
   const [selectedElement, setSelectedElement] = useState(null);
+  const [showAlert, setShowAlert] = useState(false); 
 
   const dispatch = useDispatch();
 
@@ -142,7 +146,7 @@ const Whiteboard = ({ socket }) => {
         break;
       }
       default:
-        window.alert("Unknown tool type selected");
+        setShowAlert(true); 
     }
   };
 
@@ -348,6 +352,16 @@ const Whiteboard = ({ socket }) => {
   return (
     <div className="whiteboard-wrapper">
       <Menu />
+      <Modal
+        isOpen={showAlert}
+        onRequestClose={() => setShowAlert(false)}
+        contentLabel="Unknown Tool"
+        className="custom-modal" 
+      >
+        <h2>No tool selected</h2>
+        <p>Please select a valid tool type from the menu bar.</p>
+        <button onClick={() => setShowAlert(false)}>Close</button>
+      </Modal>
       {action === actions.WRITING ? (
         <textarea
           ref={textAreaRef}
