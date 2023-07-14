@@ -362,6 +362,10 @@
   width: 100%;
 }
 
+.w-1\/2{
+  width: 50%;
+}
+
 .resize{
   resize: both;
 }
@@ -429,6 +433,11 @@
 .bg-\[\#D9D9D9\]{
   --tw-bg-opacity: 1;
   background-color: rgb(217 217 217 / var(--tw-bg-opacity));
+}
+
+.bg-white{
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
 .object-cover{

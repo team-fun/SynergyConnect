@@ -91,18 +91,26 @@ const ChatRoom = ({ socket, username }) => {
   const [whiteBoard, setWhiteBoard] = useState(false);
 
   const handleClick = () => {
-    if (videoCall) {
-      setVideoCall(false);
-    }
-    setVideoCall(true);
+    setVideoCall((prevState) => !prevState);
   };
 
+  // const handleClick = () => {
+  //   if (videoCall) {
+  //     setVideoCall(false);
+  //   }
+  //   setVideoCall(true);
+  // };
+
   const handleClickWB = () => {
-    if (whiteBoard) {
-      setWhiteBoard(false);
-    }
-    setWhiteBoard(true);
+    setWhiteBoard((prevState) => !prevState);
   };
+
+  // const handleClickWB = () => {
+  //   if (whiteBoard) {
+  //     setWhiteBoard(false);
+  //   }
+  //   setWhiteBoard(true);
+  // };
 
   const navigate = useNavigate();
 
@@ -123,20 +131,24 @@ const ChatRoom = ({ socket, username }) => {
         <p className=" text-[30px] text-center">
           Welcome to the {code} Chat Room
         </p>
+        <button onClick={leaveRoom}>Back</button>
+        <button style={{ backgroundColor: "red" }} onClick={handleDelete}>
+          Disconnect
+        </button>
 
-        <div>
-          <button onClick={leaveRoom}>Back</button>
-          <button style={{ backgroundColor: "red" }} onClick={handleDelete}>
-            Disconnect
-          </button>
-          <button onClick={handleClickWB}>Create Whiteboard</button>
-          {whiteBoard && <Whiteboard socket={socket} />}
-        </div>
-        <div className=" w-full mt-4 flex justify-end">
-          <div className=" w-[20%] text-center">
-            <button onClick={handleClick}>Start Video Call</button>
-          </div>
-          {videoCall && <VideoCall code={code} username={username} />}
+        <div className="flex">
+          <section className="w-1/2 mr-2 bg-white rounded-lg p-4">
+            <button onClick={handleClick}>
+              {videoCall ? "Exit Video Call" : "Connect to Video Call"}
+            </button>
+            {videoCall && <VideoCall code={code} username={username} />}
+          </section>
+          <section className="w-1/2 ml-2 bg-white rounded-lg p-4">
+            <button onClick={handleClickWB}>
+              {whiteBoard ? "Exit WhiteBoard" : "Connect to WhiteBoard"}
+            </button>
+            {whiteBoard && <Whiteboard socket={socket} />}
+          </section>
         </div>
       </header>
       <div className="grid grid-cols-5 h-[60vh] ">
