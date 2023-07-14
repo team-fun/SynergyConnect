@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { acceptRejectRequest, fetchAllFriends, selectFriends, sendFriendRequest } from "../home/AllFriendsSlice";
+import {
+  acceptRejectRequest,
+  fetchAllFriends,
+  selectFriends,
+  sendFriendRequest,
+} from "../home/AllFriendsSlice";
 import {
   fetchAllNonFriends,
   selectNonFriends,
@@ -19,7 +24,6 @@ const Friends = () => {
   useEffect(() => {
     dispatch(fetchAllNonFriends({ id }));
     dispatch(fetchAllFriends({ id }));
-
   }, [dispatch, friendListChange]);
 
   useEffect(() => {
@@ -64,7 +68,10 @@ const Friends = () => {
 
   return (
     <div className="relative">
-      <div className="absolute flex items-center justify-center rounded-md w-60 p-4 bg-slate-400 top-[20%] ">
+      <div
+        style={{ background: "#D9D9D9" }}
+        className="absolute flex items-center justify-center rounded-md w-72 p-4 top-[20%] "
+      >
         {friends.length === undefined || friends?.length === 0 ? (
           <div>No friends</div>
         ) : (

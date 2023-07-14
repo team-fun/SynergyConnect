@@ -1,36 +1,36 @@
-import React from 'react';
+import React from "react";
 
 const Footer = () => {
   return (
-    <footer style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <div className="footer-content" style={{ display: 'flex', alignItems: 'center' }}>
-        <h3 style={{ marginRight: '10px' }}>Synergy Connect</h3>
-        <p style={{ marginRight: '10px' }}>Let Synergy Match Your Energy</p>
-        <ul className="team-members" style={{ display: 'flex', listStyle: 'none', margin: 0, padding: 0 }}>
-          <li style={{ marginRight: '10px' }}>
+    <footer className="py-3 px-6">
+      <div className="footer-content flex  justify-around items-center">
+        <div className="flex flex-col justify-center items-center">
+          <h3 className="my-0">Synergy Connect</h3>
+          <p className="my-0">Let Synergy Match Your Energy</p>
+        </div>
+        <ul
+          className="team-members flex justify-around m-0 p-0 [&>*]:mx-2"
+          style={{ listStyle: "none" }}
+        >
+          <li>
             <a href="https://github.com/Obamg3017">Femi</a>
           </li>
-          <li style={{ marginRight: '10px' }}>
+          <li>
             <a href="https://github.com/agreen8911">Adam</a>
           </li>
-          <li style={{ marginRight: '10px' }}>
-            <a href="#">Gina</a>
+          <li>
+            <a href="https://github.com/GinaCastromonte">Gina</a>
           </li>
-          <li style={{ marginRight: '10px' }}>
+          <li>
             <a href="https://github.com/Jovans55">Jovan</a>
           </li>
-          <li style={{ marginRight: '10px' }}>
+          <li>
             <a href="https://github.com/kgr718">Keith</a>
           </li>
           <li style={{ marginRight: '10px' }}>
             <a href="https://github.com/D-A-Rod">Dan</a>
           </li>
         </ul>
-      </div>
-      <div className="footer-bottom" style={{ marginLeft: '10px' }}>
-        <p>
-          &copy; 2023 ODSC. Brought to you by <span>OneDirection</span>.
-        </p>
       </div>
     </footer>
   );

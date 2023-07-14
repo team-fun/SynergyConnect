@@ -133,17 +133,25 @@ const Home = () => {
         </>
       ) : (
         <section>
-          <div className="py-10 w-full px-5 flex items-center justify-between">
-            <div>
-              <h3 className="text-5xl">Welcome, {username}</h3>
-              <p className="font-medium"> Its good to see you</p>
+          <div className="py-10 mt-2 w-full px-5 flex items-center justify-between">
+            <div
+              style={{ background: "#D9D9D9" }}
+              className="py-2 px-4 rounded-md"
+            >
+              <h3 className="text-5xl my-0">Welcome, {username}</h3>
+              <p className="font-medium my-0"> It's good to see you</p>
             </div>
             <div>
-              <div className=" mr-60">
+              <div
+                className={`absolute right-4 ${
+                  showFriends ? "bg-[#D9D9D9]" : ""
+                }`}
+              >
                 <div>
-                  <button
-                    onClick={toggleFriendsList}
-                  >{`${friends.length} Friends`}</button>
+                  <div className="w-72 text-center" onClick={toggleFriendsList}>
+                    <span className="text-[36px] mr-2">{friends.length}</span>{" "}
+                    Friends
+                  </div>
                 </div>
                 {showFriends && <Friends />}
               </div>
@@ -211,19 +219,22 @@ const Home = () => {
                 const fav = favoriteStatus[chatId] || false;
 
                 return (
-                  <div className="flex items-center my-10" key={chat.id}>
-                    <div className="w-10 h-10  mx-32">
+                  <div
+                    className="flex w-[70%] py-4 justify-around items-center mb-2 bg-[#D9D9D9]"
+                    key={chat.id}
+                  >
+                    <div className="w-10 h-10 ">
                       <img
                         src={`./images/chat${i + 1}.png`}
                         alt="profilePic.jpg"
                       />
                     </div>
                     <div className=" w-64">
-                      <h3 className=" w-full text-xl">{chat.name}</h3>
-                      <p className="w-full">{chat.description}</p>
+                      <h3 className=" w-full my-0 text-xl">{chat.name}</h3>
+                      <p className="w-full my-0">{chat.description}</p>
                     </div>
                     <p>👤 {participants.length}</p>
-                    <Link className="mx-20" to={`/chats/${chat.code}`}>
+                    <Link className="" to={`/chats/${chat.code}`}>
                       <button>Join Room</button>
                     </Link>
                     {isParticipating ? (
