@@ -6,6 +6,7 @@ import {
   fetchOldChats,
   deleteUserFromRoom,
 } from "./chatRoomSlice";
+import { fetchAllChats } from "../home/AllChatsSlice";
 import VideoCall from "./videoCall";
 import Whiteboard from "./WhiteBoard/Whiteboard";
 import { useNavigate } from "react-router-dom";
@@ -110,6 +111,7 @@ const ChatRoom = ({ socket, username }) => {
 
   const leaveRoom = () => {
     socket.emit("leave_room", code);
+    dispatch(fetchAllChats(id));
     navigate("/home");
   };
 
