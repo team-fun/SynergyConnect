@@ -1,4 +1,3 @@
-import { create } from "@mui/material/styles/createTransitions";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -33,40 +32,39 @@ export const me = createAsyncThunk("auth/me", async () => {
 });
 
 export const authenticate = createAsyncThunk(
-	"auth/authenticate",
-	async (
-		{ username, password, email, firstName, lastName, method },
-		thunkAPI
-	) => {
-		console.log(username);
-		try {
-			let postData = { username, password };
-			if (method === "signup") {
-				postData.email = email;
-				postData.firstName = firstName;
-				postData.lastName = lastName;
-			}
-			const res = await axios.post(`/auth/${method}`, postData);
-			window.localStorage.setItem(TOKEN, res.data.token);
-			thunkAPI.dispatch(me());
-		} catch (err) {
-			if (err.response.data) {
-				return thunkAPI.rejectWithValue(err.response.data);
-			} else {
-				return "There was an issue with your request.";
-			}
-		}
-	}
+  "auth/authenticate",
+  async (
+    { username, password, email, firstName, lastName, method },
+    thunkAPI
+  ) => {
+    console.log(username);
+    try {
+      let postData = { username, password };
+      if (method === "signup") {
+        postData.email = email;
+        postData.firstName = firstName;
+        postData.lastName = lastName;
+      }
+      const res = await axios.post(`/auth/${method}`, postData);
+      window.localStorage.setItem(TOKEN, res.data.token);
+      thunkAPI.dispatch(me());
+    } catch (err) {
+      if (err.response.data) {
+        return thunkAPI.rejectWithValue(err.response.data);
+      } else {
+        return "There was an issue with your request.";
+      }
+    }
+  }
 );
 
-export const logout = createAsyncThunk("auth/logout",  async (state, action)=> {
-  await fetch("/auth/logout", {headers: {
-  authorization:localStorage.token
-  }})
- 
-
-})
-
+export const logout = createAsyncThunk("auth/logout", async (state, action) => {
+  await fetch("/auth/logout", {
+    headers: {
+      authorization: localStorage.token,
+    },
+  });
+});
 
 /*
   SLICE
@@ -77,9 +75,7 @@ export const authSlice = createSlice({
     me: {},
     error: null,
   },
-  reducers: {
-   
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(me.fulfilled, (state, action) => {
       state.me = action.payload;
@@ -90,11 +86,11 @@ export const authSlice = createSlice({
     builder.addCase(authenticate.rejected, (state, action) => {
       state.error = action.payload;
     });
-    builder.addCase(logout.fulfilled, (state, action)=>{
+    builder.addCase(logout.fulfilled, (state, action) => {
       window.localStorage.removeItem(TOKEN);
       state.me = {};
       state.error = null;
-    })
+    });
   },
 });
 
@@ -102,7 +98,7 @@ export const authSlice = createSlice({
   ACTIONS
 */
 
-export const selectUser = (state) => state.auth
+export const selectUser = (state) => state.auth;
 
 /*
   REDUCER

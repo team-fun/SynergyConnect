@@ -1,8 +1,8 @@
 import React from "react";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
+// import InstagramIcon from "@mui/icons-material/Instagram";
+// import FacebookIcon from "@mui/icons-material/Facebook";
+// import TwitterIcon from "@mui/icons-material/Twitter";
+// import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 const SingleContact = ({ name, image, description, linkedin }) => {
   return (
@@ -20,11 +20,11 @@ const SingleContact = ({ name, image, description, linkedin }) => {
           {description}
         </div>
         <div className="flex flex-row justify-around">
-          <InstagramIcon style={{ fontSize: "20px" }} />
+          {/* <InstagramIcon style={{ fontSize: "20px" }} />
           <FacebookIcon style={{ fontSize: "20px" }} />
-          <TwitterIcon style={{ fontSize: "20px" }} />
+          <TwitterIcon style={{ fontSize: "20px" }} /> */}
           <a href={linkedin}>
-            <LinkedInIcon style={{ fontSize: "20px" }} />
+            {/* <LinkedInIcon style={{ fontSize: "20px" }} /> */}
           </a>
         </div>
       </article>

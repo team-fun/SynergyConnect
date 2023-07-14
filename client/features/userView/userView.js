@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import InstagramIcon from "@mui/icons-material/Instagram";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
+// import InstagramIcon from "@mui/icons-material/Instagram";
+// import FacebookIcon from "@mui/icons-material/Facebook";
+// import TwitterIcon from "@mui/icons-material/Twitter";
+// import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import axios from "axios";
-import EditIcon from "@mui/icons-material/Edit";
-import DoneIcon from "@mui/icons-material/Done";
+// import EditIcon from "@mui/icons-material/Edit";
+// import DoneIcon from "@mui/icons-material/Done";
 import { fetchSingleUser, editUser } from "../admin/editUserSlice";
 import { me } from "../auth/authSlice";
 import { useParams } from "react-router-dom";
@@ -193,11 +193,11 @@ const UserView = () => {
               {!id &&
                 (!editUsername ? (
                   <div className="ml-2" onClick={(e) => setEditUsername(true)}>
-                    <EditIcon />
+                    {/* <EditIcon /> */}
                   </div>
                 ) : (
                   <div className="ml-2" onClick={(e) => setEditUsername(false)}>
-                    <DoneIcon />
+                    {/* <DoneIcon /> */}
                   </div>
                 ))}
             </div>
@@ -379,7 +379,7 @@ const UserView = () => {
         </div>
       </div>
       <div className="link w-[95%] lg:w-[70%] text-center mt-3 ">
-        <a href="https://www.instagram.com/">
+        {/* <a href="https://www.instagram.com/">
           <InstagramIcon style={{ fontSize: "50px" }} />
         </a>
         <a href="https://www.facebook.com/">
@@ -395,7 +395,7 @@ const UserView = () => {
             src="https://icons.veryicon.com/png/o/miscellaneous/mirror-icon/github-65.png"
             alt="Github"
           />
-        </a>
+        </a> */}
       </div>
     </div>
   );

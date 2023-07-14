@@ -4,8 +4,8 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { logout } from "../../app/store";
 import { selectUser } from "../auth/authSlice";
 import { useState } from "react";
-import LightModeIcon from "@mui/icons-material/LightMode";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
+// import LightModeIcon from "@mui/icons-material/LightMode";
+// import DarkModeIcon from "@mui/icons-material/DarkMode";
 import { AiFillHome } from "react-icons/ai";
 import { FaUserAlt } from "react-icons/fa";
 import { SlCalender } from "react-icons/sl";
@@ -185,7 +185,7 @@ const Navbar = () => {
               }}
             >
               <div className="inner">
-                {theme ? <LightModeIcon /> : <DarkModeIcon />}
+                {/* {theme ? <LightModeIcon /> : <DarkModeIcon />} */}
               </div>
             </div>
           </nav>
