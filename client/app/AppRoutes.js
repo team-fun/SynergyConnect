@@ -12,7 +12,7 @@ import ChatRoom from "../features/chat/ChatRoom";
 import ContactUs from "../features/ContactUs/ContactUs";
 import CalendarSchedule from "../features/calendar/Calendar";
 import io from "socket.io-client";
-const socket = io.connect("https://synergy-connect.onrender.com/");
+const socket = io.connect("https://synergy-connect.onrender.com");
 import NonFriends from "../features/friends/NonFriends";
 
 /**

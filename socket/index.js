@@ -5,7 +5,7 @@ const cors = require("cors");
 const { Server } = require("socket.io");
 
 const corsOptions = {
-  origin: "https://synergyconnect-front.onrender.com/",
+  origin: "https://synergyconnect-front.onrender.com",
 };
 
 app.use(cors(corsOptions));
@@ -97,5 +97,5 @@ io.on("connection", (socket) => {
 // ************************ WHITE BOARD END ************************
 
 server.listen(process.env.PORT || 3001, () => {
-  console.log("🏃 RUNNING ON https://synergy-connect.onrender.com/ 🤑");
+  console.log("🏃 RUNNING ON https://synergy-connect.onrender.com 🤑");
 });
