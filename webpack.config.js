@@ -17,16 +17,16 @@ module.exports = {
           presets: ["@babel/preset-env", "@babel/preset-react"],
         },
       },
-      // {
-      // test: /\.css$/,
-      // use: ["style-loader", "css-loader"],
-      //   test: /\.(sass|less|css)$/,
-      //   use: ["style-loader", "css-loader", "less-loader"],
-      // },
-      // {
-      //   test: /\.svg$/,
-      //   use: "file-loader",
-      // },
+      {
+        // test: /\.css$/,
+        // use: ["style-loader", "css-loader"],
+        test: /\.(sass|less|css)$/,
+        use: ["style-loader", "css-loader", "less-loader"],
+      },
+      {
+        test: /\.svg$/,
+        use: "file-loader",
+      },
     ],
   },
 };
