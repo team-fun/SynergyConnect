@@ -96,6 +96,6 @@ io.on("connection", (socket) => {
 
 // ************************ WHITE BOARD END ************************
 
-server.listen(3001, () => {
-  console.log("🏃 RUNNING ON http://localhost:3001/ 🤑");
+server.listen(process.env.PORT || 3001, () => {
+  console.log("🏃 RUNNING ON https://synergy-connect.onrender.com/ 🤑");
 });
