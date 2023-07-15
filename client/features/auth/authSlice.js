@@ -37,7 +37,6 @@ export const authenticate = createAsyncThunk(
     { username, password, email, firstName, lastName, method },
     thunkAPI
   ) => {
-    console.log(username);
     try {
       let postData = { username, password };
       if (method === "signup") {

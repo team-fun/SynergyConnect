@@ -5,7 +5,7 @@ const cors = require("cors");
 const { Server } = require("socket.io");
 
 const corsOptions = {
-  origin: "http://localhost:8080/",
+  origin: "https://synergyconnect-front.onrender.com/",
 };
 
 app.use(cors(corsOptions));
