@@ -136,19 +136,24 @@ const ChatRoom = ({ socket, username }) => {
           </button>
           <button onClick={handleView}>View Code</button>
           <span>{showCode ? code : ""}</span>
-          <button onClick={handleClickWB}>
-            {showWhiteboard ? "Close Whiteboard" : "Open Whiteboard"}
-          </button>
-          {showWhiteboard && <Whiteboard socket={socket} />}
         </div>
-        <div className=" w-full mt-4 flex justify-end">
-          <div className=" w-[20%] text-center">
+
+        <div className="flex">
+          <section className="w-1/2 mr-2 bg-white rounded-lg p-4">
             <button onClick={handleClick}>
-              {showVideoCall ? "Close Video Call" : "Start Video Call"}
+              {showVideoCall ? "Exit Video Call" : "Connect to Video Call"}
             </button>
-          </div>
-          {showVideoCall && <VideoCall code={code} username={username} />}
+            {showVideoCall && <VideoCall code={code} username={username} />}
+          </section>
+          <section className="w-1/2 ml-2 bg-white rounded-lg p-4">
+            <button onClick={handleClickWB}>
+              {showWhiteboard ? "Exit WhiteBoard" : "Connect to WhiteBoard"}
+            </button>
+            {showWhiteboard && <Whiteboard socket={socket} />}
+          </section>
         </div>
+
+
       </header>
       <div className="grid grid-cols-5 h-[60vh] ">
         <section
