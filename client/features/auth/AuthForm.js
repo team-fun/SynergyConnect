@@ -39,8 +39,8 @@ const AuthForm = ({ name, displayName }) => {
       >
         {displayName !== "Sign Up" && (
           <div className="authForm-description">
-            <h1 className="synergyConnect-title my-0">Synergy Connect</h1>
-            <p>
+            <h1 className=" keepDark synergyConnect-title my-0">Synergy Connect</h1>
+            <p className = "keepDark">
               Introducing Synergy Connect: the all-in-one collaborative
               platform for seamless communication and productivity. Chat,
               video calls, audio calls, calendar integration, and a
@@ -57,7 +57,7 @@ const AuthForm = ({ name, displayName }) => {
               : "authForm-input-wrapper"
           }`}
         >
-          <h2>
+          <h2 className="keepDark">
             {displayName === "Sign Up"
               ? "Create an Account:"
               : "Sign In:"}
