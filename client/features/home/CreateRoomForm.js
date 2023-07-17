@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCreateRoomAsync } from "./createRoomFormSlice";
+import Modal from "react-modal";
+
+Modal.setAppElement("#app");
 
 const CreateRoomForm = () => {
   const { error } = useSelector((state) => state.auth);
@@ -9,6 +12,8 @@ const CreateRoomForm = () => {
   const [description, setDescription] = useState("");
   const [code, setCode] = useState("");
   const [isPublic, setIsPublic] = useState(false);
+  const [showCode, setShowCode] = useState(false);
+  const [roomCodeToShow, setRoomCodeToShow] = useState("");
 
   const hasher = () => {
     const characters =
@@ -31,6 +36,8 @@ const CreateRoomForm = () => {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     const roomCode = isPublic ? code : hasher();
+    setRoomCodeToShow(roomCode);
+    setShowCode(!isPublic);
     dispatch(
       fetchCreateRoomAsync({ name, description, code: roomCode, isPublic })
     );
@@ -42,6 +49,17 @@ const CreateRoomForm = () => {
 
   return (
     <div>
+      <Modal
+        isOpen={showCode}
+        onRequestClose={() => setShowCode(false)}
+        contentLabel="Private Code"
+        className="custom-modal"
+      >
+        <h2>Here is your private code!</h2>
+        <p>Share it wisley!</p>
+        <p>Room Code: {roomCodeToShow}</p>
+        <button onClick={() => setShowCode(false)}>Close</button>
+      </Modal>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="name">
