@@ -833,11 +833,10 @@ button {
   color: black;
 }
 
+/* 
 .activeHomeTab.dark {
   color: white;
 }
-
-/* 
 .cal-add-form {
   display: inline-block;
   vertical-align: top;
