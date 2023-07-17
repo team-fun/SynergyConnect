@@ -173,7 +173,7 @@ const Navbar = () => {
                   }`}
                   to="/ContactUs"
                 >
-                  C
+                  <MdContactMail />
                 </Link>
               </div>
             )}
