@@ -13,6 +13,10 @@ import SearchBox from "../seachbar/SearchBar";
 import Friends from "../friends/Friends";
 import ChatModal from "./chatModal";
 
+import Modal from "react-modal";
+
+Modal.setAppElement("#app");
+
 const Home = () => {
   const [friendListChange, setfriendListChange] = useState(false);
   const [showFriends, setShowFriends] = useState(false);
@@ -28,6 +32,7 @@ const Home = () => {
   const [search, setSearch] = useState("");
   const [favoriteStatus, setFavoriteStatus] = useState({});
   const [showModal, setShowModal] = useState(false);
+  const [showFavMes, setShowFavMes] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -104,6 +109,11 @@ const Home = () => {
     }
   };
 
+  const favMess = (event) => {
+    event.preventDefault();
+    setShowFavMes(true);
+  };
+
   const onSearchChange = (event) => {
     setSearch(event.target.value);
   };
@@ -131,6 +141,16 @@ const Home = () => {
   };
   return (
     <div>
+      <Modal
+        isOpen={showFavMes}
+        onRequestClose={() => setShowFavMes(false)}
+        contentLabel="Join room"
+        className="custom-modal"
+      >
+        <h2>Join the room once before you can favorite!</h2>
+        <p>Thanks!</p>
+        <button onClick={() => setShowFavMes(false)}>Close</button>
+      </Modal>
       {createFormVis ? (
         <>
           <CreateRoomForm />
@@ -278,7 +298,12 @@ const Home = () => {
                         </span>
                       )
                     ) : (
-                      <p>Join once before favoriting!</p>
+                      <span
+                        onClick={(event) => favMess(event)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        🖤
+                      </span>
                     )}
                   </div>
                 );
