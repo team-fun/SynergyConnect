@@ -370,6 +370,10 @@
   width: 70%;
 }
 
+.w-\[70vw\]{
+  width: 70vw;
+}
+
 .w-\[80\%\]{
   width: 80%;
 }
@@ -432,6 +436,10 @@
 
 .overflow-hidden{
   overflow: hidden;
+}
+
+.overflow-scroll{
+  overflow: scroll;
 }
 
 .rounded-3xl{
@@ -738,6 +746,10 @@ li{
 
 .theme-btn.dark {
   background: #26aef433;
+}
+
+.drktext{
+  color: black;
 }
 
 .theme-btn.dark .inner {
@@ -1325,6 +1337,10 @@ img {
 }
 
 @media (min-width: 768px){
+  .md\:w-\[50vw\]{
+    width: 50vw;
+  }
+
   .md\:px-12{
     padding-left: 3rem;
     padding-right: 3rem;

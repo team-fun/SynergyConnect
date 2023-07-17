@@ -149,6 +149,9 @@ li{
 .theme-btn.dark {
   background: #26aef433;
 }
+.drktext{
+  color: black;
+}
 .theme-btn.dark .inner {
   background-color: #26aef4;
   transform: translate(27px, 0);
