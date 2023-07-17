@@ -12,7 +12,7 @@ import ChatRoom from "../features/chat/ChatRoom";
 import ContactUs from "../features/ContactUs/ContactUs";
 import CalendarSchedule from "../features/calendar/Calendar";
 import io from "socket.io-client";
-const socket = io.connect("http://localhost:3001/");
+const socket = io.connect("http://localhost:3001");
 import NonFriends from "../features/friends/NonFriends";
 
 /**
