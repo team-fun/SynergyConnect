@@ -3,13 +3,15 @@ const Chat = require("../db/models/Chat");
 
 router.post("/", async (req, res, next) => {
   try {
-    const { name, code, description, isPublic } = req.body
-    const newChat = await Chat.create({ 
+    const { name, code, description, isPublic } = req.body;
+    console.log(name, code, description, isPublic);
+    const newChat = await Chat.create({
       name: name,
       code: code,
       description: description,
-      public: isPublic
+      public: isPublic,
     });
+    console.log("NEWWWWWWWWWW", newChat);
     res.send(newChat);
   } catch (err) {
     next(err);
