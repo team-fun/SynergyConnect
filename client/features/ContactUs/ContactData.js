@@ -38,7 +38,7 @@ export const ContactData = [
     name: "Daniel",
     linkedin: "https://www.linkedin.com/in/daniel-a-rodriguez-/",
     image:
-      "https://media.licdn.com/dms/image/D5603AQHkKGCcMaH-Zw/profile-displayphoto-shrink_800_800/0/1684940462569?e=1694044800&v=beta&t=epFhaGhjU26hMW644LTUU4EfRrf7fom1bSZgVHgzdEc",
+    "https://media.licdn.com/dms/image/D5603AQFwc2Vo-1AmWA/profile-displayphoto-shrink_800_800/0/1689370735778?e=1695254400&v=beta&t=-dUULa5whpc5n_2sKFHcIA5I9mAMtSQfeAUvmA5Y7GM",
     description: '"Dogs do speak, but only to those who know how to listen"',
   },
 ];
