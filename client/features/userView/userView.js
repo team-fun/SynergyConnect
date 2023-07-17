@@ -191,11 +191,11 @@ const UserView = () => {
               {!id &&
                 (!editUsername ? (
                   <div className="ml-2" onClick={(e) => setEditUsername(true)}>
-                    {/* <EditIcon /> */}
+                    edit
                   </div>
                 ) : (
                   <div className="ml-2" onClick={(e) => setEditUsername(false)}>
-                    {/* <DoneIcon /> */}
+                    done
                   </div>
                 ))}
             </div>
@@ -230,11 +230,11 @@ const UserView = () => {
               {!id &&
                 (!editName ? (
                   <div className="ml-2" onClick={(e) => setEditName(true)}>
-                    <EditIcon />
+                    edit
                   </div>
                 ) : (
                   <div className="ml-2" onClick={(e) => setEditName(false)}>
-                    <DoneIcon />
+                    done
                   </div>
                 ))}
             </div>
@@ -266,11 +266,11 @@ const UserView = () => {
               {!id &&
                 (!editEmail ? (
                   <div className="ml-2" onClick={(e) => setEditEmail(true)}>
-                    <EditIcon />
+                    edit
                   </div>
                 ) : (
                   <div className="ml-2" onClick={(e) => setEditEmail(false)}>
-                    <DoneIcon />
+                    done
                   </div>
                 ))}
             </div>
@@ -292,11 +292,11 @@ const UserView = () => {
               {!id &&
                 (!editLocation ? (
                   <div className="ml-2" onClick={(e) => setEditLocation(true)}>
-                    <EditIcon />
+                    edit
                   </div>
                 ) : (
                   <div className="ml-2" onClick={(e) => setEditLocation(false)}>
-                    <DoneIcon />
+                    done
                   </div>
                 ))}{" "}
             </div>
@@ -319,11 +319,11 @@ const UserView = () => {
             {!id &&
               (!editBio ? (
                 <div className="ml-2" onClick={(e) => setEditBio(true)}>
-                  <EditIcon />
+                  edit
                 </div>
               ) : (
                 <div className="ml-2" onClick={(e) => setEditBio(false)}>
-                  <DoneIcon />
+                  done
                 </div>
               ))}{" "}
           </div>
@@ -342,14 +342,14 @@ const UserView = () => {
                       className="ml-2"
                       onClick={(e) => setEditInterests(true)}
                     >
-                      <EditIcon />
+                      edit
                     </div>
                   ) : (
                     <div
                       className="ml-2"
                       onClick={(e) => setEditInterests(false)}
                     >
-                      <DoneIcon />
+                      done
                     </div>
                   ))}
               </div>
