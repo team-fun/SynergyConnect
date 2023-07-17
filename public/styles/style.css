@@ -322,6 +322,10 @@
   height: 200px;
 }
 
+.h-\[60\%\]{
+  height: 60%;
+}
+
 .h-\[60vh\]{
   height: 60vh;
 }
@@ -332,10 +336,6 @@
 
 .h-screen{
   height: 100vh;
-}
-
-.h-\[60\%\]{
-  height: 60%;
 }
 
 .w-1\/2{
@@ -384,10 +384,6 @@
 
 .w-screen{
   width: 100vw;
-}
-
-.w-\[75\%\]{
-  width: 75%;
 }
 
 .transform{
