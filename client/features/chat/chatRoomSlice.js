@@ -53,8 +53,7 @@ const chatRoomSlice = createSlice({
       console.log("Message sent successfully");
     });
     builder.addCase(deleteUserFromRoom.fulfilled, (state, action) => {
-      const newState = state.filter((user) => user.id !== action.payload);
-      return newState;
+      console.log("Disconnected successfully");
     });
   },
 });

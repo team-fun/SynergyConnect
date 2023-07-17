@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   sendNewChats,
   fetchOldChats,
   deleteUserFromRoom,
 } from "./chatRoomSlice";
+import { fetchAllChats } from "../home/AllChatsSlice";
 import VideoCall from "./videoCall";
 import Whiteboard from "./WhiteBoard/Whiteboard";
 import { useNavigate } from "react-router-dom";
@@ -19,8 +20,12 @@ const ChatRoom = ({ socket, username }) => {
   const id = useSelector((state) => state.auth.me.id);
   const [message, setMessage] = useState("");
   const [userList, setUserList] = useState([]);
-  const pastMessages = useSelector((state) => state.chat);
+  const { messages, chat } = useSelector((state) => state.chat);
   const [messageList, setMessageList] = useState([]);
+  const [showCode, setShowCode] = useState(false);
+  const [showWhiteboard, setShowWhiteboard] = useState(false);
+  const [showVideoCall, setShowVideoCall] = useState(false);
+  const [chatName, setChatName] = useState("the Chat");
 
   const sendMessage = () => {
     const currentTime = new Date();
@@ -80,34 +85,33 @@ const ChatRoom = ({ socket, username }) => {
       socket.off("receive_message");
       socket.off("user_list");
     };
-  }, [socket, code, username]);
-  useEffect(() => {
-    if (pastMessages) {
-      setMessageList(pastMessages);
-    }
-  }, [pastMessages]);
+  }, [socket, code, username, id]);
 
-  const [videoCall, setVideoCall] = useState(false);
-  const [whiteBoard, setWhiteBoard] = useState(false);
+  useEffect(() => {
+    if (messages) {
+      setMessageList(messages);
+    }
+  }, [messages]);
+
+  useEffect(() => {
+    if (chat) {
+      setChatName(chat.name);
+    }
+  }, [chat]);
 
   const handleClick = () => {
-    if (videoCall) {
-      setVideoCall(false);
-    }
-    setVideoCall(true);
+    setShowVideoCall(!showVideoCall);
   };
 
   const handleClickWB = () => {
-    if (whiteBoard) {
-      setWhiteBoard(false);
-    }
-    setWhiteBoard(true);
+    setShowWhiteboard(!showWhiteboard);
   };
 
   const navigate = useNavigate();
 
   const leaveRoom = () => {
     socket.emit("leave_room", code);
+    dispatch(fetchAllChats(id));
     navigate("/home");
   };
 
@@ -117,38 +121,51 @@ const ChatRoom = ({ socket, username }) => {
     navigate("/home");
   };
 
+  const handleView = () => {
+    setShowCode(!showCode);
+  };
+
   return (
     <div className="w-full h-full">
       <header>
-        <p className=" text-[30px] text-center">
-          Welcome to the {code} Chat Room
-        </p>
-
+        <p className=" text-[30px] text-center">Welcome to {chatName} Room</p>
         <div>
           <button onClick={leaveRoom}>Back</button>
           <button style={{ backgroundColor: "red" }} onClick={handleDelete}>
             Disconnect
           </button>
-          <button onClick={handleClickWB}>Create Whiteboard</button>
-          {whiteBoard && <Whiteboard socket={socket} />}
+          <button onClick={handleView}>View Code</button>
+          <span>{showCode ? code : ""}</span>
         </div>
-        <div className=" w-full mt-4 flex justify-end">
-          <div className=" w-[20%] text-center">
-            <button onClick={handleClick}>Start Video Call</button>
-          </div>
-          {videoCall && <VideoCall code={code} username={username} />}
+
+        <div className="flex">
+          <section className="w-1/2 mr-2 bg-white rounded-lg p-4">
+            <button onClick={handleClick}>
+              {showVideoCall ? "Exit Video Call" : "Connect to Video Call"}
+            </button>
+            {showVideoCall && <VideoCall code={code} username={username} />}
+          </section>
+          <section className="w-1/2 ml-2 bg-white rounded-lg p-4">
+            <button onClick={handleClickWB}>
+              {showWhiteboard ? "Exit WhiteBoard" : "Connect to WhiteBoard"}
+            </button>
+            {showWhiteboard && <Whiteboard socket={socket} />}
+          </section>
         </div>
+
+
       </header>
       <div className="grid grid-cols-5 h-[60vh] ">
         <section
           style={{ background: "#D9D9D9" }}
-          className="col-span-4 h-full px-4 py-2 mr-1 my-2 rounded-lg"
+          className="col-span-4 h-full px-4 py-2 mr-1 my-2 rounded-lg chatRoom"
         >
           <h3
             style={{
               textAlign: "center",
               borderBottom: "3px solid rgb(25, 25, 25)",
             }}
+            className="keepDark"
           >
             Start of chat history
           </h3>
@@ -158,10 +175,12 @@ const ChatRoom = ({ socket, username }) => {
                 key={data.id}
                 id={username === data.username ? "you" : "other"}
               >
-                <div>
+                <div className="keepDark">
                   <p>{data.username}:</p>
-                  <span>{data.message}</span>
-                  <span>{data.time}</span>
+                  <span style={{ overflowWrap: "break-word" }}>
+                    {data.message}
+                  </span>
+                  <span style={{ marginLeft: "5px" }}>{data.time}</span>
                 </div>
               </div>
             );
@@ -169,11 +188,15 @@ const ChatRoom = ({ socket, username }) => {
         </section>
         <section
           style={{ background: "#D9D9D9" }}
-          className="col-span-1 h-full  px-4 py-2 mx-1 my-2 rounded-lg"
+          className="col-span-1 h-full  px-4 py-2 mx-1 my-2 rounded-lg keepDark userView"
         >
-          <h4>Users in this room: </h4>
+          <h4 className="keepDark">Users in this room: </h4>
           {userList.map((user) => {
-            return <p key={user.id}>{user.username}</p>;
+            return (
+              <p className="keepDark" key={user.id}>
+                {user.username}
+              </p>
+            );
           })}
         </section>
       </div>

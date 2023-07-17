@@ -147,10 +147,10 @@ const UserView = () => {
         </div>
         <div className="mx-[auto]">
           <h3 className="text-[30px] my-0 ">
-            {" "}
-            {user.firstName} {user.lastName}
+           Welcome!
           </h3>
-          <p className="font-medium my-0"> It's good to see you</p>
+          <p className="font-medium my-0">  {" "}
+            {user.firstName} {user.lastName}</p>
         </div>
 
         <div
@@ -168,7 +168,7 @@ const UserView = () => {
       </div>
       <div
         style={{ background: "#D9D9D9" }}
-        className="w-[70%] text-center mt-10 py-2 px-4 rounded-lg"
+        className="w-[80%] h-[60%] text-center mt-10 py-2 px-4 rounded-lg"
       >
         <h3 className="ml-10 text-[30px]">USER PROFILE</h3>
         <div className="user-info [&>*]:my-4">

@@ -14,12 +14,11 @@ const AllUsers = () => {
   useEffect(() => {
     dispatch(fetchAllUsers());
   }, [dispatch]);
-  console.log(allUsers);
   const usersDiv = allUsers ? (
     <div>
       <div className="adminOuter-wrapper">
         <div className="adminInner-wrapper">
-          <h1>Edit Users</h1>
+          <h1>Admin Permissions - Edit Users</h1>
           {allUsers.map((user) => {
             return (
               <div className="users-container" key={user.id}>

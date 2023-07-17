@@ -55,11 +55,10 @@ body {
   padding: 0;
 }
 
-/* canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-} */
+li{
+  list-style-type: none;
+}
+
 
 .whiteboard-wrapper {
   width: 500px;
@@ -69,13 +68,13 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   border: 2px solid #333333;
   position: relative;
-  overflow: hidden; /* Add this line to hide overflow */
+  overflow: hidden; 
 }
 
 .menu-container {
   width: 100%;
   height: 60px;
-  background-color: #cccccc; /* Use a slightly darker background color */
+  background-color: #cccccc; 
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -87,14 +86,21 @@ body {
 .menu-button {
   width: 40px;
   height: 40px;
-  border-radius: 50%; /* Change to a circle shape with border-radius */
+  border-radius: 50%;
   border: none;
-  transition: background-color 0.3s; /* Specify transition property explicitly */
+  transition: background-color 0.3s;
   background-color: #fff1dc;
-  display: flex; /* Add flex properties for centering the icon */
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  cursor: pointer; /* Add cursor pointer on hover */
+  cursor: pointer;
+}
+
+.menu-button img {
+  width: 80%;
+  height: 80%;
+  margin-top: 2px; 
 }
 
 .menu-button:hover {
@@ -104,7 +110,7 @@ body {
 .menu-button-active {
   width: 40px;
   height: 40px;
-  border-radius: 50%; /* Change to a circle shape with border-radius */
+  border-radius: 50%; 
   border: none;
   background-color: #e8d5c4;
 }
@@ -161,9 +167,14 @@ a.dark {
 }
 .activeNav {
   color: white;
+  scale: 1.5;
 }
 .activeNav.dark {
+  scale: 1.5;
   color: black;
+}
+.nonActiveNav:hover {
+  scale: 1.5;
 }
 .nonActiveNav {
   color: rgb(207, 202, 202);
@@ -183,7 +194,7 @@ a.dark {
 }
 .navbarArea.dark {
   background-color: white;
-  box-shadow: 10px 200px 50px white;
+  box-shadow: 10px 50px 50px white;
 }
 .online-status {
   height: 16px;
@@ -213,20 +224,29 @@ button {
   color: black;
 }
 
+.activeHomeTab.dark {
+  color: white;
+}
+
+/* 
 .cal-add-form {
   display: inline-block;
   vertical-align: top;
   height: 175px;
   width: 250px;
-  background: linear-gradient(to right, rgb(0, 0, 0), rgb(81, 79, 79), rgb(0,0,0));
+  background: linear-gradient(
+    to right,
+    rgb(0, 0, 0),
+    rgb(81, 79, 79),
+    rgb(0, 0, 0)
+  );
   padding: 45px;
   padding-top: 30px;
   padding-bottom: 40px;
   margin-right: 100px;
-}
-
+} */
+/* 
 .cal-delete-event {
-  
   display: inline-block;
   vertical-align: top;
   margin: 10px;
@@ -238,7 +258,7 @@ button {
   padding-bottom: 40px;
   background: linear-gradient(to right, rgb(0, 0, 0), rgb(81, 79, 79), rgb(0,0,0));
   
-}
+} */
 
 /* .cal-container.light-mode .cal-add-form {
   background: linear-gradient(to right, white, gray, white);
@@ -248,29 +268,34 @@ button {
   background: linear-gradient(to right, white, gray, white);
 } */
 
-.cal-delete-button {
+/* .cal-delete-button {
   display: block; 
+} */
+
+/* .cal-container{ */
+  /* display: flex;
+
+.cal-delete-button {
+  display: block;
 }
 
-.cal-container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-}
-
-.cal-title{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-}
-
-.cal-add-event{
+.cal-container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
+.cal-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cal-add-event {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
 
 /* .light-mode {
   background: linear-gradient(to right, rgb(244, 242, 242), rgb(81, 79, 79), rgb(253, 251, 251));
@@ -279,8 +304,8 @@ button {
 .dark-mode {
   background: linear-gradient(to right, rgb(0, 0, 0), rgb(81, 79, 79), rgb(0,0,0));
 } */
-img{
-  height:45px;
+img {
+  height: 45px;
 }
 
 /* *****Login Page Styling***** */
@@ -309,9 +334,8 @@ img{
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
-  width: 80%;
-  max-width: 400px;
+  justify-content: center;
+  width: 40%;
   height: auto;
   background-color: #f5f5f7;
   border-radius: 10px;
@@ -325,8 +349,9 @@ img{
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  margin-bottom: 10px;
+  width: 90%;
+  margin-bottom: 2%;
+  margin-right: 7%;
 }
 
 .authForm-description {
@@ -336,6 +361,10 @@ img{
   text-align: left;
   padding: 0;
   margin-bottom: 20px;
+}
+
+.authForm-description p {
+  text-align: left;
 }
 
 .synergyConnect-title {
@@ -381,6 +410,22 @@ img{
   margin-bottom: 0;
 }
 
+.keepDark.dark {
+  color: black;
+}
+
+/* Chat room */
+
+.chatRoom {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.userView {
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
 /* Media Queries */
 @media screen and (max-width: 768px) {
   .authForm,
@@ -413,3 +458,262 @@ img{
   }
 }
 
+/* Window alert - whiteboard */
+
+.custom-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #333;
+  color: #fff;
+  border-radius: 4px;
+  max-width: 400px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.custom-modal__overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.custom-modal__content {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.custom-modal h2 {
+  font-size: 24px;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.custom-modal p {
+  margin: 0 0 20px;
+}
+
+.custom-modal button {
+  display: inline-block;
+  background-color: #f44336;
+  color: #fff;
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.custom-modal button:hover {
+  background-color: #e53935;
+}
+
+.custom-modal button:focus {
+  outline: none;
+}
+
+
+/* Admin view styling */
+
+.adminOuter-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50%;
+  padding: 10px;
+  box-sizing: border-box;
+  margin-top: 3%;
+  margin-right: 15%;
+}
+
+.adminInner-wrapper {
+  width: 90%;
+  max-width: 700px;
+  background-color: #000;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.users-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 8px;
+  background-color: #fff;
+  color: #000;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.users-container:last-child {
+  margin-bottom: 0;
+}
+
+.individualUser {
+  flex-grow: 1;
+  text-decoration: none;
+  color: #000;
+  font-size: 0.6rem;
+}
+
+.individualUser:hover {
+  text-decoration: underline;
+}
+
+.userEditBtn,
+.userDeleteBtn {
+  padding: 4px 8px;
+  margin-left: 5px;
+  border: none;
+  border-radius: 3px;
+  background-color: #ddd;
+  color: #333;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.userEditBtn:hover,
+.userDeleteBtn:hover {
+  background-color: #ccc;
+}
+
+@media screen and (max-width: 768px) {
+  .adminOuter-wrapper {
+    margin-right: 0;
+  }
+  
+  .adminInner-wrapper {
+    max-width: 100%;
+    padding: 10px;
+  }
+
+  .users-container {
+    padding: 6px;
+  }
+
+  .individualUser {
+    font-size: 0.5rem;
+  }
+
+  .userEditBtn,
+  .userDeleteBtn {
+    padding: 3px 6px;
+    margin-left: 3px;
+    font-size: 10px;
+  }
+}
+
+.ContactUsHeader{
+  text-align: center;
+}
+
+
+/* admin - edit user */
+
+.editUser-shell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #fff;
+}
+
+.editUser-mainWrapper {
+  max-width: 90%; 
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: black;
+  text-align: center;
+  color: #fff;
+  margin: 20px; 
+}
+
+.editUserForm-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.editUserForm-wrapper label {
+  margin-bottom: 10px;
+}
+
+.editUserForm-wrapper input {
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.button-box {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.button-box button {
+  flex: 1;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 5px;
+  height: 40px;
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+.cancelLink {
+  display: inline-block;
+  width: 33%;
+}
+
+.submitBtn,
+.cancelBtn,
+.deleteBtn {
+  flex: 1;
+  height: 40px;
+}
+
+.submitBtn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.cancelBtn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+}
+
+.deleteBtn {
+  background-color: #ff9800;
+  color: white;
+  border: none;
+}
+
+@media (max-width: 768px) {
+  .editUser-mainWrapper {
+    max-width: 80%; 
+  }
+
+  .button-box {
+    flex-wrap: wrap; 
+    margin-top: 10px;
+  }
+
+  .button-box button {
+    margin: 5px;
+  }
+
+  .cancelLink {
+    width: 100%; 
+  }
+}

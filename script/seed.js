@@ -34,13 +34,13 @@ async function seed() {
       interests: ["shooting", "guns", "dogs", "snakes"],
     }),
     User.create({
-      username: "jdog",
+      username: "jovans",
       password: "123",
       isAdmin: true,
       firstName: "Jovan",
       lastName: "Stosic",
       email: "jovan@gmail.com",
-      interests: ["coding", "video games", "one direction"],
+      interests: ["coding", "video games", "more coding"],
     }),
     User.create({
       username: "testDummy",
@@ -103,24 +103,29 @@ async function seed() {
       description: "this the main chat",
       code: "main",
       public: true,
+      image: "https://cdn-icons-png.flaticon.com/512/6676/6676508.png",
     }),
     Chat.create({
       name: "test",
       description: "test chat",
       code: "test",
       public: false,
+      image: "https://cdn-icons-png.flaticon.com/512/2916/2916315.png",
     }),
     Chat.create({
       name: "admin",
       description: "this is the super secret chat",
       code: "admin",
       public: false,
+      image: "https://www.pngmart.com/files/21/Admin-Profile-PNG-Clipart.png",
     }),
     Chat.create({
       name: "sports",
       description: "FOOTTBALL!!!",
       code: "sports",
       public: true,
+      image:
+        "https://static.vecteezy.com/system/resources/previews/008/470/102/original/orange-basketball-sport-hand-drawn-free-png.png",
     }),
   ]);
 
@@ -151,23 +156,6 @@ async function seed() {
     }),
   ]);
 
-  const messages = await Promise.all([
-    MessageData.create({
-      code: "main",
-      username: "jdog",
-      message: "HELLO THIS IS A TEST MESSAGE",
-      time: "12:00am",
-      chatId: 1,
-    }),
-    MessageData.create({
-      code: "main",
-      username: "adambomb",
-      message: "HIIII THIS IS ANOTHER TEST MESSAGAE",
-      time: "12:55am",
-      chatId: 1,
-    }),
-  ]);
-
   const startDateTime = new Date(2023, 6, 10, 11, 0, 0);
   const endDateTime = new Date(2023, 6, 10, 11, 30, 0);
 
@@ -184,7 +172,6 @@ async function seed() {
   console.log(`seeded ${friends.length} friends`);
   console.log(`seeded ${chats.length} chats`);
   console.log(`seeded ${participants.length} participants`);
-  console.log(`seeded ${messages.length} messages`);
   console.log(`seeded ${events.length} events`);
   console.log(`seeded successfully`);
   return {
