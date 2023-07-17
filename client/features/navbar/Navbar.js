@@ -73,13 +73,7 @@ const Navbar = () => {
                           transition: "transform 1s"
                       }}
                     />
-                    {hoverIcon === "Home" && (
-                      <span
-                        className="hoverName"
-                      >
-                        Home
-                      </span>
-                    )}
+                  
                   </Link>
                   <Link
                     className={` ${
@@ -97,9 +91,7 @@ const Navbar = () => {
                           transition: "transform 1s"
                       }}
                     />
-                    {hoverIcon === "Friends" && (
-                      <span className="hoverName">Friends</span>
-                    )}
+                    
                   </Link>
                   <Link
                     className={` ${

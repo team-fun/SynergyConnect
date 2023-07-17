@@ -32,6 +32,7 @@ const Home = () => {
   const [search, setSearch] = useState("");
   const [favoriteStatus, setFavoriteStatus] = useState({});
   const [showModal, setShowModal] = useState(false);
+  const [specificChatId, setSpecificChatId] = useState();
   const [showFavMes, setShowFavMes] = useState(false);
 
   const dispatch = useDispatch();
@@ -129,7 +130,8 @@ const Home = () => {
       [chatId]: newFav,
     }));
   };
-  const handleShowModal = () => {
+  const handleShowModal = (chatId) => {
+    setSpecificChatId(chatId); 
     setShowModal(true);
   };
   const handleCloseModal = () => {
@@ -267,9 +269,9 @@ const Home = () => {
                     </div>
                     <p className="keepDark">👤 {participants.length}</p>
 
-                    <button onClick={handleShowModal}>Join Room</button>
+                    <button onClick={()=>handleShowModal(chat.id)}>Join Room</button>
 
-                    {showModal && (
+                    {showModal&& specificChatId === chat.id && (
                       <ChatModal
                         handleCloseModal={handleCloseModal}
                         handleAcceptGuideline={() =>
