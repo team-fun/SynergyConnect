@@ -296,7 +296,7 @@ const Navbar = () => {
                   onMouseEnter={() => handleIconMouseHover("Contact")}
                   onMouseLeave={handleIconMouseLeave}
                 >
-                  C
+                  <MdContactMail />
                 </Link>
               </div>
             )}

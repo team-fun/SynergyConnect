@@ -176,7 +176,7 @@ const Home = () => {
             onChange={(e) => setCode(e.target.value)}
             onKeyUp={handleKeyPress}
           ></input>
-          <button onClick={joinRoom}>Join Room</button>
+          <button onClick={joinRoom}>Join Private Room</button>
           <div>
             <h3 className="text-3xl">Chat Rooms</h3>
             <SearchBox searchChange={onSearchChange} />

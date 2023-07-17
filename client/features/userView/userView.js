@@ -32,6 +32,7 @@ const UserView = () => {
   const [image, setImage] = useState();
   const [showFriends, setShowFriends] = useState(false);
   const [search, setSearch] = useState("");
+  console.log(friends);
   async function fetchUser() {
     const data = await (await fetch("/api/users/" + id)).json();
 
@@ -132,7 +133,7 @@ const UserView = () => {
   return (
     <div className="profile">
       <div className="py-10 w-[70%] px-5 flex items-center justify-between">
-        <div className="pfp w-20 h-20 object-cover">
+        <div className="pfp w-40 h-40 object-cover">
           <img
             style={{ height: "unset" }}
             className="w-full"
@@ -145,11 +146,11 @@ const UserView = () => {
           <input type="file" onChange={handleImageChange} />
         </div>
         <div className="mx-[auto]">
-          <h3 className="text-[30px] my-0 ">
+          <h3 className="text-[30px] my-0 ">Welcome!</h3>
+          <p className="font-medium my-0">
             {" "}
             {user.firstName} {user.lastName}
-          </h3>
-          <p className="font-medium my-0"> It's good to see you</p>
+          </p>
         </div>
 
         <div
@@ -158,10 +159,7 @@ const UserView = () => {
           }`}
         >
           <div>
-            <div
-              className="w-72 keepDark text-center"
-              onClick={toggleFriendsList}
-            >
+            <div className="w-72 text-center" onClick={toggleFriendsList}>
               <span className="text-[36px] mr-2">{friends.length}</span> Friends
             </div>
           </div>
@@ -170,16 +168,16 @@ const UserView = () => {
       </div>
       <div
         style={{ background: "#D9D9D9" }}
-        className="w-[95%] lg:w-[70%] keepDark text-center mt-10 py-2 px-4 rounded-lg"
+        className="w-[80%] h-[60%] text-center mt-10 py-2 px-4 rounded-lg"
       >
         <h3 className="ml-10 text-[30px]">USER PROFILE</h3>
         <div className="user-info [&>*]:my-4">
           <div className="flex justify-around">
             <div className="username flex items-center">
-              {!editUsername && user.username}
+              Username: {!editUsername && user.username}
               {editUsername && (
                 <>
-                  Edit username:{" "}
+                  {" "}
                   <input
                     value={user.username}
                     onChange={(e) =>
@@ -205,12 +203,12 @@ const UserView = () => {
             <div className="fullname flex items-center">
               {!editName && (
                 <>
-                  {user.firstName} {user.lastName}
+                  Full Name:{user.firstName} {user.lastName}
                 </>
               )}
               {editName && (
                 <>
-                  Edit Name:{" "}
+                  {" "}
                   <input
                     value={user.firstName}
                     onChange={(e) =>
@@ -243,6 +241,7 @@ const UserView = () => {
           </div>
           <div className="flex justify-around">
             <div className="email flex items-center">
+              Email:{" "}
               {!editEmail &&
                 user.email &&
                 (user.email.split("").includes("@") &&
@@ -252,7 +251,7 @@ const UserView = () => {
               {!editEmail && !user.email && <span>Add an Email</span>}
               {editEmail && (
                 <>
-                  Edit Email:{" "}
+                  {" "}
                   <input
                     type="email"
                     value={user.email}
@@ -276,10 +275,10 @@ const UserView = () => {
                 ))}
             </div>
             <div className="location flex items-center">
+              Location:{" "}
               {!editLocation && (user.location || (!id && "Add a Location"))}
               {editLocation && (
                 <>
-                  Edit Location:
                   <input
                     value={user.location}
                     onChange={(e) =>
@@ -303,11 +302,10 @@ const UserView = () => {
             </div>
           </div>
           <div className="bio flex justify-center items-center">
-            {" "}
-            {!editBio && (user.bio || (!id && "Add a Bio"))}
+            Bio: {!editBio && (user.bio || (!id && "Add a Bio"))}
             {editBio && (
               <>
-                Edit Bio:{" "}
+                {" "}
                 <input
                   value={user.bio}
                   onChange={(e) =>

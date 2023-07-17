@@ -314,8 +314,8 @@
   display: none;
 }
 
-.h-20{
-  height: 5rem;
+.h-40{
+  height: 10rem;
 }
 
 .h-\[200px\]{
@@ -334,6 +334,9 @@
   height: 100vh;
 }
 
+.h-\[60\%\]{
+  height: 60%;
+}
 
 .w-1\/2{
   width: 50%;
@@ -379,13 +382,16 @@
   width: 100%;
 }
 
-.transform{
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
 .w-screen{
   width: 100vw;
+}
 
+.w-\[75\%\]{
+  width: 75%;
+}
+
+.transform{
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .resize{
@@ -827,11 +833,10 @@ button {
   color: black;
 }
 
+/* 
 .activeHomeTab.dark {
   color: white;
 }
-
-/* 
 .cal-add-form {
   display: inline-block;
   vertical-align: top;
@@ -851,7 +856,6 @@ button {
 
 /* 
 .cal-delete-event {
-  
   display: inline-block;
   vertical-align: top;
   margin: 10px;
@@ -881,18 +885,20 @@ button {
 
 /* display: flex;
 
+.cal-delete-button {
+  display: block;
+}
+
 .cal-container {
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
 .cal-title {
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
 .cal-add-event {
