@@ -24,7 +24,10 @@ const SingleContact = ({ name, image, description, linkedin }) => {
           <FacebookIcon style={{ fontSize: "20px" }} />
           <TwitterIcon style={{ fontSize: "20px" }} /> */}
           <a href={linkedin}>
-            {/* <LinkedInIcon style={{ fontSize: "20px" }} /> */}
+            <img
+              src="https://icons.veryicon.com/png/o/miscellaneous/mirror-icon/github-65.png"
+              alt="Github"
+            />
           </a>
         </div>
       </article>
