@@ -314,8 +314,8 @@
   display: none;
 }
 
-.h-20{
-  height: 5rem;
+.h-40{
+  height: 10rem;
 }
 
 .h-\[200px\]{
@@ -332,6 +332,10 @@
 
 .h-screen{
   height: 100vh;
+}
+
+.h-\[60\%\]{
+  height: 60%;
 }
 
 .w-1\/2{
@@ -380,6 +384,10 @@
 
 .w-screen{
   width: 100vw;
+}
+
+.w-\[75\%\]{
+  width: 75%;
 }
 
 .transform{

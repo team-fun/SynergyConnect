@@ -27,6 +27,7 @@ const EditUser = () => {
 	const [email, setEmail] = useState("");
 	const [bio, setBio] = useState("");
 	const [icon, setIcon] = useState("");
+	
 
 
 	const handleSubmit = async (e) => {
