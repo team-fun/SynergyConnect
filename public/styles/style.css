@@ -386,6 +386,10 @@
   width: 100vw;
 }
 
+.w-\[70vw\]{
+  width: 70vw;
+}
+
 .transform{
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
@@ -432,6 +436,10 @@
 
 .overflow-hidden{
   overflow: hidden;
+}
+
+.overflow-scroll{
+  overflow: scroll;
 }
 
 .rounded-3xl{
@@ -1325,6 +1333,14 @@ img {
 }
 
 @media (min-width: 768px){
+  .md\:w-\[\]{
+    width: ;
+  }
+
+  .md\:w-\[50vw\]{
+    width: 50vw;
+  }
+
   .md\:px-12{
     padding-left: 3rem;
     padding-right: 3rem;
