@@ -3,6 +3,7 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
+import {AiFillLinkedin} from "react-icons/ai"
 
 const SingleContact = ({ name, image, description, linkedin }) => {
   return (
@@ -24,10 +25,7 @@ const SingleContact = ({ name, image, description, linkedin }) => {
           <FacebookIcon style={{ fontSize: "20px" }} />
           <TwitterIcon style={{ fontSize: "20px" }} /> */}
           <a href={linkedin}>
-            <img
-              src="https://icons.veryicon.com/png/o/miscellaneous/mirror-icon/github-65.png"
-              alt="Github"
-            />
+           <AiFillLinkedin/>
           </a>
         </div>
       </article>
