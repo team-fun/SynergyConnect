@@ -18,7 +18,7 @@ export const ContactData = [
     linkedin: "https://www.linkedin.com/in/ginacastromonte/",
     image:
       "https://vcahospitals.com/darien/team/-/media/2/vca/images/hospitals/united-states/connecticut/darien/staff/700x525_darien_ginacastromonte2021.ashx?h=525&w=700&hash=45352FF6F9F94C7078E58ABC7DCF98E8",
-    description: '"Let today be the start of something new"',
+    description: "Let Today Be the Start Of Something New ",
   },
   {
     name: "Jovan",
