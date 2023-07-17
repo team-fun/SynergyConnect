@@ -18,7 +18,7 @@ export const ContactData = [
     linkedin: "https://www.linkedin.com/in/ginacastromonte/",
     image:
       "https://vcahospitals.com/darien/team/-/media/2/vca/images/hospitals/united-states/connecticut/darien/staff/700x525_darien_ginacastromonte2021.ashx?h=525&w=700&hash=45352FF6F9F94C7078E58ABC7DCF98E8",
-    description: 'Let Today Be the Start Of Something New ',
+    description: "Let Today Be the Start Of Something New ",
   },
   {
     name: "Jovan",
@@ -38,7 +38,7 @@ export const ContactData = [
     name: "Daniel",
     linkedin: "https://www.linkedin.com/in/daniel-a-rodriguez-/",
     image:
-      "https://media.licdn.com/dms/image/D5603AQHkKGCcMaH-Zw/profile-displayphoto-shrink_800_800/0/1684940462569?e=1694044800&v=beta&t=epFhaGhjU26hMW644LTUU4EfRrf7fom1bSZgVHgzdEc",
+      "https://media.licdn.com/dms/image/D5603AQFwc2Vo-1AmWA/profile-displayphoto-shrink_400_400/0/1689370735778?e=1695254400&v=beta&t=fhEWXeQXWneCSa-SsnNVi3v5rq8_0IYsv6aNKDq2crM",
     description: 'I focus on the "Magic" of the "Little Things"',
   },
 ];
