@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CreateRoomForm from "./CreateRoomForm";
 import { selectFriends, fetchAllFriends } from "./AllFriendsSlice";
 import {
@@ -11,6 +11,7 @@ import {
 } from "./AllChatsSlice";
 import SearchBox from "../seachbar/SearchBar";
 import Friends from "../friends/Friends";
+import ChatModal from "./chatModal";
 
 const Home = () => {
   const [friendListChange, setfriendListChange] = useState(false);
@@ -26,8 +27,10 @@ const Home = () => {
   const [code, setCode] = useState("");
   const [search, setSearch] = useState("");
   const [favoriteStatus, setFavoriteStatus] = useState({});
-  const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(false);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(fetchAllChats(id));
     dispatch(fetchAllFriends({ id }));
@@ -116,7 +119,16 @@ const Home = () => {
       [chatId]: newFav,
     }));
   };
-
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+  const handleAcceptGuideline = (chat) => {
+    setShowModal(false);
+    navigate(`/chats/${chat.code}`);
+  };
   return (
     <div>
       {createFormVis ? (
@@ -164,7 +176,7 @@ const Home = () => {
             onChange={(e) => setCode(e.target.value)}
             onKeyUp={handleKeyPress}
           ></input>
-          <button onClick={joinRoom}>Join Room</button>
+          <button onClick={joinRoom}>Join Private Room</button>
           <div>
             <h3 className="text-3xl">Chat Rooms</h3>
             <SearchBox searchChange={onSearchChange} />
@@ -234,9 +246,17 @@ const Home = () => {
                       <p className="keepDark w-full my-0">{chat.description}</p>
                     </div>
                     <p className="keepDark">👤 {participants.length}</p>
-                    <Link className="" to={`/chats/${chat.code}`}>
-                      <button>Join Room</button>
-                    </Link>
+
+                    <button onClick={handleShowModal}>Join Room</button>
+
+                    {showModal && (
+                      <ChatModal
+                        handleCloseModal={handleCloseModal}
+                        handleAcceptGuideline={() =>
+                          handleAcceptGuideline(chat)
+                        }
+                      />
+                    )}
                     {isParticipating ? (
                       fav ? (
                         <span

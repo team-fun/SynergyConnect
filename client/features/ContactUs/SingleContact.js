@@ -16,7 +16,7 @@ const SingleContact = ({ name, image, description, linkedin }) => {
 
         <div className=" mx-2 my-2 text-[24px]">{name}</div>
 
-        <div className="mx-2 my-2 h-[80px] text-slate-500 text-sm">
+        <div className="mx-2 my-2 h-[200px] text-slate-500 text-sm">
           {description}
         </div>
         <div className="flex flex-row justify-around">

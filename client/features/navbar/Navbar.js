@@ -26,6 +26,7 @@ const Navbar = () => {
   const user = useSelector(selectUser);
   const isAdmin = user.me.isAdmin;
   const [theme, setTheme] = useState(true);
+  const [hoverIcon, setHoverIcon] = useState(null);
   const { pathname } = useLocation();
   function changeTheme() {
     !theme
@@ -34,6 +35,15 @@ const Navbar = () => {
           .forEach((e) => e.classList.remove("dark"))
       : document.querySelectorAll("*").forEach((e) => e.classList.add("dark"));
   }
+
+  const handleIconMouseHover = (iconName) => {
+    setHoverIcon(iconName);
+  };
+
+  const handleIconMouseLeave = (iconName) => {
+    setHoverIcon(null);
+  };
+
   return (
     <div>
       <div className="h-screen flex flex-col justify-center items-center w-40 [&>*]:text-lg">
@@ -51,22 +61,58 @@ const Navbar = () => {
                         : "nonActiveNav"
                     }`}
                     to="/home"
+                    onMouseEnter={() => handleIconMouseHover("Home")}
+                    onMouseLeave={handleIconMouseLeave}
                   >
-                    <AiFillHome />
+                    <AiFillHome
+                      className={hoverIcon === "Home"}
+                      style={{
+                        transition: "transform 1s",
+                        transform:
+                          hoverIcon === "Home" ? "scale(1.5)" : "scale(1)",
+                          transition: "transform 1s"
+                      }}
+                    />
+                    {hoverIcon === "Home" && (
+                      <span
+                        className="hoverName"
+                      >
+                        Home
+                      </span>
+                    )}
                   </Link>
                   <Link
                     className={` ${
                       pathname == "/friends" ? "activeNav" : "nonActiveNav"
                     }`}
                     to="/friends"
+                    onMouseEnter={() => handleIconMouseHover("Friends")}
+                    onMouseLeave={handleIconMouseLeave}
                   >
-                    <FaUserFriends />
+                    <FaUserFriends
+                      className={hoverIcon === "Friends"}
+                      style={{
+                        transform:
+                          hoverIcon === "Friends" ? "scale(1.5)" : "scale(1)",
+                          transition: "transform 1s"
+                      }}
+                    />
+                    {hoverIcon === "Friends" && (
+                      <span className="hoverName">Friends</span>
+                    )}
                   </Link>
                   <Link
                     className={` ${
                       pathname == "/ContactUs" ? "activeNav" : "nonActiveNav"
                     }`}
                     to="/ContactUs"
+                    style={{
+                      transform:
+                        hoverIcon === "Contact Us" ? "scale(1.5)" : "scale(1)",
+                        transition: "transform 1s"
+                    }}
+                    onMouseEnter={() => handleIconMouseHover("Contact Us")}
+                    onMouseLeave={handleIconMouseLeave}
                   >
                     <MdContactMail />
                   </Link>
@@ -75,6 +121,13 @@ const Navbar = () => {
                       pathname == "/profile" ? "activeNav" : "nonActiveNav"
                     }`}
                     to="/profile"
+                    style={{
+                      transform:
+                        hoverIcon === "Profile" ? "scale(1.5)" : "scale(1)",
+                        transition: "transform 1s"
+                    }}
+                    onMouseEnter={() => handleIconMouseHover("Profile")}
+                    onMouseLeave={handleIconMouseLeave}
                   >
                     <FaUserAlt />
                   </Link>
@@ -83,6 +136,13 @@ const Navbar = () => {
                       pathname == "/admin" ? "activeNav" : "nonActiveNav"
                     }`}
                     to="/admin"
+                    style={{
+                      transform:
+                        hoverIcon === "Admin" ? "scale(1.5)" : "scale(1)",
+                        transition: "transform 1s"
+                    }}
+                    onMouseEnter={() => handleIconMouseHover("Admin")}
+                    onMouseLeave={handleIconMouseLeave}
                   >
                     <MdOutlineAdminPanelSettings />
                   </Link>
@@ -91,6 +151,13 @@ const Navbar = () => {
                       pathname == "/Calendar" ? "activeNav" : "nonActiveNav"
                     }`}
                     to="/Calendar"
+                    style={{
+                      transform:
+                        hoverIcon === "Calendar" ? "scale(1.5)" : "scale(1)",
+                      transition: "transform 1s"
+                    }}
+                    onMouseEnter={() => handleIconMouseHover("Calendar")}
+                    onMouseLeave={handleIconMouseLeave}
                   >
                     <SlCalender />
                   </Link>
@@ -108,6 +175,13 @@ const Navbar = () => {
                         : "nonActiveNav"
                     }`}
                     to="/home"
+                    style={{
+                      transform:
+                        hoverIcon === "Home" ? "scale(1.5)" : "scale(1)",
+                        transition: "transform 1s"
+                    }}
+                    onMouseEnter={() => handleIconMouseHover("Home")}
+                    onMouseLeave={handleIconMouseLeave}
                   >
                     <AiFillHome />
                   </Link>
@@ -116,6 +190,13 @@ const Navbar = () => {
                       pathname == "/profile" ? "activeNav" : "nonActiveNav"
                     }`}
                     to="/profile/1"
+                    style={{
+                      transform:
+                        hoverIcon === "Profile" ? "scale(1.5)" : "scale(1)",
+                        transition: "transform 1s"
+                    }}
+                    onMouseEnter={() => handleIconMouseHover("Profile")}
+                    onMouseLeave={handleIconMouseLeave}
                   >
                     <FaUserAlt />
                   </Link>
@@ -124,6 +205,13 @@ const Navbar = () => {
                       pathname == "/Calendar" ? "activeNav" : "nonActiveNav"
                     }`}
                     to="/Calendar"
+                    style={{
+                      transform:
+                        hoverIcon === "Calendar" ? "scale(1.5)" : "scale(1)",
+                        transition: "transform 1s"
+                    }}
+                    onMouseEnter={() => handleIconMouseHover("Calendar")}
+                    onMouseLeave={handleIconMouseLeave}
                   >
                     <SlCalender />
                   </Link>
@@ -132,6 +220,13 @@ const Navbar = () => {
                       pathname == "/friends" ? "activeNav" : "nonActiveNav"
                     }`}
                     to="/friends"
+                    style={{
+                      transform:
+                        hoverIcon === "Friends" ? "scale(1.5)" : "scale(1)",
+                        transition: "transform 1s"
+                    }}
+                    onMouseEnter={() => handleIconMouseHover("Friends")}
+                    onMouseLeave={handleIconMouseLeave}
                   >
                     Fr!
                   </Link>
@@ -140,6 +235,13 @@ const Navbar = () => {
                       pathname == "/ContactUs" ? "activeNav" : "nonActiveNav"
                     }`}
                     to="/ContactUs"
+                    style={{
+                      transform:
+                        hoverIcon === "Contact" ? "scale(1.5)" : "scale(1)",
+                        transition: "transform 1s"
+                    }}
+                    onMouseEnter={() => handleIconMouseHover("Contact")}
+                    onMouseLeave={handleIconMouseLeave}
                   >
                     C
                   </Link>
@@ -156,6 +258,13 @@ const Navbar = () => {
                     pathname == "/login" ? "activeNav" : "nonActiveNav"
                   }`}
                   to="/login"
+                  style={{
+                    transform:
+                      hoverIcon === "Login" ? "scale(1.5)" : "scale(1)",
+                      transition: "transform 1s"
+                  }}
+                  onMouseEnter={() => handleIconMouseHover("Login")}
+                  onMouseLeave={handleIconMouseLeave}
                 >
                   <FiLogIn />
                 </Link>
@@ -164,6 +273,13 @@ const Navbar = () => {
                     pathname == "/signup" ? "activeNav" : "nonActiveNav"
                   }`}
                   to="/signup"
+                  style={{
+                    transform:
+                      hoverIcon === "Sign Up" ? "scale(1.5)" : "scale(1)",
+                      transition: "transform 1s"
+                  }}
+                  onMouseEnter={() => handleIconMouseHover("Sign Up")}
+                  onMouseLeave={handleIconMouseLeave}
                 >
                   <ImProfile />
                 </Link>
@@ -172,6 +288,13 @@ const Navbar = () => {
                     pathname == "/ContactUs" ? "activeNav" : "nonActiveNav"
                   }`}
                   to="/ContactUs"
+                  style={{
+                    transform:
+                      hoverIcon === "Contact" ? "scale(1.5)" : "scale(1)",
+                      transition: "transform 1s"
+                  }}
+                  onMouseEnter={() => handleIconMouseHover("Contact")}
+                  onMouseLeave={handleIconMouseLeave}
                 >
                   <MdContactMail />
                 </Link>
