@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Friend, Participant, Chat, MessageData },
+  models: { User, Friend, Participant, Chat, MessageData, Event },
 } = require("../server/db");
 
 /**
@@ -16,13 +16,13 @@ async function seed() {
   // Creating Users
   const users = await Promise.all([
     User.create({
-      username: "adambomb",
+      username: "adam",
       password: "123",
       isAdmin: true,
       firstName: "Adam",
       lastName: "Green",
       email: "adam@gmail.com",
-      interests: ["sports", "health & wellness", "muffins", "taco bell"],
+      interests: ["health & wellness", "AI", "taco bell"],
     }),
     User.create({
       username: "drod",
@@ -54,10 +54,29 @@ async function seed() {
     User.create({
       username: "Emoman",
       password: "321",
+      isAdmin: true,
       firstName: "Keith",
       lastName: "Russell",
-      email: "Keith@gmail.com",
-      interests: ["Jujutsu Kaisen", "being sad"],
+      email: "keith@gmail.com",
+      interests: ["Jujutsu Kaisen", "being sad", "digimon"],
+    }),
+    User.create({
+      username: "BronxsBandit",
+      password: "123",
+      isAdmin: true,
+      firstName: "Femi",
+      lastName: "Bamgbose",
+      email: "femi@gmail.com",
+      interests: ["basketball", "lebron lover", "pizza", "money"],
+    }),
+    User.create({
+      username: "doglover21",
+      password: "123",
+      isAdmin: true,
+      firstName: "Gina",
+      lastName: "Castromonte",
+      email: "gina@gmail.com",
+      interests: ["animals", "tv shows", "pizza"],
     }),
   ]);
 
@@ -149,17 +168,31 @@ async function seed() {
     }),
   ]);
 
+  const startDateTime = new Date(2023, 6, 10, 11, 0, 0);
+  const endDateTime = new Date(2023, 6, 10, 11, 30, 0);
+
+  const events = await Promise.all([
+    Event.create({
+      title: "Event 1",
+      start: startDateTime,
+      end: endDateTime,
+      userId: 1,
+    }),
+  ]);
+
   console.log(`seeded ${users.length} users`);
   console.log(`seeded ${friends.length} friends`);
   console.log(`seeded ${chats.length} chats`);
   console.log(`seeded ${participants.length} participants`);
   console.log(`seeded ${messages.length} messages`);
+  console.log(`seeded ${events.length} events`);
   console.log(`seeded successfully`);
   return {
     users,
     chats,
     friends,
     participants,
+    events,
   };
 }
 

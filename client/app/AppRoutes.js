@@ -10,10 +10,12 @@ import EditUser from "../features/admin/EditUser";
 import UserView from "../features/userView/userView";
 import ChatRoom from "../features/chat/ChatRoom";
 import ContactUs from "../features/ContactUs/ContactUs";
+import CalendarSchedule from "../features/calendar/Calendar";
 // import WhiteBoard from "../features/chat/WhiteBoard/WhiteBoard";
 import io from "socket.io-client";
 const socket = io.connect("http://localhost:3001/");
 import Friends from "../features/friends/Friends";
+import NonFriends from "../features/friends/NonFriends";
 
 /**
  * COMPONENT
@@ -31,13 +33,13 @@ const AppRoutes = () => {
   }, []);
 
   return (
-    <div>
+    <div className="w-full">
       {isLoggedIn ? (
         isAdmin ? (
           <Routes>
             <Route path="/*" element={<Home />} />
             <Route to="/home" element={<Home />} />
-            <Route path="/friends" element={<Friends />} />
+            <Route path="/friends" element={<NonFriends />} />
             <Route path="/admin" element={<AdminView />} />
             <Route path="/admin/:id" element={<EditUser />} />
             <Route
@@ -48,12 +50,13 @@ const AppRoutes = () => {
             <Route path="/profile" element={<UserView />} />
             <Route path="/profile/:id" element={<UserView />} />
             <Route path="/contactus" element={<ContactUs />} />
+            <Route path="/Calendar" element={<CalendarSchedule />} />
           </Routes>
         ) : (
           <Routes>
             <Route path="/*" element={<Home />} />
             <Route to="/home" element={<Home />} />
-            <Route path="/friends" element={<Friends />} />
+            <Route path="/friends" element={<NonFriends />} />
             <Route
               path="/chats/:code"
               element={<ChatRoom socket={socket} username={username} />}
@@ -63,6 +66,7 @@ const AppRoutes = () => {
             <Route path="/profile" element={<UserView />} />
             <Route path="/profile/:id" element={<UserView />} />
             <Route path="/contactus" element={<ContactUs />} />
+            <Route path="/Calendar" element={<CalendarSchedule />} />
           </Routes>
         )
       ) : (

@@ -1,3 +1,4 @@
+import { create } from "@mui/material/styles/createTransitions";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -58,6 +59,14 @@ export const authenticate = createAsyncThunk(
 	}
 );
 
+export const logout = createAsyncThunk("auth/logout",  async (state, action)=> {
+  await fetch("/auth/logout", {headers: {
+  authorization:localStorage.token
+  }})
+ 
+
+})
+
 
 /*
   SLICE
@@ -69,11 +78,7 @@ export const authSlice = createSlice({
     error: null,
   },
   reducers: {
-    logout(state, action) {
-      window.localStorage.removeItem(TOKEN);
-      state.me = {};
-      state.error = null;
-    },
+   
   },
   extraReducers: (builder) => {
     builder.addCase(me.fulfilled, (state, action) => {
@@ -85,13 +90,18 @@ export const authSlice = createSlice({
     builder.addCase(authenticate.rejected, (state, action) => {
       state.error = action.payload;
     });
+    builder.addCase(logout.fulfilled, (state, action)=>{
+      window.localStorage.removeItem(TOKEN);
+      state.me = {};
+      state.error = null;
+    })
   },
 });
 
 /*
   ACTIONS
 */
-export const { logout } = authSlice.actions;
+
 export const selectUser = (state) => state.auth
 
 /*

@@ -8,6 +8,7 @@ import editUserSlice from "../features/admin/editUserSlice";
 import AllFriendsSlice from "../features/home/AllFriendsSlice";
 import AllNonFriendsSlice from "../features/home/AllNonFriendsSlice";
 import chatRoomSlice from "../features/chat/chatRoomSlice";
+import eventSlice from "../features/calendar/eventSlice";
 import whiteboardSliceReducer from "../features/chat/WhiteBoard/whiteboardSlice";
 import cursorSliceReducer from "../features/chat/WhiteBoard/CursorOverlay/cursorSlice";
 
@@ -21,6 +22,7 @@ const store = configureStore({
     friends: AllFriendsSlice,
     notFriends: AllNonFriendsSlice,
     chat: chatRoomSlice,
+    events: eventSlice,
     whiteboard: whiteboardSliceReducer,
     cursor: cursorSliceReducer,
   },

@@ -8,6 +8,7 @@ const Chat = require("./models/Chat");
 const Friend = require("./models/Friend");
 const Participant = require("./models/Participant");
 const MessageData = require("./models/MessageData");
+const Event = require("./models/Event");
 
 //associations could go here!
 
@@ -27,6 +28,10 @@ Participant.belongsTo(Chat);
 Chat.hasMany(MessageData);
 MessageData.belongsTo(Chat);
 
+//Calendar EVENTS
+User.hasMany(Event);
+Event.belongsTo(User)
+
 module.exports = {
   db,
   models: {
@@ -35,5 +40,6 @@ module.exports = {
     Participant,
     Chat,
     MessageData,
+    Event
   },
 };
