@@ -7,6 +7,8 @@ Synergy Connect is a collaboration tool designed to provide users a centralized 
 
 The world is full of ways to talk and share with others.  Synergy Connect helps you bring them all together so you can work together to imagine and build tomorrow's solutions today.
 
+Deployed Site:  https://synergyconnect-front.onrender.com/ 
+
 
                 
 ## Contributors
